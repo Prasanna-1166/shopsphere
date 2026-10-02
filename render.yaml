@@ -1,0 +1,54 @@
+services:
+  # Express Backend Web Service
+  - type: web
+    name: shopsphere-backend
+    env: node
+    plan: free
+    buildCommand: npm install && npx prisma generate
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: COOKIE_SECRET
+        generateValue: true
+      - key: CUSTOMER_ORIGIN
+        sync: false
+      - key: ADMIN_ORIGIN
+        sync: false
+      - key: PAYMENT_PROVIDER
+        value: MOCK
+    healthCheckPath: /api/health
+
+  # Customer Frontend Static Site
+  - type: web
+    name: shopsphere-customer-web
+    env: static
+    buildCommand: npm --prefix apps/customer-web install && npm --prefix apps/customer-web run build
+    staticPublishPath: ./apps/customer-web/dist
+    envVars:
+      - key: VITE_API_BASE_URL
+        sync: false
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+  # Admin Frontend Static Site
+  - type: web
+    name: shopsphere-admin-web
+    env: static
+    buildCommand: npm --prefix apps/admin-web install && npm --prefix apps/admin-web run build
+    staticPublishPath: ./apps/admin-web/dist
+    envVars:
+      - key: VITE_API_BASE_URL
+        sync: false
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

@@ -1,0 +1,45 @@
+{
+  "name": "shopsphere",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ShopSphere — At the End of Your Streets | Full-Stack E-Commerce Platform",
+  "workspaces": [
+    "apps/*",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "concurrently -n \"BACKEND,CUSTOMER,ADMIN\" -c \"cyan,blue,magenta\" \"npm run dev:backend\" \"npm run dev:customer\" \"npm run dev:admin\"",
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:customer": "npm --prefix apps/customer-web run dev",
+    "dev:admin": "npm --prefix apps/admin-web run dev",
+    "build": "npm run build:backend && npm run build:customer && npm run build:admin",
+    "build:backend": "npm --prefix backend run build",
+    "build:customer": "npm --prefix apps/customer-web run build",
+    "build:admin": "npm --prefix apps/admin-web run build",
+    "start": "npm --prefix backend start",
+    "test": "npm --prefix backend test",
+    "prisma:generate": "npx prisma generate",
+    "prisma:migrate": "npx prisma migrate dev",
+    "prisma:seed": "node prisma/seed.js",
+    "prisma:studio": "npx prisma studio"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "prisma": "^5.19.1"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.19.1"
+  },
+  "keywords": [
+    "ecommerce",
+    "react",
+    "vite",
+    "nodejs",
+    "express",
+    "prisma",
+    "postgresql",
+    "neon"
+  ],
+  "author": "ShopSphere Team",
+  "license": "MIT"
+}
