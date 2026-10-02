@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Package, ArrowRight, Calendar, CreditCard, ChevronRight } from 'lucide-react';
+import { Package, ChevronRight, Calendar, CreditCard, Truck } from 'lucide-react';
 import api from '../api/client';
 import EmptyState from '../components/common/EmptyState';
 
 const STATUS_BADGES = {
-  PENDING: 'bg-amber-500/10 text-amber-400 border-amber-500/30',
-  CONFIRMED: 'bg-blue-500/10 text-blue-400 border-blue-500/30',
-  PROCESSING: 'bg-purple-500/10 text-purple-400 border-purple-500/30',
-  SHIPPED: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/30',
-  DELIVERED: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
-  CANCELLED: 'bg-rose-500/10 text-rose-400 border-rose-500/30',
+  PENDING: 'bg-amber-50 text-amber-800 border-amber-200',
+  CONFIRMED: 'bg-blue-50 text-blue-800 border-blue-200',
+  PROCESSING: 'bg-purple-50 text-purple-800 border-purple-200',
+  SHIPPED: 'bg-indigo-50 text-indigo-800 border-indigo-200',
+  DELIVERED: 'bg-emerald-50 text-emerald-800 border-emerald-200',
+  CANCELLED: 'bg-rose-50 text-rose-800 border-rose-200',
 };
 
 export default function OrdersPage() {
@@ -35,96 +35,103 @@ export default function OrdersPage() {
   }, []);
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
       {/* Title */}
-      <div className="border-b border-slate-800 pb-6">
-        <h1 className="text-3xl font-black text-white tracking-tight">My Orders</h1>
-        <p className="text-sm text-slate-400 mt-1">
-          Review historical purchases, monitor shipments, and track current statuses.
+      <div className="border-b border-slate-200 pb-4">
+        <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Your Orders</h1>
+        <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+          Track packages, view receipts, and manage your purchase history
         </p>
       </div>
 
       {loading ? (
         <div className="space-y-4 animate-pulse">
           {[...Array(3)].map((_, i) => (
-            <div key={i} className="h-36 bg-slate-900 rounded-3xl border border-slate-800" />
+            <div key={i} className="h-32 bg-slate-100 rounded-xl border border-slate-200" />
           ))}
         </div>
       ) : orders.length === 0 ? (
         <EmptyState
-          icon={Package}
           title="No orders placed yet"
-          description="You haven't ordered anything yet. Discover our trending categories and make your first order!"
-          actionText="Browse Products"
-          actionLink="/products"
+          message="You haven't ordered anything yet. Discover our collection of kitchen essentials, audio accessories, and clothing!"
+          actionLabel="Start Shopping"
+          onAction={() => {}}
         />
       ) : (
-        <div className="space-y-5">
+        <div className="space-y-4">
           {orders.map((order) => {
             const dateStr = new Date(order.createdAt).toLocaleDateString('en-IN', {
               day: 'numeric',
               month: 'short',
               year: 'numeric',
             });
+            const badgeClass = STATUS_BADGES[order.status] || 'bg-slate-100 text-slate-700 border-slate-200';
 
             return (
               <div
                 key={order.id}
-                className="p-6 rounded-3xl bg-slate-900 border border-slate-800 hover:border-slate-700 transition shadow-lg space-y-4"
+                className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4 hover:border-slate-300 transition"
               >
-                {/* Header */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-800/80">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <span className="font-mono text-sm font-bold text-white">#{order.id}</span>
-                    <span className="text-xs text-slate-400 flex items-center gap-1">
-                      <Calendar className="w-3.5 h-3.5" />
-                      <span>{dateStr}</span>
-                    </span>
+                {/* Order Top Bar */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+                  <div className="flex flex-wrap items-center gap-3 text-xs">
+                    <div>
+                      <span className="text-slate-400 font-medium block text-[10px]">ORDER ID</span>
+                      <span className="font-mono font-bold text-slate-900">#{order.id.slice(-8).toUpperCase()}</span>
+                    </div>
+                    <div className="h-6 w-px bg-slate-200 hidden sm:block" />
+                    <div>
+                      <span className="text-slate-400 font-medium block text-[10px]">ORDER DATE</span>
+                      <span className="font-semibold text-slate-700">{dateStr}</span>
+                    </div>
+                    <div className="h-6 w-px bg-slate-200 hidden sm:block" />
+                    <div>
+                      <span className="text-slate-400 font-medium block text-[10px]">TOTAL</span>
+                      <span className="font-bold text-slate-900">₹{order.totalAmount.toLocaleString('en-IN')}</span>
+                    </div>
                   </div>
 
-                  <div className="flex items-center gap-3">
-                    <span
-                      className={`px-3 py-1 rounded-full text-xs font-bold border uppercase tracking-wider ${
-                        STATUS_BADGES[order.status] || 'bg-slate-800 text-slate-300'
-                      }`}
-                    >
+                  {/* Status Badge */}
+                  <div>
+                    <span className={`px-2.5 py-1 rounded-md text-xs font-bold border uppercase tracking-wider ${badgeClass}`}>
                       {order.status}
-                    </span>
-                    <span className="text-base font-black text-white">
-                      ₹{order.totalAmount.toLocaleString('en-IN')}
                     </span>
                   </div>
                 </div>
 
-                {/* Items Thumbnails */}
-                <div className="flex items-center justify-between gap-4">
-                  <div className="flex items-center gap-2 overflow-x-auto py-1">
-                    {order.items?.map((item) => (
-                      <div
-                        key={item.id}
-                        className="flex items-center gap-2 bg-slate-950 p-2 rounded-xl border border-slate-800 shrink-0"
-                      >
-                        <img
-                          src={item.product?.images?.[0]?.url || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=100'}
-                          alt=""
-                          className="w-10 h-10 rounded-lg object-cover bg-slate-900"
-                        />
-                        <div className="text-xs pr-2">
-                          <p className="font-bold text-slate-200 truncate max-w-[140px]">
-                            {item.productName}
-                          </p>
-                          <p className="text-[10px] text-slate-400">Qty: {item.quantity}</p>
-                        </div>
-                      </div>
-                    ))}
+                {/* Items Summary */}
+                <div className="space-y-2">
+                  {order.items?.map((item) => (
+                    <div key={item.id} className="flex justify-between items-center text-xs">
+                      <span className="font-medium text-slate-800">
+                        {item.productName} <span className="text-slate-400">× {item.quantity}</span>
+                      </span>
+                      <span className="font-semibold text-slate-900">
+                        ₹{item.subtotal.toLocaleString('en-IN')}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Bottom Action */}
+                <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
+                  <div className="flex items-center gap-1.5 text-xs text-slate-500">
+                    <Truck className="w-3.5 h-3.5 text-slate-400" />
+                    <span>
+                      {order.status === 'DELIVERED'
+                        ? 'Package delivered to your address'
+                        : order.status === 'CANCELLED'
+                        ? 'Order cancelled'
+                        : 'Delivery in progress'}
+                    </span>
                   </div>
 
                   <Link
                     to={`/orders/${order.id}`}
-                    className="p-3 bg-slate-800 hover:bg-brand-500 hover:text-slate-950 text-slate-200 font-bold text-xs rounded-xl transition shrink-0 flex items-center gap-1.5 shadow"
+                    className="inline-flex items-center gap-1 text-xs font-bold text-slate-900 hover:text-accent-600 transition"
                   >
-                    <span>Details</span>
-                    <ChevronRight className="w-4 h-4" />
+                    <span>View Details & Timeline</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
               </div>

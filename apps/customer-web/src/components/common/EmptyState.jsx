@@ -5,36 +5,36 @@ import { PackageOpen } from 'lucide-react';
 export default function EmptyState({
   icon: Icon = PackageOpen,
   title = 'No items found',
-  description = 'Try adjusting your filters or search terms to find what you are looking for.',
-  actionText = 'Browse Catalog',
+  message = 'Try adjusting your filters or search terms to find what you are looking for.',
+  actionLabel = 'Browse Catalog',
   actionLink = '/products',
   onAction,
 }) {
   return (
-    <div className="text-center py-16 px-4 bg-slate-900/50 border border-slate-800 rounded-3xl max-w-lg mx-auto">
-      <div className="w-16 h-16 mx-auto mb-4 bg-slate-800/80 rounded-2xl flex items-center justify-center text-slate-400 border border-slate-700/50">
-        <Icon className="w-8 h-8" />
+    <div className="text-center py-12 px-4 bg-white border border-slate-200 rounded-2xl max-w-md mx-auto shadow-sm">
+      <div className="w-12 h-12 mx-auto mb-3 bg-slate-100 rounded-full flex items-center justify-center text-slate-400">
+        <Icon className="w-6 h-6" />
       </div>
-      <h3 className="text-lg font-bold text-slate-100">{title}</h3>
-      <p className="text-sm text-slate-400 mt-1 max-w-sm mx-auto leading-relaxed">
-        {description}
+      <h3 className="text-base font-bold text-slate-800">{title}</h3>
+      <p className="text-xs text-slate-500 mt-1 max-w-xs mx-auto leading-relaxed">
+        {message}
       </p>
 
-      {(actionText && (actionLink || onAction)) && (
-        <div className="mt-6">
+      {actionLabel && (
+        <div className="mt-5">
           {onAction ? (
             <button
               onClick={onAction}
-              className="px-6 py-2.5 bg-brand-500 hover:bg-brand-400 text-slate-950 font-bold text-sm rounded-xl transition shadow-glow"
+              className="px-5 py-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs rounded-lg transition shadow-sm"
             >
-              {actionText}
+              {actionLabel}
             </button>
           ) : (
             <Link
               to={actionLink}
-              className="inline-block px-6 py-2.5 bg-brand-500 hover:bg-brand-400 text-slate-950 font-bold text-sm rounded-xl transition shadow-glow"
+              className="inline-block px-5 py-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs rounded-lg transition shadow-sm"
             >
-              {actionText}
+              {actionLabel}
             </Link>
           )}
         </div>

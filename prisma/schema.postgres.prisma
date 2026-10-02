@@ -1,7 +1,5 @@
 // ===================================================
-// ShopSphere Prisma Schema
-// Provider: SQLite for Zero-Setup Local Development & Testing
-// Compatible with PostgreSQL (Neon) for Cloud Deployment
+// ShopSphere Prisma Schema (PostgreSQL / Neon Production)
 // ===================================================
 
 generator client {
@@ -9,21 +7,53 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-// ---------------------------------------------------
-// Models
-// ---------------------------------------------------
+enum Role {
+  CUSTOMER
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+  INACTIVE
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum InventoryTransactionType {
+  RESTOCK
+  SALE
+  CANCELLATION_RESTORE
+  MANUAL_ADJUSTMENT
+  RETURN
+}
 
 model User {
   id                    String                 @id @default(cuid())
   name                  String
   email                 String                 @unique
   passwordHash          String
-  role                  String                 @default("CUSTOMER") // CUSTOMER | ADMIN | SUPER_ADMIN
-  status                String                 @default("ACTIVE")   // ACTIVE | SUSPENDED | INACTIVE
+  role                  Role                   @default(CUSTOMER)
+  status                UserStatus             @default(ACTIVE)
   createdAt             DateTime               @default(now())
   updatedAt             DateTime               @updatedAt
 
@@ -170,9 +200,9 @@ model Order {
   subtotal        Float
   discount        Float         @default(0)
   shippingAmount  Float         @default(0)
-  status          String        @default("PENDING") // PENDING, CONFIRMED, PROCESSING, SHIPPED, DELIVERED, CANCELLED
-  paymentStatus   String        @default("PENDING") // PENDING, PAID, FAILED, REFUNDED
-  shippingAddress String        // Serialized JSON address snapshot
+  status          OrderStatus   @default(PENDING)
+  paymentStatus   PaymentStatus @default(PENDING)
+  shippingAddress Json
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
 
@@ -211,8 +241,8 @@ model Payment {
   providerReference String?
   amount            Float
   currency          String        @default("INR")
-  status            String        @default("PENDING")
-  metadata          String?       // Serialized JSON metadata
+  status            PaymentStatus @default(PENDING)
+  metadata          Json?
   createdAt         DateTime      @default(now())
   updatedAt         DateTime      @updatedAt
 
@@ -229,7 +259,7 @@ model InventoryTransaction {
   quantityChange   Int
   previousQuantity Int
   newQuantity      Int
-  type             String                   @default("RESTOCK") // RESTOCK, SALE, CANCELLATION_RESTORE, MANUAL_ADJUSTMENT, RETURN
+  type             InventoryTransactionType
   reason           String?
   performedBy      String?
   createdAt        DateTime                 @default(now())
@@ -249,7 +279,7 @@ model AuditLog {
   action    String
   entity    String
   entityId  String?
-  metadata  String?  // Serialized JSON metadata
+  metadata  Json?
   createdAt DateTime @default(now())
 
   user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)

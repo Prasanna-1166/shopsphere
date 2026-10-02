@@ -1,5 +1,6 @@
 const prisma = require('../../config/prisma');
 const { sendSuccess, sendError } = require('../../utils/response');
+const { createAuditLog } = require('../../utils/auditLogger');
 
 /**
  * Helper to slugify string
@@ -38,9 +39,9 @@ const getAdminProducts = async (req, res, next) => {
     if (search && search.trim()) {
       const q = search.trim();
       where.OR = [
-        { name: { contains: q, mode: 'insensitive' } },
-        { sku: { contains: q, mode: 'insensitive' } },
-        { slug: { contains: q, mode: 'insensitive' } },
+        { name: { contains: q } },
+        { sku: { contains: q } },
+        { slug: { contains: q } },
       ];
     }
 
@@ -195,14 +196,12 @@ const createProduct = async (req, res, next) => {
     });
 
     // Audit log
-    await prisma.auditLog.create({
-      data: {
-        userId: req.user.id,
-        action: 'PRODUCT_CREATE',
-        entity: 'PRODUCT',
-        entityId: product.id,
-        metadata: { name: product.name, sku: product.sku, price: product.price },
-      },
+    await createAuditLog(prisma, {
+      userId: req.user.id,
+      action: 'PRODUCT_CREATE',
+      entity: 'PRODUCT',
+      entityId: product.id,
+      metadata: { name: product.name, sku: product.sku, price: product.price },
     });
 
     return sendSuccess(res, 'Product created successfully.', { product }, 201);
@@ -311,14 +310,12 @@ const updateProduct = async (req, res, next) => {
     });
 
     // Audit log
-    await prisma.auditLog.create({
-      data: {
-        userId: req.user.id,
-        action: 'PRODUCT_UPDATE',
-        entity: 'PRODUCT',
-        entityId: id,
-        metadata: { updatedFields: Object.keys(updateData) },
-      },
+    await createAuditLog(prisma, {
+      userId: req.user.id,
+      action: 'PRODUCT_UPDATE',
+      entity: 'PRODUCT',
+      entityId: id,
+      metadata: { updatedFields: Object.keys(updateData) },
     });
 
     return sendSuccess(res, 'Product updated successfully.', { product: updated });
@@ -344,14 +341,12 @@ const toggleProductActive = async (req, res, next) => {
       data: { active: !existing.active },
     });
 
-    await prisma.auditLog.create({
-      data: {
-        userId: req.user.id,
-        action: 'PRODUCT_STATUS_TOGGLE',
-        entity: 'PRODUCT',
-        entityId: id,
-        metadata: { previousActive: existing.active, newActive: updated.active },
-      },
+    await createAuditLog(prisma, {
+      userId: req.user.id,
+      action: 'PRODUCT_STATUS_TOGGLE',
+      entity: 'PRODUCT',
+      entityId: id,
+      metadata: { previousActive: existing.active, newActive: updated.active },
     });
 
     return sendSuccess(res, `Product ${updated.active ? 'activated' : 'deactivated'} successfully.`, { product: updated });
@@ -376,13 +371,11 @@ const bulkToggleProductActive = async (req, res, next) => {
       data: { active: Boolean(active) },
     });
 
-    await prisma.auditLog.create({
-      data: {
-        userId: req.user.id,
-        action: 'PRODUCT_BULK_STATUS_UPDATE',
-        entity: 'PRODUCT',
-        metadata: { count: result.count, productIds, active: Boolean(active) },
-      },
+    await createAuditLog(prisma, {
+      userId: req.user.id,
+      action: 'PRODUCT_BULK_STATUS_UPDATE',
+      entity: 'PRODUCT',
+      metadata: { count: result.count, productIds, active: Boolean(active) },
     });
 
     return sendSuccess(res, `Updated ${result.count} products successfully.`, { modifiedCount: result.count });
@@ -414,14 +407,12 @@ const deleteProduct = async (req, res, next) => {
         data: { active: false },
       });
 
-      await prisma.auditLog.create({
-        data: {
-          userId: req.user.id,
-          action: 'PRODUCT_DEACTIVATE_SAFE',
-          entity: 'PRODUCT',
-          entityId: id,
-          metadata: { reason: 'Deactivated due to historical order dependencies' },
-        },
+      await createAuditLog(prisma, {
+        userId: req.user.id,
+        action: 'PRODUCT_DEACTIVATE_SAFE',
+        entity: 'PRODUCT',
+        entityId: id,
+        metadata: { reason: 'Deactivated due to historical order dependencies' },
       });
 
       return sendSuccess(res, 'Product has historical orders. It has been deactivated rather than deleted to preserve order history.', { deactivated: true });
@@ -430,14 +421,12 @@ const deleteProduct = async (req, res, next) => {
     // Clean delete
     await prisma.product.delete({ where: { id } });
 
-    await prisma.auditLog.create({
-      data: {
-        userId: req.user.id,
-        action: 'PRODUCT_DELETE',
-        entity: 'PRODUCT',
-        entityId: id,
-        metadata: { name: product.name, sku: product.sku },
-      },
+    await createAuditLog(prisma, {
+      userId: req.user.id,
+      action: 'PRODUCT_DELETE',
+      entity: 'PRODUCT',
+      entityId: id,
+      metadata: { name: product.name, sku: product.sku },
     });
 
     return sendSuccess(res, 'Product deleted successfully.');
@@ -567,13 +556,11 @@ const importProductsCSV = async (req, res, next) => {
       }
     }
 
-    await prisma.auditLog.create({
-      data: {
-        userId: req.user.id,
-        action: 'PRODUCT_CSV_IMPORT',
-        entity: 'PRODUCT',
-        metadata: { importedCount: successItems.length, errorCount: errors.length },
-      },
+    await createAuditLog(prisma, {
+      userId: req.user.id,
+      action: 'PRODUCT_CSV_IMPORT',
+      entity: 'PRODUCT',
+      metadata: { importedCount: successItems.length, errorCount: errors.length },
     });
 
     return sendSuccess(res, `Processed CSV import. ${successItems.length} products imported/updated.`, {

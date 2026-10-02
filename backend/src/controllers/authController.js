@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const prisma = require('../config/prisma');
 const { signToken, attachAuthCookie, clearAuthCookie } = require('../utils/jwt');
 const { sendSuccess, sendError } = require('../utils/response');
+const { createAuditLog } = require('../utils/auditLogger');
 
 /**
  * Register a new Customer
@@ -159,14 +160,12 @@ const adminLogin = async (req, res, next) => {
     attachAuthCookie(res, token);
 
     // Audit Log for Admin Login
-    await prisma.auditLog.create({
-      data: {
-        userId: user.id,
-        action: 'ADMIN_LOGIN',
-        entity: 'AUTH',
-        entityId: user.id,
-        metadata: { ip: req.ip, userAgent: req.get('user-agent') },
-      },
+    await createAuditLog(prisma, {
+      userId: user.id,
+      action: 'ADMIN_LOGIN',
+      entity: 'AUTH',
+      entityId: user.id,
+      metadata: { ip: req.ip, userAgent: req.get('user-agent') },
     });
 
     const safeUser = {

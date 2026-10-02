@@ -36,9 +36,9 @@ const getProducts = async (req, res, next) => {
     if (search && search.trim()) {
       const q = search.trim();
       where.OR = [
-        { name: { contains: q, mode: 'insensitive' } },
-        { sku: { contains: q, mode: 'insensitive' } },
-        { description: { contains: q, mode: 'insensitive' } },
+        { name: { contains: q } },
+        { sku: { contains: q } },
+        { description: { contains: q } },
       ];
     }
 

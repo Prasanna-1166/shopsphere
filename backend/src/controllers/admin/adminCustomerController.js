@@ -1,5 +1,6 @@
 const prisma = require('../../config/prisma');
 const { sendSuccess, sendError } = require('../../utils/response');
+const { createAuditLog } = require('../../utils/auditLogger');
 
 /**
  * Get Customers List with Spend Summary
@@ -19,8 +20,8 @@ const getAdminCustomers = async (req, res, next) => {
     if (search && search.trim()) {
       const q = search.trim();
       where.OR = [
-        { name: { contains: q, mode: 'insensitive' } },
-        { email: { contains: q, mode: 'insensitive' } },
+        { name: { contains: q } },
+        { email: { contains: q } },
       ];
     }
 
@@ -162,14 +163,12 @@ const toggleCustomerStatus = async (req, res, next) => {
       select: { id: true, name: true, email: true, status: true, role: true },
     });
 
-    await prisma.auditLog.create({
-      data: {
-        userId: req.user.id,
-        action: 'USER_STATUS_TOGGLE',
-        entity: 'USER',
-        entityId: id,
-        metadata: { previousStatus: targetUser.status, newStatus: nextStatus },
-      },
+    await createAuditLog(prisma, {
+      userId: req.user.id,
+      action: 'USER_STATUS_TOGGLE',
+      entity: 'USER',
+      entityId: id,
+      metadata: { previousStatus: targetUser.status, newStatus: nextStatus },
     });
 
     return sendSuccess(res, `Account status updated to ${nextStatus}.`, { user: updated });

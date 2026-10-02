@@ -41,3 +41,8 @@ coverage/
 *.zip
 tmp/
 temp/
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+

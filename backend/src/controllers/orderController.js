@@ -1,6 +1,17 @@
 const prisma = require('../config/prisma');
 const paymentService = require('../services/payment/PaymentService');
 const { sendSuccess, sendError } = require('../utils/response');
+const { createAuditLog } = require('../utils/auditLogger');
+
+const parseJsonSafe = (val) => {
+  if (!val) return null;
+  if (typeof val === 'object') return val;
+  try {
+    return JSON.parse(val);
+  } catch (e) {
+    return val;
+  }
+};
 
 /**
  * Perform Atomic Checkout & Create Order
@@ -68,7 +79,6 @@ const createOrder = async (req, res, next) => {
       const inventoryUpdates = [];
 
       for (const item of cart.items) {
-        // Fetch fresh product with lock/current state
         const freshProduct = await tx.product.findUnique({
           where: { id: item.productId },
         });
@@ -118,7 +128,7 @@ const createOrder = async (req, res, next) => {
           totalAmount,
           status: 'PENDING',
           paymentStatus: 'PAID', // In mock simulation, auto-mark as paid
-          shippingAddress: finalShippingAddress,
+          shippingAddress: JSON.stringify(finalShippingAddress),
           items: {
             create: orderItemsToCreate,
           },
@@ -157,11 +167,11 @@ const createOrder = async (req, res, next) => {
           amount: totalAmount,
           currency: 'INR',
           status: 'PAID',
-          metadata: {
+          metadata: JSON.stringify({
             paymentMethod,
             simulated: true,
             checkoutTimestamp: new Date().toISOString(),
-          },
+          }),
         },
       });
 
@@ -174,15 +184,15 @@ const createOrder = async (req, res, next) => {
     });
 
     // Audit log
-    await prisma.auditLog.create({
-      data: {
-        userId: req.user.id,
-        action: 'ORDER_PLACED',
-        entity: 'ORDER',
-        entityId: orderResult.id,
-        metadata: { totalAmount: orderResult.totalAmount, itemsCount: orderResult.items.length },
-      },
+    await createAuditLog(prisma, {
+      userId: req.user.id,
+      action: 'ORDER_PLACED',
+      entity: 'ORDER',
+      entityId: orderResult.id,
+      metadata: { totalAmount: orderResult.totalAmount, itemsCount: orderResult.items.length },
     });
+
+    orderResult.shippingAddress = parseJsonSafe(orderResult.shippingAddress);
 
     return sendSuccess(res, 'Order placed successfully! Thank you for shopping with ShopSphere.', { order: orderResult }, 201);
   } catch (error) {
@@ -213,7 +223,13 @@ const getMyOrders = async (req, res, next) => {
       orderBy: { createdAt: 'desc' },
     });
 
-    return sendSuccess(res, 'Orders fetched successfully.', { orders });
+    const parsedOrders = orders.map((o) => ({
+      ...o,
+      shippingAddress: parseJsonSafe(o.shippingAddress),
+      payments: o.payments.map((p) => ({ ...p, metadata: parseJsonSafe(p.metadata) })),
+    }));
+
+    return sendSuccess(res, 'Orders fetched successfully.', { orders: parsedOrders });
   } catch (error) {
     next(error);
   }
@@ -244,15 +260,20 @@ const getOrderById = async (req, res, next) => {
       return sendError(res, 'Order not found.', [], 404);
     }
 
-    return sendSuccess(res, 'Order details fetched.', { order });
+    const parsedOrder = {
+      ...order,
+      shippingAddress: parseJsonSafe(order.shippingAddress),
+      payments: order.payments.map((p) => ({ ...p, metadata: parseJsonSafe(p.metadata) })),
+    };
+
+    return sendSuccess(res, 'Order details fetched.', { order: parsedOrder });
   } catch (error) {
     next(error);
   }
 };
 
 /**
- * Cancel Order by Customer (Allowed only if status is PENDING or CONFIRMED)
- * Restores inventory atomically.
+ * Cancel Order by Customer
  */
 const cancelOrder = async (req, res, next) => {
   try {
@@ -278,7 +299,6 @@ const cancelOrder = async (req, res, next) => {
       );
     }
 
-    // Atomic cancellation and stock restoration
     const updatedOrder = await prisma.$transaction(async (tx) => {
       const cancelled = await tx.order.update({
         where: { id },
@@ -315,16 +335,15 @@ const cancelOrder = async (req, res, next) => {
       return cancelled;
     });
 
-    // Audit log
-    await prisma.auditLog.create({
-      data: {
-        userId: req.user.id,
-        action: 'ORDER_CANCELLED',
-        entity: 'ORDER',
-        entityId: id,
-        metadata: { reason, previousStatus: order.status },
-      },
+    await createAuditLog(prisma, {
+      userId: req.user.id,
+      action: 'ORDER_CANCELLED',
+      entity: 'ORDER',
+      entityId: id,
+      metadata: { reason, previousStatus: order.status },
     });
+
+    updatedOrder.shippingAddress = parseJsonSafe(updatedOrder.shippingAddress);
 
     return sendSuccess(res, 'Order has been successfully cancelled and refunded.', { order: updatedOrder });
   } catch (error) {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { CheckCircle2, Package, ArrowRight, Home, ShieldCheck } from 'lucide-react';
+import { CheckCircle2, Package, Home, Truck, ShieldCheck } from 'lucide-react';
 import api from '../api/client';
 
 export default function OrderSuccessPage() {
@@ -26,54 +26,52 @@ export default function OrderSuccessPage() {
   }, [id]);
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-16 text-center space-y-8">
-      {/* Celebration Icon */}
-      <div className="relative inline-block">
-        <div className="w-20 h-20 bg-brand-500/20 text-brand-400 rounded-full flex items-center justify-center mx-auto border border-brand-500/30 shadow-glow animate-bounce">
-          <CheckCircle2 className="w-10 h-10 text-brand-400" />
-        </div>
+    <div className="max-w-2xl mx-auto px-4 py-12 text-center space-y-6">
+      {/* Success Badge */}
+      <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto border border-emerald-200">
+        <CheckCircle2 className="w-9 h-9" />
       </div>
 
-      <div className="space-y-2">
-        <span className="text-xs font-bold text-brand-400 uppercase tracking-widest">
-          Payment Confirmed & Verified
+      <div className="space-y-1">
+        <span className="text-xs font-bold text-emerald-700 uppercase tracking-wider">
+          Order Confirmed
         </span>
-        <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
           Thank you for your order!
         </h1>
-        <p className="text-sm text-slate-400 max-w-md mx-auto">
-          We've received your order and our warehouse is preparing your shipment.
+        <p className="text-xs sm:text-sm text-slate-500 max-w-sm mx-auto">
+          We've received your order and our fulfillment team is packaging your shipment.
         </p>
       </div>
 
       {/* Order Summary Card */}
       {order && (
-        <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 text-left space-y-6 shadow-xl">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-800">
+        <div className="bg-white border border-slate-200 rounded-xl p-5 text-left space-y-4 shadow-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-100">
             <div>
-              <span className="text-xs text-slate-400">Order Reference</span>
-              <div className="font-mono text-base font-bold text-white">#{order.id}</div>
+              <span className="text-[11px] text-slate-400 font-medium">Order Number</span>
+              <div className="font-mono text-sm font-bold text-slate-900">#{order.id}</div>
             </div>
             <div className="sm:text-right">
-              <span className="text-xs text-slate-400">Total Paid</span>
-              <div className="text-lg font-black text-brand-400">
+              <span className="text-[11px] text-slate-400 font-medium">Total Amount</span>
+              <div className="text-base font-extrabold text-slate-900">
                 ₹{order.totalAmount.toLocaleString('en-IN')}
               </div>
             </div>
           </div>
 
           {/* Items */}
-          <div className="space-y-3">
-            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-              Purchased Items
-            </h3>
-            <div className="space-y-2">
+          <div className="space-y-2">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+              Ordered Items ({order.items?.length || 0})
+            </h4>
+            <div className="space-y-1.5 divide-y divide-slate-100">
               {order.items?.map((item) => (
-                <div key={item.id} className="flex justify-between items-center text-xs">
-                  <span className="text-white font-medium">
-                    {item.productName} <span className="text-slate-500">× {item.quantity}</span>
+                <div key={item.id} className="flex justify-between items-center text-xs pt-1.5 first:pt-0">
+                  <span className="text-slate-800 font-medium">
+                    {item.productName} <span className="text-slate-400">× {item.quantity}</span>
                   </span>
-                  <span className="text-slate-300 font-bold">
+                  <span className="text-slate-900 font-bold">
                     ₹{item.subtotal.toLocaleString('en-IN')}
                   </span>
                 </div>
@@ -83,31 +81,35 @@ export default function OrderSuccessPage() {
 
           {/* Shipping Address */}
           {order.shippingAddress && (
-            <div className="pt-4 border-t border-slate-800 text-xs text-slate-400 space-y-1">
-              <span className="font-bold text-slate-300 block">Delivering to:</span>
-              <p className="text-white font-medium">{order.shippingAddress.fullName}</p>
+            <div className="pt-3 border-t border-slate-100 text-xs text-slate-600 space-y-0.5">
+              <span className="font-bold text-slate-800 block text-xs">Shipping Address:</span>
+              <p className="font-medium text-slate-900">{order.shippingAddress.fullName}</p>
               <p>
-                {order.shippingAddress.addressLine1}, {order.shippingAddress.city}, {order.shippingAddress.state} - {order.shippingAddress.postalCode}
+                {order.shippingAddress.addressLine1}
+                {order.shippingAddress.addressLine2 ? `, ${order.shippingAddress.addressLine2}` : ''}
+              </p>
+              <p>
+                {order.shippingAddress.city}, {order.shippingAddress.state} — {order.shippingAddress.postalCode}
               </p>
             </div>
           )}
         </div>
       )}
 
-      {/* Actions */}
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+      {/* Action Buttons */}
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
         <Link
           to={`/orders/${id}`}
-          className="w-full sm:w-auto px-6 py-3.5 bg-brand-500 hover:bg-brand-400 text-slate-950 font-black text-sm rounded-xl transition shadow-glow flex items-center justify-center gap-2"
+          className="w-full sm:w-auto px-6 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs rounded-lg transition flex items-center justify-center gap-2 shadow-sm"
         >
           <Package className="w-4 h-4" />
-          <span>Track Order Status</span>
+          <span>Track Order Progress</span>
         </Link>
         <Link
           to="/products"
-          className="w-full sm:w-auto px-6 py-3.5 bg-slate-900 hover:bg-slate-850 text-slate-200 border border-slate-800 font-bold text-sm rounded-xl transition flex items-center justify-center gap-2"
+          className="w-full sm:w-auto px-6 py-2.5 bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 font-semibold text-xs rounded-lg transition flex items-center justify-center gap-2"
         >
-          <Home className="w-4 h-4 text-slate-400" />
+          <Home className="w-4 h-4 text-slate-500" />
           <span>Continue Shopping</span>
         </Link>
       </div>

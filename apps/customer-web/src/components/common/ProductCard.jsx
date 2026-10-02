@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, ShoppingBag, Eye } from 'lucide-react';
+import { Heart, ShoppingBag } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
 
@@ -25,30 +25,32 @@ export default function ProductCard({ product }) {
     'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&auto=format&fit=crop&q=80';
 
   return (
-    <div className="group relative bg-slate-900 border border-slate-800/90 rounded-2xl overflow-hidden hover:border-slate-700 transition-all duration-300 flex flex-col hover:shadow-2xl hover:shadow-black/50">
+    <div className="group relative bg-white border border-slate-200 rounded-xl overflow-hidden hover:border-slate-300 hover:shadow-md transition-all duration-200 flex flex-col justify-between">
       {/* Product Image Container */}
-      <div className="relative aspect-square overflow-hidden bg-slate-950">
-        <img
-          src={imgUrl}
-          alt={product.name}
-          loading="lazy"
-          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-        />
+      <div className="relative aspect-square overflow-hidden bg-slate-100">
+        <Link to={`/products/${product.slug}`} className="block w-full h-full">
+          <img
+            src={imgUrl}
+            alt={product.name}
+            loading="lazy"
+            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+          />
+        </Link>
 
-        {/* Badges Overlay */}
-        <div className="absolute top-3 left-3 flex flex-col gap-1.5 z-10">
+        {/* Discount & Stock Badges */}
+        <div className="absolute top-2.5 left-2.5 flex flex-col gap-1 z-10">
           {hasDiscount && (
-            <span className="px-2.5 py-1 bg-brand-500 text-slate-950 font-black text-xs rounded-lg shadow-md uppercase tracking-wider">
+            <span className="px-2 py-0.5 bg-emerald-600 text-white font-bold text-[11px] rounded shadow-sm">
               {discountPercent}% OFF
             </span>
           )}
           {isOutOfStock ? (
-            <span className="px-2.5 py-1 bg-rose-500/90 text-white font-bold text-[11px] rounded-lg shadow-md">
-              Sold Out
+            <span className="px-2 py-0.5 bg-slate-800 text-white font-medium text-[10px] rounded shadow-sm">
+              Out of Stock
             </span>
           ) : isLowStock ? (
-            <span className="px-2.5 py-1 bg-amber-500/90 text-slate-950 font-bold text-[11px] rounded-lg shadow-md">
-              Only {product.stockQuantity} Left
+            <span className="px-2 py-0.5 bg-amber-500 text-white font-medium text-[10px] rounded shadow-sm">
+              Only {product.stockQuantity} left
             </span>
           ) : null}
         </div>
@@ -59,61 +61,42 @@ export default function ProductCard({ product }) {
             e.preventDefault();
             toggleWishlist(product.id);
           }}
-          className={`absolute top-3 right-3 p-2.5 rounded-xl backdrop-blur-md transition-all duration-200 z-10 shadow-lg ${
+          className={`absolute top-2.5 right-2.5 p-2 rounded-full transition-all z-10 shadow-sm ${
             inWish
-              ? 'bg-rose-500 text-white shadow-rose-500/20'
-              : 'bg-slate-900/80 text-slate-300 hover:text-rose-400 hover:bg-slate-900'
+              ? 'bg-rose-50 text-rose-600 border border-rose-200'
+              : 'bg-white/90 text-slate-500 hover:text-rose-600 hover:bg-white border border-slate-200/80'
           }`}
-          title={inWish ? 'Remove from wishlist' : 'Add to wishlist'}
+          title={inWish ? 'Remove from Wishlist' : 'Add to Wishlist'}
         >
           <Heart className={`w-4 h-4 ${inWish ? 'fill-current' : ''}`} />
         </button>
-
-        {/* Hover Quick Action Overlay */}
-        <div className="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
-          <Link
-            to={`/products/${product.slug}`}
-            className="p-3 bg-slate-900/90 text-slate-100 hover:bg-brand-500 hover:text-slate-950 rounded-xl transition shadow-xl font-medium text-xs flex items-center gap-1.5 backdrop-blur-md"
-          >
-            <Eye className="w-4 h-4" />
-            <span>Details</span>
-          </Link>
-          {!isOutOfStock && (
-            <button
-              onClick={() => addToCart(product.id, 1)}
-              className="p-3 bg-brand-500 text-slate-950 hover:bg-brand-400 rounded-xl transition shadow-glow font-bold text-xs flex items-center gap-1.5"
-            >
-              <ShoppingBag className="w-4 h-4" />
-              <span>Add</span>
-            </button>
-          )}
-        </div>
       </div>
 
-      {/* Content */}
-      <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
+      {/* Product Details */}
+      <div className="p-4 flex-1 flex flex-col justify-between">
         <div>
           {product.category && (
-            <span className="text-[11px] font-semibold text-brand-400 uppercase tracking-wider block mb-1">
+            <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block mb-1">
               {product.category.name}
             </span>
           )}
           <Link
             to={`/products/${product.slug}`}
-            className="text-sm font-bold text-slate-100 group-hover:text-brand-300 transition line-clamp-1"
+            className="text-sm font-semibold text-slate-900 hover:text-accent-600 transition line-clamp-1 block"
+            title={product.name}
           >
             {product.name}
           </Link>
-          <p className="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+          <p className="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">
             {product.description}
           </p>
         </div>
 
-        {/* Price & Action */}
-        <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between">
+        {/* Pricing & Add to Cart */}
+        <div className="pt-3 mt-3 border-t border-slate-100 flex items-center justify-between gap-2">
           <div>
-            <div className="flex items-baseline gap-2">
-              <span className="text-base font-extrabold text-slate-100">
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-base font-bold text-slate-900">
                 ₹{currentPrice.toLocaleString('en-IN')}
               </span>
               {hasDiscount && (
@@ -122,20 +105,21 @@ export default function ProductCard({ product }) {
                 </span>
               )}
             </div>
-            <span className="text-[10px] text-slate-400 block">Inclusive of all taxes</span>
+            <span className="text-[10px] text-slate-400 block -mt-0.5">Incl. all taxes</span>
           </div>
 
           <button
             onClick={() => addToCart(product.id, 1)}
             disabled={isOutOfStock}
-            className={`p-2.5 rounded-xl font-semibold text-xs transition flex items-center justify-center ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 shadow-sm ${
               isOutOfStock
-                ? 'bg-slate-800 text-slate-500 cursor-not-allowed'
-                : 'bg-brand-500/10 text-brand-400 border border-brand-500/30 hover:bg-brand-500 hover:text-slate-950 shadow-glow'
+                ? 'bg-slate-100 text-slate-400 cursor-not-allowed border border-slate-200'
+                : 'bg-slate-900 hover:bg-slate-800 text-white active:scale-95'
             }`}
-            title={isOutOfStock ? 'Out of Stock' : 'Add to Bag'}
+            title={isOutOfStock ? 'Sold Out' : 'Add to Cart'}
           >
-            <ShoppingBag className="w-4 h-4" />
+            <ShoppingBag className="w-3.5 h-3.5" />
+            <span>Add</span>
           </button>
         </div>
       </div>

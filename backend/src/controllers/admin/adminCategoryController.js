@@ -1,5 +1,6 @@
 const prisma = require('../../config/prisma');
 const { sendSuccess, sendError } = require('../../utils/response');
+const { createAuditLog } = require('../../utils/auditLogger');
 
 const slugify = (text) => {
   return text
@@ -60,14 +61,12 @@ const createCategory = async (req, res, next) => {
       },
     });
 
-    await prisma.auditLog.create({
-      data: {
-        userId: req.user.id,
-        action: 'CATEGORY_CREATE',
-        entity: 'CATEGORY',
-        entityId: category.id,
-        metadata: { name: category.name, slug: category.slug },
-      },
+    await createAuditLog(prisma, {
+      userId: req.user.id,
+      action: 'CATEGORY_CREATE',
+      entity: 'CATEGORY',
+      entityId: category.id,
+      metadata: { name: category.name, slug: category.slug },
     });
 
     return sendSuccess(res, 'Category created successfully.', { category }, 201);
@@ -103,14 +102,12 @@ const updateCategory = async (req, res, next) => {
       data: updateData,
     });
 
-    await prisma.auditLog.create({
-      data: {
-        userId: req.user.id,
-        action: 'CATEGORY_UPDATE',
-        entity: 'CATEGORY',
-        entityId: id,
-        metadata: { updatedFields: Object.keys(updateData) },
-      },
+    await createAuditLog(prisma, {
+      userId: req.user.id,
+      action: 'CATEGORY_UPDATE',
+      entity: 'CATEGORY',
+      entityId: id,
+      metadata: { updatedFields: Object.keys(updateData) },
     });
 
     return sendSuccess(res, 'Category updated successfully.', { category: updated });
@@ -136,14 +133,12 @@ const toggleCategoryActive = async (req, res, next) => {
       data: { active: !existing.active },
     });
 
-    await prisma.auditLog.create({
-      data: {
-        userId: req.user.id,
-        action: 'CATEGORY_STATUS_TOGGLE',
-        entity: 'CATEGORY',
-        entityId: id,
-        metadata: { previousActive: existing.active, newActive: updated.active },
-      },
+    await createAuditLog(prisma, {
+      userId: req.user.id,
+      action: 'CATEGORY_STATUS_TOGGLE',
+      entity: 'CATEGORY',
+      entityId: id,
+      metadata: { previousActive: existing.active, newActive: updated.active },
     });
 
     return sendSuccess(res, `Category ${updated.active ? 'activated' : 'deactivated'}.`, { category: updated });
@@ -171,13 +166,11 @@ const deleteCategory = async (req, res, next) => {
 
     await prisma.category.delete({ where: { id } });
 
-    await prisma.auditLog.create({
-      data: {
-        userId: req.user.id,
-        action: 'CATEGORY_DELETE',
-        entity: 'CATEGORY',
-        entityId: id,
-      },
+    await createAuditLog(prisma, {
+      userId: req.user.id,
+      action: 'CATEGORY_DELETE',
+      entity: 'CATEGORY',
+      entityId: id,
     });
 
     return sendSuccess(res, 'Category deleted successfully.');

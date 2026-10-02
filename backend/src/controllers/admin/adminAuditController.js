@@ -25,11 +25,11 @@ const getAuditLogs = async (req, res, next) => {
     if (search && search.trim()) {
       const q = search.trim();
       where.OR = [
-        { action: { contains: q, mode: 'insensitive' } },
-        { entity: { contains: q, mode: 'insensitive' } },
-        { entityId: { contains: q, mode: 'insensitive' } },
-        { user: { name: { contains: q, mode: 'insensitive' } } },
-        { user: { email: { contains: q, mode: 'insensitive' } } },
+        { action: { contains: q } },
+        { entity: { contains: q } },
+        { entityId: { contains: q } },
+        { user: { name: { contains: q } } },
+        { user: { email: { contains: q } } },
       ];
     }
 

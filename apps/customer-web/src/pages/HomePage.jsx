@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import {
   ArrowRight,
   ShoppingBag,
-  Sparkles,
-  Zap,
   ShieldCheck,
-  TrendingUp,
-  Star,
-  Layers,
+  Truck,
+  RotateCcw,
+  BadgePercent,
+  CheckCircle2,
+  Sparkles,
 } from 'lucide-react';
 import api from '../api/client';
 import ProductCard from '../components/common/ProductCard';
@@ -46,92 +46,114 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="space-y-20 pb-20">
-      {/* 1. Hero Section */}
-      <section className="relative overflow-hidden pt-8 pb-16 lg:py-24 bg-gradient-to-b from-slate-900/60 via-slate-950 to-slate-950">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-brand-950/40 via-transparent to-transparent pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+    <div className="space-y-12 pb-16">
+      {/* 1. Practical Consumer Hero Section */}
+      <section className="bg-gradient-to-b from-slate-100 to-slate-50 border-b border-slate-200 py-10 md:py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Left Content */}
-            <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-500/10 border border-brand-500/30 text-brand-400 text-xs font-bold tracking-wide">
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>NEW ARRIVALS 2026 EDITION</span>
+            <div className="lg:col-span-7 space-y-5 text-center lg:text-left">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent-50 border border-accent-200 text-accent-700 text-xs font-semibold">
+                <BadgePercent className="w-3.5 h-3.5" />
+                <span>Everyday essentials starting at ₹249</span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1]">
-                At the End of <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-emerald-300 to-teal-200">
-                  Your Streets.
-                </span>
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                Good products. Fair prices. <br />
+                <span className="text-accent-600">Delivered to your door.</span>
               </h1>
 
-              <p className="text-base sm:text-lg text-slate-300 max-w-xl mx-auto lg:mx-0 leading-relaxed font-normal">
-                Discover engineered studio audio, iconic street silhouettes, Japanese selvedge denim,
-                and precision workstation gears — delivered straight to your door with zero hassle.
+              <p className="text-base sm:text-lg text-slate-600 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                Discover everyday kitchen essentials, reliable audio accessories, comfortable apparel, and workspace organizers — curated for quality and priced honestly.
               </p>
 
-              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 pt-2">
                 <Link
                   to="/products"
-                  className="w-full sm:w-auto px-8 py-4 bg-brand-500 hover:bg-brand-400 text-slate-950 font-black text-sm rounded-2xl transition shadow-glow flex items-center justify-center gap-2"
+                  className="w-full sm:w-auto px-7 py-3 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm rounded-lg transition shadow-sm flex items-center justify-center gap-2"
                 >
                   <ShoppingBag className="w-4 h-4" />
-                  <span>Explore Catalog</span>
+                  <span>Shop Catalog</span>
                 </Link>
                 <Link
-                  to="/products?category=electronics-audio"
-                  className="w-full sm:w-auto px-8 py-4 bg-slate-900 hover:bg-slate-850 text-slate-200 border border-slate-800 font-bold text-sm rounded-2xl transition flex items-center justify-center gap-2"
+                  to="/products?category=home-kitchen"
+                  className="w-full sm:w-auto px-6 py-3 bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 font-semibold text-sm rounded-lg transition flex items-center justify-center gap-2"
                 >
-                  <span>Hi-Fi Audio Gear</span>
-                  <ArrowRight className="w-4 h-4 text-slate-400" />
+                  <span>Kitchen & Home</span>
+                  <ArrowRight className="w-4 h-4 text-slate-500" />
                 </Link>
               </div>
 
-              {/* Stats row */}
-              <div className="grid grid-cols-3 gap-6 pt-8 border-t border-slate-800/80 max-w-md mx-auto lg:mx-0">
-                <div>
-                  <div className="text-2xl font-black text-white">20+</div>
-                  <div className="text-xs text-slate-400 font-medium mt-0.5">Curated Products</div>
+              {/* 4 Trust Props */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-slate-200 text-left">
+                <div className="flex items-center gap-2 text-xs font-medium text-slate-700">
+                  <Truck className="w-4 h-4 text-accent-600 shrink-0" />
+                  <span>Free shipping ₹499+</span>
                 </div>
-                <div>
-                  <div className="text-2xl font-black text-brand-400">100%</div>
-                  <div className="text-xs text-slate-400 font-medium mt-0.5">Authentic Brands</div>
+                <div className="flex items-center gap-2 text-xs font-medium text-slate-700">
+                  <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>100% Genuine</span>
                 </div>
-                <div>
-                  <div className="text-2xl font-black text-emerald-400">4.9 ★</div>
-                  <div className="text-xs text-slate-400 font-medium mt-0.5">Customer Trust</div>
+                <div className="flex items-center gap-2 text-xs font-medium text-slate-700">
+                  <RotateCcw className="w-4 h-4 text-accent-600 shrink-0" />
+                  <span>7-Day Returns</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs font-medium text-slate-700">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>Cash on Delivery</span>
                 </div>
               </div>
             </div>
 
-            {/* Right Hero Visual Banner */}
+            {/* Right Hero Product Collage */}
             <div className="lg:col-span-5 relative">
-              <div className="relative mx-auto max-w-md lg:max-w-none">
-                <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-brand-500 to-emerald-600 opacity-30 blur-2xl animate-pulse" />
-                <div className="relative rounded-3xl overflow-hidden border border-slate-800 bg-slate-900 shadow-2xl">
-                  <img
-                    src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=80"
-                    alt="SphereAcoustics Studio ANC Headphones"
-                    className="w-full h-80 sm:h-96 object-cover object-center"
-                  />
-                  <div className="p-6 bg-slate-900/90 backdrop-blur-md border-t border-slate-800 flex items-center justify-between">
-                    <div>
-                      <span className="text-xs font-bold text-brand-400 uppercase tracking-wider">
-                        Editor’s Spotlight
-                      </span>
-                      <h3 className="text-base font-bold text-white mt-0.5">
-                        SphereAcoustics Pro Wireless ANC
-                      </h3>
-                      <p className="text-xs text-slate-400">Custom 45mm Neodymium Drivers</p>
+              <div className="grid grid-cols-2 gap-3 max-w-md mx-auto">
+                <div className="space-y-3">
+                  <div className="bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm">
+                    <img
+                      src="https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&auto=format&fit=crop&q=80"
+                      alt="Wireless Earbuds"
+                      className="w-full h-36 object-cover rounded-lg"
+                    />
+                    <div className="pt-2 text-left">
+                      <p className="text-xs font-bold text-slate-900 truncate">BoltAudio Earbuds</p>
+                      <p className="text-xs font-bold text-slate-900">₹1,299 <span className="text-[10px] text-slate-400 line-through">₹1,899</span></p>
                     </div>
-                    <Link
-                      to="/products/sphereacoustics-pro-wireless-anc-headphones"
-                      className="p-3 bg-brand-500 text-slate-950 rounded-xl hover:bg-brand-400 transition shadow-glow shrink-0"
-                    >
-                      <ArrowRight className="w-5 h-5" />
-                    </Link>
+                  </div>
+                  <div className="bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm">
+                    <img
+                      src="https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=500&auto=format&fit=crop&q=80"
+                      alt="Stainless Steel Water Bottle"
+                      className="w-full h-36 object-cover rounded-lg"
+                    />
+                    <div className="pt-2 text-left">
+                      <p className="text-xs font-bold text-slate-900 truncate">Thermosteel 1L</p>
+                      <p className="text-xs font-bold text-slate-900">₹649 <span className="text-[10px] text-slate-400 line-through">₹899</span></p>
+                    </div>
+                  </div>
+                </div>
+                <div className="space-y-3 pt-6">
+                  <div className="bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm">
+                    <img
+                      src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500&auto=format&fit=crop&q=80"
+                      alt="UrbanShield Laptop Backpack"
+                      className="w-full h-36 object-cover rounded-lg"
+                    />
+                    <div className="pt-2 text-left">
+                      <p className="text-xs font-bold text-slate-900 truncate">Laptop Backpack</p>
+                      <p className="text-xs font-bold text-slate-900">₹1,199 <span className="text-[10px] text-slate-400 line-through">₹1,799</span></p>
+                    </div>
+                  </div>
+                  <div className="bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm">
+                    <img
+                      src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500&auto=format&fit=crop&q=80"
+                      alt="Cotton Crewneck T-Shirt"
+                      className="w-full h-36 object-cover rounded-lg"
+                    />
+                    <div className="pt-2 text-left">
+                      <p className="text-xs font-bold text-slate-900 truncate">Cotton Tee</p>
+                      <p className="text-xs font-bold text-slate-900">₹449 <span className="text-[10px] text-slate-400 line-through">₹699</span></p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -140,47 +162,41 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 2. Shop By Department / Categories Grid */}
+      {/* 2. Popular Categories */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-8 gap-4">
+        <div className="flex items-center justify-between mb-6">
           <div>
-            <div className="text-xs font-bold text-brand-400 uppercase tracking-wider flex items-center gap-1.5">
-              <Layers className="w-3.5 h-3.5" />
-              <span>Explore Departments</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-black text-white mt-1">Shop by Category</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900">Explore by Category</h2>
+            <p className="text-xs sm:text-sm text-slate-500 mt-0.5">Handpicked collections for everyday living</p>
           </div>
           <Link
             to="/products"
-            className="text-sm font-semibold text-slate-400 hover:text-brand-400 flex items-center gap-1.5 transition"
+            className="text-xs sm:text-sm font-semibold text-accent-600 hover:text-accent-700 flex items-center gap-1"
           >
-            <span>View All Categories</span>
+            <span>All Categories</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
           {categories.map((cat) => (
             <Link
               key={cat.id}
               to={`/products?category=${cat.slug}`}
-              className="group relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 hover:border-brand-500/50 transition-all duration-300 flex flex-col"
+              className="group bg-white border border-slate-200 rounded-xl p-3 text-center hover:border-slate-300 hover:shadow-md transition flex flex-col items-center justify-between"
             >
-              <div className="aspect-[4/3] w-full overflow-hidden bg-slate-950">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden bg-slate-100 mb-2 border border-slate-200">
                 <img
-                  src={cat.image || 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400'}
+                  src={cat.image || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200&auto=format&fit=crop&q=80'}
                   alt={cat.name}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  loading="lazy"
+                  className="w-full h-full object-cover group-hover:scale-110 transition duration-300"
                 />
               </div>
-              <div className="p-3 text-center bg-slate-900/90 flex-1 flex flex-col justify-center">
-                <h3 className="text-xs font-bold text-slate-100 group-hover:text-brand-400 transition truncate">
-                  {cat.name}
-                </h3>
-                <span className="text-[10px] text-slate-500 font-medium">
-                  {cat._count?.products || 0} products
-                </span>
-              </div>
+              <h3 className="text-xs font-semibold text-slate-800 group-hover:text-slate-900 line-clamp-1">
+                {cat.name}
+              </h3>
+              <span className="text-[10px] text-slate-400 mt-0.5">Explore →</span>
             </Link>
           ))}
         </div>
@@ -188,19 +204,21 @@ export default function HomePage() {
 
       {/* 3. Featured Products */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-8 gap-4">
+        <div className="flex items-center justify-between mb-6">
           <div>
-            <div className="text-xs font-bold text-brand-400 uppercase tracking-wider flex items-center gap-1.5">
-              <Star className="w-3.5 h-3.5 fill-brand-400" />
-              <span>Handpicked Selection</span>
+            <div className="flex items-center gap-2">
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900">Featured Essentials</h2>
+              <span className="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[11px] font-bold rounded">
+                Top Rated
+              </span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-black text-white mt-1">Featured Products</h2>
+            <p className="text-xs sm:text-sm text-slate-500 mt-0.5">Most loved products by customers across India</p>
           </div>
           <Link
             to="/products"
-            className="text-sm font-semibold text-slate-400 hover:text-brand-400 flex items-center gap-1.5 transition"
+            className="text-xs sm:text-sm font-semibold text-accent-600 hover:text-accent-700 flex items-center gap-1"
           >
-            <span>See Everything</span>
+            <span>View All</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -208,37 +226,33 @@ export default function HomePage() {
         {loading ? (
           <ProductSkeletonGrid count={4} />
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {featured.slice(0, 8).map((prod) => (
-              <ProductCard key={prod.id} product={prod} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {featured.slice(0, 8).map((product) => (
+              <ProductCard key={product.id} product={product} />
             ))}
           </div>
         )}
       </section>
 
-      {/* 4. Promotional Flash Banner */}
+      {/* 4. Value / Promo Banner */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-slate-900 via-slate-850 to-brand-950 border border-brand-500/30 p-8 sm:p-12 shadow-2xl">
-          <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-radial-gradient from-brand-500/20 to-transparent pointer-events-none" />
-
-          <div className="relative z-10 max-w-xl space-y-4">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-brand-500 text-slate-950 font-black text-xs uppercase tracking-wider">
-              <Zap className="w-3.5 h-3.5 fill-slate-950" />
-              <span>Limited Time Promotion</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
-              Upgrade Your Desk & Workspace Setup
+        <div className="bg-slate-900 text-white rounded-2xl p-6 sm:p-10 relative overflow-hidden border border-slate-800">
+          <div className="relative z-10 max-w-xl space-y-3">
+            <span className="px-2.5 py-1 bg-accent-600 text-white text-xs font-bold rounded uppercase tracking-wider inline-block">
+              Budget Friendly
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+              Quality Kitchenware & Essentials Under ₹999
             </h2>
-            <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-              Experience the tactility of hot-swappable mechanical keyboards, aerospace aluminum laptop
-              stands, and premium felt desk organizers with up to 30% instant discount.
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              Upgrade your home with stainless steel insulated bottles, airtight glass containers, and durable cookware backed by our 7-day doorstep replacement guarantee.
             </p>
             <div className="pt-2">
               <Link
-                to="/products?category=workspace-stationery"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-brand-500 hover:bg-brand-400 text-slate-950 font-bold text-sm rounded-xl transition shadow-glow"
+                to="/products?category=home-kitchen"
+                className="inline-flex items-center gap-2 px-6 py-2.5 bg-white hover:bg-slate-100 text-slate-900 text-xs font-bold rounded-lg transition"
               >
-                <span>Shop Workspace Gear</span>
+                <span>Shop Kitchen Essentials</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -246,91 +260,81 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. Best Value Deals & Discounts */}
+      {/* 5. Best Deals Section */}
       {bestDeals.length > 0 && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-8 gap-4">
+          <div className="flex items-center justify-between mb-6">
             <div>
-              <div className="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
-                <TrendingUp className="w-3.5 h-3.5" />
-                <span>Special Pricing</span>
+              <div className="flex items-center gap-2">
+                <h2 className="text-xl sm:text-2xl font-bold text-slate-900">Best Value Deals</h2>
+                <span className="px-2 py-0.5 bg-rose-100 text-rose-700 text-[11px] font-bold rounded">
+                  Limited Period
+                </span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-black text-white mt-1">
-                Flash Discounts & Deals
-              </h2>
+              <p className="text-xs sm:text-sm text-slate-500 mt-0.5">Top discounts on high-utility items</p>
             </div>
             <Link
               to="/products"
-              className="text-sm font-semibold text-slate-400 hover:text-brand-400 flex items-center gap-1.5 transition"
+              className="text-xs sm:text-sm font-semibold text-accent-600 hover:text-accent-700 flex items-center gap-1"
             >
-              <span>Explore All Deals</span>
+              <span>See All Deals</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {bestDeals.slice(0, 4).map((prod) => (
-              <ProductCard key={prod.id} product={prod} />
-            ))}
-          </div>
+          {loading ? (
+            <ProductSkeletonGrid count={4} />
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              {bestDeals.slice(0, 4).map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          )}
         </section>
       )}
 
-      {/* 6. Brand Commitment & Verified Customer Reviews */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
-          <h2 className="text-2xl sm:text-3xl font-black text-white">What Our Customers Say</h2>
-          <p className="text-sm text-slate-400">
-            Real feedback from verified buyers who shop at the end of their streets.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-4">
-            <div className="flex text-amber-400 gap-1">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 fill-amber-400" />
-              ))}
-            </div>
-            <p className="text-sm text-slate-300 leading-relaxed italic">
-              "The SphereAcoustics headphones arrived in Bengaluru within 24 hours. Studio-grade sound
-              clarity, impeccable ANC, and the unboxing felt truly top-tier."
+      {/* 6. Why ShopSphere Trust Section */}
+      <section className="bg-white border-y border-slate-200 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
+              Why ShopSphere?
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-500 mt-1">
+              At the end of your streets — honest pricing, verified items, and neighborhood support.
             </p>
-            <div className="pt-2 border-t border-slate-800 flex items-center justify-between">
-              <span className="text-xs font-bold text-white">Aditya K.</span>
-              <span className="text-[10px] text-brand-400 font-semibold">Verified Buyer</span>
-            </div>
           </div>
 
-          <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-4">
-            <div className="flex text-amber-400 gap-1">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 fill-amber-400" />
-              ))}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="p-5 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2">
+              <div className="w-10 h-10 rounded-lg bg-slate-900 text-white flex items-center justify-center text-base font-bold">
+                ₹
+              </div>
+              <h3 className="text-sm font-bold text-slate-900">Transparent & Honest Pricing</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                No inflated markups or artificial discounts. Every item is priced sensibly for middle-class Indian households.
+              </p>
             </div>
-            <p className="text-sm text-slate-300 leading-relaxed italic">
-              "The 450GSM heavyweight hoodie is the best quality cotton I've ever bought online in India.
-              Heavy, thick cuffs, and perfect oversized drape."
-            </p>
-            <div className="pt-2 border-t border-slate-800 flex items-center justify-between">
-              <span className="text-xs font-bold text-white">Shreya S.</span>
-              <span className="text-[10px] text-brand-400 font-semibold">Verified Buyer</span>
-            </div>
-          </div>
 
-          <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-4">
-            <div className="flex text-amber-400 gap-1">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 fill-amber-400" />
-              ))}
+            <div className="p-5 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2">
+              <div className="w-10 h-10 rounded-lg bg-slate-900 text-white flex items-center justify-center">
+                <ShieldCheck className="w-5 h-5 text-emerald-400" />
+              </div>
+              <h3 className="text-sm font-bold text-slate-900">Verified Quality Sourcing</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                We inspect materials, durability, and manufacturer reliability before adding any product to the ShopSphere catalog.
+              </p>
             </div>
-            <p className="text-sm text-slate-300 leading-relaxed italic">
-              "KeyForge 75% keyboard has buttery smooth pre-lubed switches right out of the box. Fast checkout
-              and clean order tracking."
-            </p>
-            <div className="pt-2 border-t border-slate-800 flex items-center justify-between">
-              <span className="text-xs font-bold text-white">Rohan M.</span>
-              <span className="text-[10px] text-brand-400 font-semibold">Verified Buyer</span>
+
+            <div className="p-5 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2">
+              <div className="w-10 h-10 rounded-lg bg-slate-900 text-white flex items-center justify-center">
+                <Truck className="w-5 h-5 text-accent-400" />
+              </div>
+              <h3 className="text-sm font-bold text-slate-900">Reliable Doorstep Delivery</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Fast courier partnerships across 19,000+ Indian pincodes with real-time tracking and Cash on Delivery support.
+              </p>
             </div>
           </div>
         </div>

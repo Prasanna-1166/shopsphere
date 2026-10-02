@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('🌱 Starting ShopSphere Database Seeding...');
+  console.log('🌱 Starting ShopSphere Real-World Database Seeding...');
 
   // 1. Clean existing records in reverse dependency order
   await prisma.auditLog.deleteMany({});
@@ -28,10 +28,10 @@ async function main() {
   const adminPassword = await bcrypt.hash('Admin@123', 10);
   const customerPassword = await bcrypt.hash('Customer@123', 10);
 
-  // 3. Create Users
+  // 3. Create Admin Users
   const superAdmin = await prisma.user.create({
     data: {
-      name: 'Eleanor Vance (Super Admin)',
+      name: 'Rajesh Nair (Super Admin)',
       email: 'superadmin@shopsphere.com',
       passwordHash: superAdminPassword,
       role: 'SUPER_ADMIN',
@@ -41,7 +41,7 @@ async function main() {
 
   const admin = await prisma.user.create({
     data: {
-      name: 'Marcus Brody (Store Manager)',
+      name: 'Sunita Menon (Store Manager)',
       email: 'admin@shopsphere.com',
       passwordHash: adminPassword,
       role: 'ADMIN',
@@ -49,105 +49,155 @@ async function main() {
     },
   });
 
-  const customer1 = await prisma.user.create({
-    data: {
+  // 4. Create Realistic Indian Customers
+  const customerData = [
+    {
       name: 'Aarav Sharma',
-      email: 'customer@shopsphere.com',
-      passwordHash: customerPassword,
-      role: 'CUSTOMER',
-      status: 'ACTIVE',
-      cart: {
-        create: {},
-      },
-    },
-  });
-
-  const customer2 = await prisma.user.create({
-    data: {
-      name: 'Priya Patel',
-      email: 'priya@example.com',
-      passwordHash: customerPassword,
-      role: 'CUSTOMER',
-      status: 'ACTIVE',
-      cart: {
-        create: {},
-      },
-    },
-  });
-
-  console.log('👤 Created demo accounts (SUPER_ADMIN, ADMIN, CUSTOMER).');
-
-  // 4. Create Addresses for Customer 1 & 2
-  const addr1 = await prisma.address.create({
-    data: {
-      userId: customer1.id,
-      fullName: 'Aarav Sharma',
-      phone: '+91 98765 43210',
-      addressLine1: 'Flat 402, Sunshine Heights',
-      addressLine2: 'Outer Ring Road, Bellandur',
+      email: 'customer@shopsphere.com', // Primary demo customer
+      phone: '+91 98201 45678',
       city: 'Bengaluru',
       state: 'Karnataka',
-      postalCode: '560103',
-      country: 'India',
-      isDefault: true,
+      pin: '560103',
+      addr1: 'Flat 402, Sunshine Heights, Outer Ring Road, Bellandur',
     },
-  });
-
-  await prisma.address.create({
-    data: {
-      userId: customer1.id,
-      fullName: 'Aarav Sharma (Office)',
-      phone: '+91 98765 43210',
-      addressLine1: 'Tech Park Block B, 5th Floor',
-      city: 'Bengaluru',
-      state: 'Karnataka',
-      postalCode: '560066',
-      country: 'India',
-      isDefault: false,
+    {
+      name: 'Priya Iyer',
+      email: 'priya.iyer@gmail.com',
+      phone: '+91 98450 12345',
+      city: 'Chennai',
+      state: 'Tamil Nadu',
+      pin: '600028',
+      addr1: 'No. 14, 2nd Cross Street, RA Puram',
     },
-  });
+    {
+      name: 'Rohan Kulkarni',
+      email: 'rohan.k@outlook.com',
+      phone: '+91 99220 87654',
+      city: 'Pune',
+      state: 'Maharashtra',
+      pin: '411038',
+      addr1: 'B-12, Mayur Colony, Kothrud',
+    },
+    {
+      name: 'Ananya Deshmukh',
+      email: 'ananya.d@yahoo.com',
+      phone: '+91 98112 34567',
+      city: 'Mumbai',
+      state: 'Maharashtra',
+      pin: '400053',
+      addr1: 'A-704, Sea Breeze Apts, Lokhandwala, Andheri West',
+    },
+    {
+      name: 'Vikramaditya Verma',
+      email: 'vikram.verma@gmail.com',
+      phone: '+91 98710 98765',
+      city: 'New Delhi',
+      state: 'Delhi',
+      pin: '110017',
+      addr1: 'E-45, Greater Kailash Part 1',
+    },
+    {
+      name: 'Sneha Reddy',
+      email: 'sneha.reddy@gmail.com',
+      phone: '+91 98490 65432',
+      city: 'Hyderabad',
+      state: 'Telangana',
+      pin: '500081',
+      addr1: 'Plot 88, Silicon Valley, Madhapur',
+    },
+    {
+      name: 'Harish Mehta',
+      email: 'harish.mehta@gmail.com',
+      phone: '+91 98250 33445',
+      city: 'Ahmedabad',
+      state: 'Gujarat',
+      pin: '380015',
+      addr1: '301, Shivalik Plaza, Satellite Road',
+    },
+    {
+      name: 'Deblina Mukherjee',
+      email: 'deblina.m@gmail.com',
+      phone: '+91 98300 77889',
+      city: 'Kolkata',
+      state: 'West Bengal',
+      pin: '700029',
+      addr1: '42A, Southern Avenue, Lake Market',
+    },
+  ];
 
-  // 5. Create Categories
+  const createdCustomers = [];
+  for (const c of customerData) {
+    const user = await prisma.user.create({
+      data: {
+        name: c.name,
+        email: c.email,
+        passwordHash: customerPassword,
+        role: 'CUSTOMER',
+        status: 'ACTIVE',
+        cart: { create: {} },
+      },
+    });
+
+    const addr = await prisma.address.create({
+      data: {
+        userId: user.id,
+        fullName: c.name,
+        phone: c.phone,
+        addressLine1: c.addr1,
+        city: c.city,
+        state: c.state,
+        postalCode: c.pin,
+        country: 'India',
+        isDefault: true,
+      },
+    });
+
+    createdCustomers.push({ ...user, address: addr });
+  }
+
+  console.log(`👤 Created Admin accounts & ${createdCustomers.length} realistic Indian customers.`);
+
+  // 5. Create Realistic Categories for Indian Retail Market
   const categoriesData = [
     {
       name: 'Electronics & Audio',
       slug: 'electronics-audio',
-      description: 'High-fidelity headphones, smart home gear, and cutting-edge audio technology.',
-      image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&auto=format&fit=crop&q=80',
+      description: 'True wireless earbuds, portable Bluetooth speakers, fast charging power banks, and everyday tech accessories.',
+      image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=600&auto=format&fit=crop&q=80',
       active: true,
     },
     {
-      name: 'Fashion & Apparel',
+      name: 'Home & Kitchen',
+      slug: 'home-kitchen',
+      description: 'Stainless steel thermal bottles, airtight storage jars, non-stick cookware, and aesthetic home organizers.',
+      image: 'https://images.unsplash.com/photo-1584992236310-6edddc08acff?w=600&auto=format&fit=crop&q=80',
+      active: true,
+    },
+    {
+      name: 'Fashion & Everyday Wear',
       slug: 'fashion-apparel',
-      description: 'Modern silhouettes, premium fabrics, and street-ready urban essentials.',
-      image: 'https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=600&auto=format&fit=crop&q=80',
+      description: 'Breathable 100% cotton tees, everyday linen shirts, casual polo tees, and comfortable loungewear.',
+      image: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop&q=80',
       active: true,
     },
     {
-      name: 'Home & Living',
-      slug: 'home-living',
-      description: 'Minimalist decor, ergonomic furniture, and cozy accents for contemporary homes.',
-      image: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=600&auto=format&fit=crop&q=80',
+      name: 'Personal Care & Grooming',
+      slug: 'personal-care',
+      description: 'Natural grooming essentials, herbal hair care, electric trimmers, and daily skin hydration kits.',
+      image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=600&auto=format&fit=crop&q=80',
       active: true,
     },
     {
-      name: 'Footwear & Sneakerhead',
-      slug: 'footwear-sneakers',
-      description: 'Engineered performance trainers, iconic lifestyle kicks, and handcrafted leather footwear.',
-      image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop&q=80',
-      active: true,
-    },
-    {
-      name: 'Accessories & Watches',
-      slug: 'accessories-watches',
-      description: 'Timepieces, vegan leather wallets, polarized optics, and everyday carry essentials.',
-      image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&auto=format&fit=crop&q=80',
+      name: 'Bags & Travel Essentials',
+      slug: 'bags-travel',
+      description: 'Water-resistant laptop backpacks, lightweight sling bags, passport organizers, and compact duffles.',
+      image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&auto=format&fit=crop&q=80',
       active: true,
     },
     {
       name: 'Workspace & Stationery',
       slug: 'workspace-stationery',
-      description: 'Mechanical keyboards, desk mats, fountain pens, and productivity accessories.',
+      description: 'Ergonomic laptop stands, desk organizers, smooth gel pen sets, and premium hardcover notebooks.',
       image: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=600&auto=format&fit=crop&q=80',
       active: true,
     },
@@ -159,338 +209,365 @@ async function main() {
     createdCategories[cat.slug] = created;
   }
 
-  console.log(`📁 Created ${Object.keys(createdCategories).length} categories.`);
+  console.log(`📁 Created ${Object.keys(createdCategories).length} retail categories.`);
 
-  // 6. Create 22 Rich Products with Images
+  // 6. Create 24 Realistic Products with Middle-Class Indian Pricing (₹99 – ₹3,999)
   const productsData = [
-    // Category: Electronics & Audio
+    // --- Category: Electronics & Audio ---
     {
-      name: 'SphereAcoustics Pro Wireless ANC Headphones',
-      slug: 'sphereacoustics-pro-wireless-anc-headphones',
-      sku: 'ELEC-ANC-001',
-      description: 'Engineered with custom 45mm neodymium drivers and hybrid active noise cancellation, delivering pristine studio-grade frequency response and up to 40 hours of battery life.',
-      price: 14999,
-      discountPrice: 11999,
+      name: 'BoltAudio BassPods Wave Wireless Earbuds with ENC',
+      slug: 'boltaudio-basspods-wave-wireless-earbuds',
+      sku: 'ELEC-EAR-001',
+      description: 'Quad-mic environmental noise cancellation, 13mm deep bass drivers, 40 hours total playtime with Type-C fast charging, and IPX5 sweat resistance.',
+      price: 1899,
+      discountPrice: 1299,
       stockQuantity: 45,
       active: true,
       categoryId: createdCategories['electronics-audio'].id,
       images: [
-        { url: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=80', altText: 'Studio ANC Headphones Front' },
-        { url: 'https://images.unsplash.com/photo-1484704849700-f032a568e944?w=800&auto=format&fit=crop&q=80', altText: 'Earcups detail' },
+        { url: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=800&auto=format&fit=crop&q=80', altText: 'BoltAudio BassPods Wave Earbuds' },
       ],
     },
     {
-      name: 'AuraSound Compact Portable Bluetooth 5.3 Speaker',
-      slug: 'aurasound-compact-portable-speaker',
+      name: 'SoundPulse 10W Compact Bluetooth Speaker with Bass Radiator',
+      slug: 'soundpulse-10w-compact-bluetooth-speaker',
       sku: 'ELEC-SPK-002',
-      description: 'IPX7 waterproof ultra-portable Bluetooth speaker featuring dual passive radiators for deep bass, 360-degree room-filling acoustic distribution, and 16 hours of continuous playtime.',
-      price: 4499,
-      discountPrice: 3299,
+      description: 'Portable IPX6 water-resistant speaker with 12-hour continuous battery life, built-in FM radio, microSD slot, and punchy stereo sound.',
+      price: 1499,
+      discountPrice: 999,
       stockQuantity: 60,
       active: true,
       categoryId: createdCategories['electronics-audio'].id,
       images: [
-        { url: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800&auto=format&fit=crop&q=80', altText: 'Portable Speaker Black' },
+        { url: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800&auto=format&fit=crop&q=80', altText: 'SoundPulse 10W Portable Speaker' },
       ],
     },
     {
-      name: 'PulseFlow True Wireless Earbuds with Spatial Audio',
-      slug: 'pulseflow-tws-earbuds',
-      sku: 'ELEC-TWS-003',
-      description: 'Ultra-low latency wireless earbuds with dynamic head tracking, transparency mode, beamforming quadruple microphones, and Qi wireless fast charging case.',
-      price: 6999,
-      discountPrice: 5499,
-      stockQuantity: 3, // LOW STOCK
-      active: true,
-      categoryId: createdCategories['electronics-audio'].id,
-      images: [
-        { url: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=800&auto=format&fit=crop&q=80', altText: 'PulseFlow TWS In Charging Case' },
-      ],
-    },
-    {
-      name: 'NovaDesk Hi-Res Studio Desktop Reference Monitors',
-      slug: 'novadesk-studio-monitors',
-      sku: 'ELEC-MON-004',
-      description: 'Biamplified 50W desktop acoustic reference speakers with woven glass fiber woofers, silk dome tweeters, and balanced TRS inputs for pristine mix monitoring.',
-      price: 18999,
-      discountPrice: null,
-      stockQuantity: 0, // OUT OF STOCK
-      active: true,
-      categoryId: createdCategories['electronics-audio'].id,
-      images: [
-        { url: 'https://images.unsplash.com/photo-1545454675-3531b543be5d?w=800&auto=format&fit=crop&q=80', altText: 'Hi-Res Studio Monitors Pair' },
-      ],
-    },
-
-    // Category: Fashion & Apparel
-    {
-      name: 'UrbanHeavyweight 450GSM French Terry Hoodie',
-      slug: 'urban-heavyweight-french-terry-hoodie',
-      sku: 'FASH-HOD-001',
-      description: 'Crafted from 100% organic custom-milled heavyweight combed cotton with double-needle ribbed side panels and a tailored oversized street fit.',
-      price: 3499,
-      discountPrice: 2799,
-      stockQuantity: 80,
-      active: true,
-      categoryId: createdCategories['fashion-apparel'].id,
-      images: [
-        { url: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&auto=format&fit=crop&q=80', altText: 'Charcoal Black Heavyweight Hoodie' },
-      ],
-    },
-    {
-      name: 'Komorebi Relaxed Fit Japanese Selvedge Denim',
-      slug: 'komorebi-relaxed-selvedge-denim',
-      sku: 'FASH-JNS-002',
-      description: '14oz raw indigo shuttle-loom woven denim with copper hardware, chain-stitched hems, and distinctive red selvedge ID line.',
-      price: 5999,
-      discountPrice: 4899,
-      stockQuantity: 25,
-      active: true,
-      categoryId: createdCategories['fashion-apparel'].id,
-      images: [
-        { url: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=800&auto=format&fit=crop&q=80', altText: 'Indigo Raw Selvedge Denim Jeans' },
-      ],
-    },
-    {
-      name: 'Solstice All-Weather Technical Shell Windbreaker',
-      slug: 'solstice-technical-windbreaker',
-      sku: 'FASH-JKT-003',
-      description: 'Waterproof breathable 3-layer membrane jacket featuring YKK AquaGuard seam-sealed zippers, reflective accents, and adjustable storm hood.',
-      price: 7499,
-      discountPrice: null,
-      stockQuantity: 18,
-      active: true,
-      categoryId: createdCategories['fashion-apparel'].id,
-      images: [
-        { url: 'https://images.unsplash.com/photo-1548883354-7622d03aca27?w=800&auto=format&fit=crop&q=80', altText: 'Technical Windbreaker Jacket' },
-      ],
-    },
-    {
-      name: 'Merino Wool Minimalist Crewneck Sweater',
-      slug: 'merino-wool-crewneck-sweater',
-      sku: 'FASH-SWT-004',
-      description: 'Ultra-fine 19.5 micron Australian extrafine merino wool knit, naturally odor-resistant, thermo-regulating, and exceptionally soft against skin.',
-      price: 4299,
-      discountPrice: 3599,
-      stockQuantity: 4, // LOW STOCK
-      active: true,
-      categoryId: createdCategories['fashion-apparel'].id,
-      images: [
-        { url: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800&auto=format&fit=crop&q=80', altText: 'Oatmeal Heather Crewneck Sweater' },
-      ],
-    },
-
-    // Category: Footwear & Sneakerhead
-    {
-      name: 'Vortex Phantom Responsive Running Trainers',
-      slug: 'vortex-phantom-running-trainers',
-      sku: 'FOOT-RUN-001',
-      description: 'Engineered jacquard mesh upper paired with supercritical nitrogen-infused foam midsole for maximum energy return and marathon-tested durability.',
-      price: 8999,
-      discountPrice: 6999,
-      stockQuantity: 52,
-      active: true,
-      categoryId: createdCategories['footwear-sneakers'].id,
-      images: [
-        { url: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80', altText: 'Vortex Phantom Trainers Scarlet Red' },
-      ],
-    },
-    {
-      name: 'Heritage Low-Top Full-Grain Leather Sneakers',
-      slug: 'heritage-low-top-leather-sneakers',
-      sku: 'FOOT-SNK-002',
-      description: 'Hand-stitched Tuscan calfskin leather minimalist sneakers featuring Italian Margom rubber cupsoles and removable memory foam insoles.',
-      price: 9999,
-      discountPrice: 7999,
-      stockQuantity: 30,
-      active: true,
-      categoryId: createdCategories['footwear-sneakers'].id,
-      images: [
-        { url: 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=800&auto=format&fit=crop&q=80', altText: 'Classic White Low-top Leather Sneakers' },
-      ],
-    },
-    {
-      name: 'TerraGrip Waterproof Trail Hiking Boots',
-      slug: 'terragrip-trail-hiking-boots',
-      sku: 'FOOT-BOT-003',
-      description: 'Rugged nubuck leather construction with high-traction Vibram Megagrip outsoles, reinforced TPU toe caps, and waterproof inner bootie.',
-      price: 11499,
-      discountPrice: null,
-      stockQuantity: 14,
-      active: true,
-      categoryId: createdCategories['footwear-sneakers'].id,
-      images: [
-        { url: 'https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=800&auto=format&fit=crop&q=80', altText: 'Rugged Trail Hiking Boots' },
-      ],
-    },
-
-    // Category: Home & Living
-    {
-      name: 'Lumora Ambient Dimmable Ceramic Table Lamp',
-      slug: 'lumora-ambient-ceramic-table-lamp',
-      sku: 'HOME-LMP-001',
-      description: 'Hand-thrown terracotta ceramic base paired with an unbleached linen drum shade. Features smooth 3-level brass rotary touch dimming and warm 2700K LED glow.',
-      price: 3899,
-      discountPrice: 2999,
-      stockQuantity: 35,
-      active: true,
-      categoryId: createdCategories['home-living'].id,
-      images: [
-        { url: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=800&auto=format&fit=crop&q=80', altText: 'Terracotta Ceramic Table Lamp' },
-      ],
-    },
-    {
-      name: 'AromaZen Ultrasonic Essential Oil Diffuser',
-      slug: 'aromazen-ultrasonic-diffuser',
-      sku: 'HOME-DIF-002',
-      description: 'Whisper-quiet cold ultrasonic mist diffuser with genuine bamboo exterior housing, ambient breathing mood lighting, and auto-shutoff safety timer.',
-      price: 2499,
-      discountPrice: 1899,
-      stockQuantity: 48,
-      active: true,
-      categoryId: createdCategories['home-living'].id,
-      images: [
-        { url: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=800&auto=format&fit=crop&q=80', altText: 'Bamboo Ultrasonic Diffuser' },
-      ],
-    },
-    {
-      name: 'Nordic Solid Walnut Ergonomic Accent Chair',
-      slug: 'nordic-walnut-accent-chair',
-      sku: 'HOME-CHR-003',
-      description: 'Sculptural solid American walnut frame with boucle upholstered high-density foam cushions and ergonomic lumbar contouring.',
-      price: 24999,
-      discountPrice: 19999,
-      stockQuantity: 6,
-      active: true,
-      categoryId: createdCategories['home-living'].id,
-      images: [
-        { url: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=800&auto=format&fit=crop&q=80', altText: 'Nordic Walnut Lounge Chair' },
-      ],
-    },
-    {
-      name: 'Artisan Handwoven Wool Area Rug (5x8 ft)',
-      slug: 'artisan-handwoven-wool-rug',
-      sku: 'HOME-RUG-004',
-      description: 'Fair-trade hand-loomed 100% New Zealand wool rug featuring subtle geometric tribal motifs and plush underfoot pile height.',
-      price: 12999,
-      discountPrice: null,
-      stockQuantity: 12,
-      active: true,
-      categoryId: createdCategories['home-living'].id,
-      images: [
-        { url: 'https://images.unsplash.com/photo-1600121848594-d8644e57abab?w=800&auto=format&fit=crop&q=80', altText: 'Handwoven Minimalist Wool Rug' },
-      ],
-    },
-
-    // Category: Accessories & Watches
-    {
-      name: 'Chronos Classic Bauhaus Automatic Watch 40mm',
-      slug: 'chronos-classic-bauhaus-automatic-watch',
-      sku: 'ACCS-WAT-001',
-      description: 'Miyota 9015 Japanese 24-jewel automatic movement, double-domed anti-reflective sapphire crystal, surgical 316L stainless steel case, and quick-release leather strap.',
-      price: 16999,
-      discountPrice: 13499,
-      stockQuantity: 22,
-      active: true,
-      categoryId: createdCategories['accessories-watches'].id,
-      images: [
-        { url: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=800&auto=format&fit=crop&q=80', altText: 'Bauhaus Automatic Watch' },
-      ],
-    },
-    {
-      name: 'Aegis Slim RFID-Blocking Top Grain Leather Wallet',
-      slug: 'aegis-rfid-leather-wallet',
-      sku: 'ACCS-WLT-002',
-      description: 'Handcrafted vegetable-tanned bifold wallet holding up to 10 cards and flat currency with integrated aerospace aluminum RFID electromagnetic shielding.',
+      name: 'PowerMax 20000mAh 22.5W Fast Charging Power Bank',
+      slug: 'powermax-20000mah-fast-charging-power-bank',
+      sku: 'ELEC-PWR-003',
+      description: 'Dual USB-A and Type-C Power Delivery ports, digital LED battery display, multi-layer circuit protection, compatible with iPhone and Android.',
       price: 2199,
-      discountPrice: 1699,
-      stockQuantity: 90,
-      active: true,
-      categoryId: createdCategories['accessories-watches'].id,
-      images: [
-        { url: 'https://images.unsplash.com/photo-1627123424574-724758594e93?w=800&auto=format&fit=crop&q=80', altText: 'Top Grain Slim Leather Wallet' },
-      ],
-    },
-    {
-      name: 'SolRay Polarized Classic Acetate Sunglasses',
-      slug: 'solray-polarized-acetate-sunglasses',
-      sku: 'ACCS-SUN-003',
-      description: 'Hand-polished cellulose acetate frames with Japanese 7-barrel hinges and category 3 polarized UV400 scratch-resistant mineral glass lenses.',
-      price: 3999,
-      discountPrice: 2999,
-      stockQuantity: 40,
-      active: true,
-      categoryId: createdCategories['accessories-watches'].id,
-      images: [
-        { url: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=800&auto=format&fit=crop&q=80', altText: 'Handcrafted Acetate Sunglasses' },
-      ],
-    },
-
-    // Category: Workspace & Stationery
-    {
-      name: 'KeyForge Mechanical 75% Wireless Keyboard',
-      slug: 'keyforge-75-mechanical-keyboard',
-      sku: 'WORK-KBD-001',
-      description: 'Gasket-mounted CNC anodized aluminum chassis, pre-lubed Gateron Pro switches, hot-swappable PCB, PBT dye-sub keycaps, and tri-mode Bluetooth/2.4G/USB-C connectivity.',
-      price: 10999,
-      discountPrice: 8999,
+      discountPrice: 1499,
       stockQuantity: 38,
       active: true,
-      categoryId: createdCategories['workspace-stationery'].id,
+      categoryId: createdCategories['electronics-audio'].id,
       images: [
-        { url: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800&auto=format&fit=crop&q=80', altText: 'Custom Mechanical 75% Keyboard' },
+        { url: 'https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=800&auto=format&fit=crop&q=80', altText: 'PowerMax 20000mAh Power Bank' },
       ],
     },
     {
-      name: 'DeskMat Pro Ergonomic Felt & Vegan Leather Desk Pad',
-      slug: 'deskmat-pro-felt-leather-pad',
-      sku: 'WORK-MAT-002',
-      description: 'Dual-sided 900x400mm oversized executive desk organizer pad made from waterproof scratch-proof PU leather backed with natural Merino wool felt.',
-      price: 1799,
-      discountPrice: 1299,
-      stockQuantity: 70,
+      name: 'TurboCharge 65W GaN Dual-Port Fast Wall Charger',
+      slug: 'turbocharge-65w-gan-fast-wall-charger',
+      sku: 'ELEC-CHG-004',
+      description: 'Next-gen Gallium Nitride (GaN) technology for compact, ultra-fast charging of laptops, tablets, and smartphones simultaneously without overheating.',
+      price: 1999,
+      discountPrice: 1399,
+      stockQuantity: 28,
       active: true,
-      categoryId: createdCategories['workspace-stationery'].id,
+      categoryId: createdCategories['electronics-audio'].id,
       images: [
-        { url: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=800&auto=format&fit=crop&q=80', altText: 'Executive Desk Mat Minimalist' },
+        { url: 'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=800&auto=format&fit=crop&q=80', altText: 'TurboCharge 65W GaN Charger' },
+      ],
+    },
+
+    // --- Category: Home & Kitchen ---
+    {
+      name: 'Thermosteel 1000ml Vacuum Insulated Stainless Steel Bottle',
+      slug: 'thermosteel-1000ml-insulated-water-bottle',
+      sku: 'HOME-BOT-001',
+      description: 'Double-wall food-grade 304 stainless steel keeps beverages cold for 24 hours and hot for 18 hours. Spill-proof cap with carrying loop.',
+      price: 899,
+      discountPrice: 649,
+      stockQuantity: 75,
+      active: true,
+      categoryId: createdCategories['home-kitchen'].id,
+      images: [
+        { url: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=800&auto=format&fit=crop&q=80', altText: 'Stainless Steel Insulated Bottle' },
       ],
     },
     {
-      name: 'Precision Aluminum Laptop Stand with 360 Rotation',
-      slug: 'precision-aluminum-laptop-stand',
-      sku: 'WORK-STD-003',
-      description: 'Aircraft-grade sandblasted aluminum stand with dual-axis damping hinges and 360-degree silent swivel base for posture-perfect workstation ergonomics.',
-      price: 2899,
-      discountPrice: 2299,
+      name: 'ChefPro Tri-Ply Stainless Steel Fry Pan (24cm, Induction Base)',
+      slug: 'chefpro-triply-stainless-steel-fry-pan',
+      sku: 'HOME-PAN-002',
+      description: 'Heavy-gauge 3-layer body for even heat distribution with zero hotspots. Riveted stay-cool ergonomic handle suitable for gas and induction stoves.',
+      price: 1899,
+      discountPrice: 1399,
+      stockQuantity: 32,
+      active: true,
+      categoryId: createdCategories['home-kitchen'].id,
+      images: [
+        { url: 'https://images.unsplash.com/photo-1584992236310-6edddc08acff?w=800&auto=format&fit=crop&q=80', altText: 'Stainless Steel Fry Pan' },
+      ],
+    },
+    {
+      name: 'FreshLock Airtight Glass Food Container Set (Pack of 3)',
+      slug: 'freshlock-airtight-glass-food-container-set',
+      sku: 'HOME-JAR-003',
+      description: 'Microwave and oven-safe borosilicate glass lunch containers with leakproof BPA-free locking lids (320ml, 640ml, 1040ml).',
+      price: 1199,
+      discountPrice: 849,
+      stockQuantity: 50,
+      active: true,
+      categoryId: createdCategories['home-kitchen'].id,
+      images: [
+        { url: 'https://images.unsplash.com/photo-1544816155-12df9643f363?w=800&auto=format&fit=crop&q=80', altText: 'Airtight Glass Container Set' },
+      ],
+    },
+    {
+      name: 'BrewMaster French Press Coffee & Tea Maker (600ml)',
+      slug: 'brewmaster-french-press-coffee-maker',
+      sku: 'HOME-BRW-004',
+      description: 'Heat-resistant borosilicate glass carafe with 4-level stainless steel mesh filtration system for rich, smooth aromatic coffee and leaf tea.',
+      price: 999,
+      discountPrice: 699,
+      stockQuantity: 40,
+      active: true,
+      categoryId: createdCategories['home-kitchen'].id,
+      images: [
+        { url: 'https://images.unsplash.com/photo-1517256064527-09c73fc73e38?w=800&auto=format&fit=crop&q=80', altText: 'French Press Coffee Maker' },
+      ],
+    },
+
+    // --- Category: Fashion & Everyday Wear ---
+    {
+      name: 'Everyday Classic 100% Combed Cotton Crewneck T-Shirt (Navy)',
+      slug: 'everyday-classic-combed-cotton-tshirt-navy',
+      sku: 'FASH-TEE-001',
+      description: '180 GSM bio-washed pre-shrunk combed cotton. Breathable, durable stitching, colorfast dye, perfect for daily casual comfort.',
+      price: 699,
+      discountPrice: 449,
+      stockQuantity: 110,
+      active: true,
+      categoryId: createdCategories['fashion-apparel'].id,
+      images: [
+        { url: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80', altText: 'Navy Combed Cotton T-Shirt' },
+      ],
+    },
+    {
+      name: 'ComfortFit Pure Linen Casual Mandarin Collar Shirt',
+      slug: 'comfortfit-pure-linen-casual-shirt',
+      sku: 'FASH-SHT-002',
+      description: 'Lightweight, naturally breathable linen-cotton blend shirt with clean roll-up sleeve tabs and relaxed silhouette for Indian summers.',
+      price: 1699,
+      discountPrice: 1199,
+      stockQuantity: 35,
+      active: true,
+      categoryId: createdCategories['fashion-apparel'].id,
+      images: [
+        { url: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=800&auto=format&fit=crop&q=80', altText: 'Casual Linen Mandarin Shirt' },
+      ],
+    },
+    {
+      name: 'ActiveStretch Lightweight Quick-Dry Track Pants with Zip Pockets',
+      slug: 'activestretch-quickdry-track-pants',
+      sku: 'FASH-TRK-003',
+      description: '4-way stretch polyester elastane blend with moisture-wicking technology, elasticated waistband with drawstring, and concealed zipper pockets.',
+      price: 1199,
+      discountPrice: 799,
       stockQuantity: 55,
       active: true,
-      categoryId: createdCategories['workspace-stationery'].id,
+      categoryId: createdCategories['fashion-apparel'].id,
       images: [
-        { url: 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=800&auto=format&fit=crop&q=80', altText: 'Adjustable Aluminum Laptop Stand' },
+        { url: 'https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=800&auto=format&fit=crop&q=80', altText: 'Quick-Dry Track Pants' },
       ],
     },
     {
-      name: 'Kaweco Style Brass Pocket Fountain Pen',
-      slug: 'kaweco-style-brass-fountain-pen',
-      sku: 'WORK-PEN-004',
-      description: 'Machined solid raw brass fountain pen with stainless steel medium nib that develops a unique vintage patina over time with daily use.',
-      price: 3499,
-      discountPrice: null,
-      stockQuantity: 2, // LOW STOCK
+      name: 'Woven Canvas Casual Sneakers with Memory Foam Insole',
+      slug: 'woven-canvas-casual-sneakers',
+      sku: 'FASH-SNK-004',
+      description: 'Durable breathable canvas upper with cushioned memory foam footbed and anti-skid rubber vulcanized outsole for everyday commute.',
+      price: 1499,
+      discountPrice: 999,
+      stockQuantity: 42,
+      active: true,
+      categoryId: createdCategories['fashion-apparel'].id,
+      images: [
+        { url: 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=800&auto=format&fit=crop&q=80', altText: 'Woven Canvas Sneakers' },
+      ],
+    },
+
+    // --- Category: Personal Care & Grooming ---
+    {
+      name: 'PrecisionGroom Cordless Beard Trimmer with Titanium Blades',
+      slug: 'precisiongroom-cordless-beard-trimmer',
+      sku: 'CARE-TRM-001',
+      description: 'Self-sharpening titanium-coated blades, 20 length settings (0.5mm - 10mm precision dial), 90 minutes runtime on a single USB charge.',
+      price: 1599,
+      discountPrice: 1099,
+      stockQuantity: 48,
+      active: true,
+      categoryId: createdCategories['personal-care'].id,
+      images: [
+        { url: 'https://images.unsplash.com/photo-1621607512214-68297480165e?w=800&auto=format&fit=crop&q=80', altText: 'Cordless Beard Trimmer' },
+      ],
+    },
+    {
+      name: 'PureBotanics Red Onion & Black Seed Hair Care Kit (Shampoo + Oil)',
+      slug: 'purebotanics-red-onion-hair-care-kit',
+      sku: 'CARE-HRK-002',
+      description: 'Sulphate & paraben-free daily anti-hairfall therapy enriched with cold-pressed onion seed oil, bhringraj, and Moroccan argan extracts.',
+      price: 799,
+      discountPrice: 549,
+      stockQuantity: 85,
+      active: true,
+      categoryId: createdCategories['personal-care'].id,
+      images: [
+        { url: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=800&auto=format&fit=crop&q=80', altText: 'Herbal Hair Care Kit' },
+      ],
+    },
+    {
+      name: 'HydraGlow Vitamin C & Hyaluronic Acid Face Care Duo',
+      slug: 'hydraglow-vitamin-c-face-care-duo',
+      sku: 'CARE-SKN-003',
+      description: 'Lightweight non-sticky Vitamin C face serum (30ml) paired with oil-free hyaluronic moisturizer (50g) for 24-hour hydration and natural radiance.',
+      price: 899,
+      discountPrice: 599,
+      stockQuantity: 65,
+      active: true,
+      categoryId: createdCategories['personal-care'].id,
+      images: [
+        { url: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&auto=format&fit=crop&q=80', altText: 'Vitamin C Face Care Set' },
+      ],
+    },
+    {
+      name: 'SonicClean Electric Toothbrush with 3 Cleaning Modes',
+      slug: 'sonicclean-electric-toothbrush',
+      sku: 'CARE-TTH-004',
+      description: '38,000 vibrations per minute sonic motor, built-in 2-minute quad-pacer smart timer, IPX7 waterproof body, and 30-day battery backup.',
+      price: 1299,
+      discountPrice: 899,
+      stockQuantity: 30,
+      active: true,
+      categoryId: createdCategories['personal-care'].id,
+      images: [
+        { url: 'https://images.unsplash.com/photo-1559591937-e1032b4b2e88?w=800&auto=format&fit=crop&q=80', altText: 'Sonic Electric Toothbrush' },
+      ],
+    },
+
+    // --- Category: Bags & Travel Essentials ---
+    {
+      name: 'UrbanShield 25L Water-Resistant Laptop Backpack (15.6 Inch)',
+      slug: 'urbanshield-25l-water-resistant-laptop-backpack',
+      sku: 'BAGS-BPK-001',
+      description: 'Padded dedicated 15.6" laptop compartment, hidden anti-theft back pocket, USB charging pass-through, ergonomic breathable mesh shoulder straps.',
+      price: 1799,
+      discountPrice: 1199,
+      stockQuantity: 58,
+      active: true,
+      categoryId: createdCategories['bags-travel'].id,
+      images: [
+        { url: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&auto=format&fit=crop&q=80', altText: 'Water-Resistant Laptop Backpack' },
+      ],
+    },
+    {
+      name: 'MetroCross Compact Crossbody Sling Bag with Tablet Sleeve',
+      slug: 'metrocross-compact-crossbody-sling-bag',
+      sku: 'BAGS-SLG-002',
+      description: 'Lightweight unisex sling bag with water-repellent nylon fabric, key leash, quick-access front zipper, and adjustable reversible shoulder strap.',
+      price: 999,
+      discountPrice: 649,
+      stockQuantity: 70,
+      active: true,
+      categoryId: createdCategories['bags-travel'].id,
+      images: [
+        { url: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&auto=format&fit=crop&q=80', altText: 'Compact Crossbody Sling Bag' },
+      ],
+    },
+    {
+      name: 'TravelPro 40L Foldable Weekend Duffle Bag with Shoe Compartment',
+      slug: 'travelpro-40l-foldable-weekend-duffle-bag',
+      sku: 'BAGS-DUF-003',
+      description: 'Ripstop honeycomb polyester construction with isolated ventilated shoe pocket, wet-dry pouch, and luggage trolley sleeve attachment.',
+      price: 1399,
+      discountPrice: 899,
+      stockQuantity: 44,
+      active: true,
+      categoryId: createdCategories['bags-travel'].id,
+      images: [
+        { url: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=800&auto=format&fit=crop&q=80', altText: 'Weekend Travel Duffle Bag' },
+      ],
+    },
+    {
+      name: 'LeatherCraft Slim Bifold RFID-Blocking Leather Wallet',
+      slug: 'leathercraft-slim-bifold-rfid-leather-wallet',
+      sku: 'BAGS-WLT-004',
+      description: 'Handcrafted top-grain genuine leather with 6 card slots, 2 currency compartments, transparent ID window, and certified RFID data protection.',
+      price: 899,
+      discountPrice: 599,
+      stockQuantity: 80,
+      active: true,
+      categoryId: createdCategories['bags-travel'].id,
+      images: [
+        { url: 'https://images.unsplash.com/photo-1627123424574-724758594e93?w=800&auto=format&fit=crop&q=80', altText: 'Genuine Leather Bifold Wallet' },
+      ],
+    },
+
+    // --- Category: Workspace & Stationery ---
+    {
+      name: 'ErgoLift Multi-Angle Foldable Aluminum Laptop Stand',
+      slug: 'ergolift-multiangle-aluminum-laptop-stand',
+      sku: 'WORK-STD-001',
+      description: 'Solid CNC machined aerospace-grade aluminum with 6 adjustable height levels, anti-slip silicone cushions, and foldable portable pouch.',
+      price: 1299,
+      discountPrice: 849,
+      stockQuantity: 62,
       active: true,
       categoryId: createdCategories['workspace-stationery'].id,
       images: [
-        { url: 'https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?w=800&auto=format&fit=crop&q=80', altText: 'Solid Brass Pocket Fountain Pen' },
+        { url: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=800&auto=format&fit=crop&q=80', altText: 'Aluminum Laptop Stand' },
+      ],
+    },
+    {
+      name: 'DeskShield Extended Dual-Sided PU Leather Desk Mat (90x45cm)',
+      slug: 'deskshield-extended-leather-desk-mat',
+      sku: 'WORK-MAT-002',
+      description: 'Spill-resistant eco-friendly PU leather desk blotter with smooth mouse gliding surface, stitched anti-fray edges, and reversible dual colors.',
+      price: 799,
+      discountPrice: 499,
+      stockQuantity: 90,
+      active: true,
+      categoryId: createdCategories['workspace-stationery'].id,
+      images: [
+        { url: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800&auto=format&fit=crop&q=80', altText: 'Dual-Sided Desk Mat' },
+      ],
+    },
+    {
+      name: 'PaperKraft Hardcover A5 Dot-Grid Journal Notebook (160 Pages)',
+      slug: 'paperkraft-hardcover-a5-dotgrid-journal',
+      sku: 'WORK-NTB-003',
+      description: '120 GSM bleed-resistant ivory paper, lay-flat thread binding, elastic closure band, dual ribbon bookmarks, and expandable rear inner pocket.',
+      price: 499,
+      discountPrice: 349,
+      stockQuantity: 100,
+      active: true,
+      categoryId: createdCategories['workspace-stationery'].id,
+      images: [
+        { url: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800&auto=format&fit=crop&q=80', altText: 'A5 Dot Grid Hardcover Journal' },
+      ],
+    },
+    {
+      name: 'AeroWire Magnetic Cable Management Clips (Pack of 4)',
+      slug: 'aerowire-magnetic-cable-management-clips',
+      sku: 'WORK-CBL-004',
+      description: 'Strong magnetic locking collars with traceless 3M adhesive base, keeping charging cables, HDMI cords, and earphones organized on your desk.',
+      price: 399,
+      discountPrice: 249,
+      stockQuantity: 120,
+      active: true,
+      categoryId: createdCategories['workspace-stationery'].id,
+      images: [
+        { url: 'https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=800&auto=format&fit=crop&q=80', altText: 'Magnetic Cable Management Clips' },
       ],
     },
   ];
 
   const createdProducts = [];
-  for (const p of productsData) {
-    const { images, ...prodData } = p;
+  for (const prod of productsData) {
+    const { images, ...prodFields } = prod;
     const created = await prisma.product.create({
       data: {
-        ...prodData,
+        ...prodFields,
         images: {
           create: images.map((img, idx) => ({
             url: img.url,
@@ -501,9 +578,8 @@ async function main() {
       },
       include: { images: true },
     });
-    createdProducts.push(created);
 
-    // Create initial restock inventory transaction
+    // Record initial inventory transaction
     await prisma.inventoryTransaction.create({
       data: {
         productId: created.id,
@@ -511,166 +587,229 @@ async function main() {
         previousQuantity: 0,
         newQuantity: created.stockQuantity,
         type: 'RESTOCK',
-        reason: 'Initial warehouse inventory stock',
-        performedBy: admin.id,
+        reason: 'Initial retail inventory inward',
+        performedBy: superAdmin.id,
       },
     });
+
+    createdProducts.push(created);
   }
 
-  console.log(`📦 Created ${createdProducts.length} products with stock and inventory transactions.`);
+  console.log(`📦 Created ${createdProducts.length} retail products with middle-class Indian pricing.`);
 
-  // 7. Seed Sample Orders for Customer 1
-  const order1Products = [createdProducts[0], createdProducts[4]]; // ANC Headphones & Hoodie
-  const order1Subtotal = (createdProducts[0].discountPrice || createdProducts[0].price) * 1 +
-                         (createdProducts[4].discountPrice || createdProducts[4].price) * 1;
-  const order1Shipping = 0;
-  const order1Total = order1Subtotal + order1Shipping;
-
-  const order1 = await prisma.order.create({
-    data: {
-      userId: customer1.id,
-      subtotal: order1Subtotal,
-      discount: 0,
-      shippingAmount: order1Shipping,
-      totalAmount: order1Total,
+  // 7. Seed Realistic Real-World Historical Orders across Customers
+  const orderTemplates = [
+    {
+      customerIndex: 0, // Aarav Sharma
+      daysAgo: 2,
       status: 'DELIVERED',
       paymentStatus: 'PAID',
-      shippingAddress: {
-        fullName: addr1.fullName,
-        phone: addr1.phone,
-        addressLine1: addr1.addressLine1,
-        addressLine2: addr1.addressLine2,
-        city: addr1.city,
-        state: addr1.state,
-        postalCode: addr1.postalCode,
-        country: addr1.country,
-      },
-      items: {
-        create: [
-          {
-            productId: createdProducts[0].id,
-            productName: createdProducts[0].name,
-            sku: createdProducts[0].sku,
-            unitPrice: createdProducts[0].discountPrice || createdProducts[0].price,
-            quantity: 1,
-            subtotal: createdProducts[0].discountPrice || createdProducts[0].price,
-          },
-          {
-            productId: createdProducts[4].id,
-            productName: createdProducts[4].name,
-            sku: createdProducts[4].sku,
-            unitPrice: createdProducts[4].discountPrice || createdProducts[4].price,
-            quantity: 1,
-            subtotal: createdProducts[4].discountPrice || createdProducts[4].price,
-          },
-        ],
-      },
-      payments: {
-        create: {
-          provider: 'MOCK',
-          providerReference: 'MOCK-PAY-TXN-882193',
-          amount: order1Total,
-          currency: 'INR',
-          status: 'PAID',
-          metadata: { cardLast4: '4242', method: 'UPI / Mock Card' },
-        },
-      },
+      items: [
+        { productIndex: 0, qty: 1 }, // Earbuds (₹1299)
+        { productIndex: 4, qty: 1 }, // Thermosteel Bottle (₹649)
+      ],
     },
-  });
-
-  // Order 2: Processing
-  const order2 = await prisma.order.create({
-    data: {
-      userId: customer1.id,
-      subtotal: createdProducts[8].discountPrice || createdProducts[8].price, // Trainers
-      discount: 0,
-      shippingAmount: 99,
-      totalAmount: (createdProducts[8].discountPrice || createdProducts[8].price) + 99,
+    {
+      customerIndex: 0, // Aarav Sharma
+      daysAgo: 14,
+      status: 'DELIVERED',
+      paymentStatus: 'PAID',
+      items: [
+        { productIndex: 8, qty: 2 }, // Cotton T-shirts (2 x ₹449 = ₹898)
+        { productIndex: 20, qty: 1 }, // Laptop Stand (₹849)
+      ],
+    },
+    {
+      customerIndex: 1, // Priya Iyer
+      daysAgo: 5,
+      status: 'SHIPPED',
+      paymentStatus: 'PAID',
+      items: [
+        { productIndex: 6, qty: 1 }, // Glass Food Containers (₹849)
+        { productIndex: 7, qty: 1 }, // French Press (₹699)
+      ],
+    },
+    {
+      customerIndex: 2, // Rohan Kulkarni
+      daysAgo: 1,
       status: 'PROCESSING',
       paymentStatus: 'PAID',
-      shippingAddress: {
-        fullName: addr1.fullName,
-        phone: addr1.phone,
-        addressLine1: addr1.addressLine1,
-        city: addr1.city,
-        state: addr1.state,
-        postalCode: addr1.postalCode,
-        country: addr1.country,
-      },
-      items: {
-        create: [
-          {
-            productId: createdProducts[8].id,
-            productName: createdProducts[8].name,
-            sku: createdProducts[8].sku,
-            unitPrice: createdProducts[8].discountPrice || createdProducts[8].price,
-            quantity: 1,
-            subtotal: createdProducts[8].discountPrice || createdProducts[8].price,
-          },
-        ],
-      },
-      payments: {
-        create: {
-          provider: 'MOCK',
-          providerReference: 'MOCK-PAY-TXN-991024',
-          amount: (createdProducts[8].discountPrice || createdProducts[8].price) + 99,
-          currency: 'INR',
-          status: 'PAID',
-          metadata: { method: 'NetBanking' },
+      items: [
+        { productIndex: 16, qty: 1 }, // Laptop Backpack (₹1199)
+        { productIndex: 19, qty: 1 }, // Leather Wallet (₹599)
+      ],
+    },
+    {
+      customerIndex: 3, // Ananya Deshmukh
+      daysAgo: 8,
+      status: 'DELIVERED',
+      paymentStatus: 'PAID',
+      items: [
+        { productIndex: 13, qty: 1 }, // Hair Care Kit (₹549)
+        { productIndex: 14, qty: 1 }, // Vitamin C Duo (₹599)
+      ],
+    },
+    {
+      customerIndex: 4, // Vikramaditya Verma
+      daysAgo: 22,
+      status: 'DELIVERED',
+      paymentStatus: 'PAID',
+      items: [
+        { productIndex: 2, qty: 1 }, // Power Bank (₹1499)
+        { productIndex: 3, qty: 1 }, // GaN Charger (₹1399)
+      ],
+    },
+    {
+      customerIndex: 5, // Sneha Reddy
+      daysAgo: 3,
+      status: 'CONFIRMED',
+      paymentStatus: 'PAID',
+      items: [
+        { productIndex: 9, qty: 1 }, // Linen Shirt (₹1199)
+        { productIndex: 17, qty: 1 }, // Crossbody Sling (₹649)
+      ],
+    },
+    {
+      customerIndex: 6, // Harish Mehta
+      daysAgo: 35,
+      status: 'DELIVERED',
+      paymentStatus: 'PAID',
+      items: [
+        { productIndex: 5, qty: 1 }, // Fry Pan (₹1399)
+        { productIndex: 21, qty: 1 }, // Desk Mat (₹499)
+      ],
+    },
+    {
+      customerIndex: 7, // Deblina Mukherjee
+      daysAgo: 18,
+      status: 'DELIVERED',
+      paymentStatus: 'PAID',
+      items: [
+        { productIndex: 15, qty: 1 }, // Sonic Toothbrush (₹899)
+        { productIndex: 22, qty: 2 }, // Dot-Grid Journal (2 x ₹349 = ₹698)
+      ],
+    },
+    {
+      customerIndex: 1, // Priya Iyer
+      daysAgo: 45,
+      status: 'DELIVERED',
+      paymentStatus: 'PAID',
+      items: [
+        { productIndex: 1, qty: 1 }, // Bluetooth Speaker (₹999)
+        { productIndex: 23, qty: 1 }, // Cable clips (₹249)
+      ],
+    },
+    {
+      customerIndex: 3, // Ananya Deshmukh
+      daysAgo: 60,
+      status: 'DELIVERED',
+      paymentStatus: 'PAID',
+      items: [
+        { productIndex: 18, qty: 1 }, // Travel Duffle (₹899)
+        { productIndex: 10, qty: 1 }, // Track Pants (₹799)
+      ],
+    },
+    {
+      customerIndex: 0, // Aarav Sharma
+      daysAgo: 0, // Today
+      status: 'PENDING',
+      paymentStatus: 'PENDING',
+      items: [
+        { productIndex: 12, qty: 1 }, // Beard Trimmer (₹1099)
+      ],
+    },
+  ];
+
+  for (const ord of orderTemplates) {
+    const cust = createdCustomers[ord.customerIndex];
+    const orderDate = new Date();
+    orderDate.setDate(orderDate.getDate() - ord.daysAgo);
+
+    let subtotal = 0;
+    const orderItemsData = [];
+
+    for (const item of ord.items) {
+      const prod = createdProducts[item.productIndex];
+      const unitPrice = prod.discountPrice || prod.price;
+      const itemSubtotal = unitPrice * item.qty;
+      subtotal += itemSubtotal;
+
+      orderItemsData.push({
+        productId: prod.id,
+        productName: prod.name,
+        sku: prod.sku,
+        quantity: item.qty,
+        unitPrice: unitPrice,
+        subtotal: itemSubtotal,
+      });
+    }
+
+    const shippingAddressJson = JSON.stringify({
+      fullName: cust.address.fullName,
+      phone: cust.address.phone,
+      addressLine1: cust.address.addressLine1,
+      city: cust.address.city,
+      state: cust.address.state,
+      postalCode: cust.address.postalCode,
+      country: cust.address.country,
+    });
+
+    const createdOrder = await prisma.order.create({
+      data: {
+        userId: cust.id,
+        subtotal: subtotal,
+        totalAmount: subtotal,
+        status: ord.status,
+        paymentStatus: ord.paymentStatus,
+        shippingAddress: shippingAddressJson,
+        createdAt: orderDate,
+        updatedAt: orderDate,
+        items: {
+          create: orderItemsData,
         },
       },
-    },
-  });
+    });
 
-  // 8. Wishlist item for Customer 1
-  await prisma.wishlist.create({
+    if (ord.paymentStatus === 'PAID') {
+      await prisma.payment.create({
+        data: {
+          orderId: createdOrder.id,
+          amount: subtotal,
+          provider: 'UPI_GATEWAY',
+          providerReference: `UPI-${Date.now().toString(36).toUpperCase()}-${Math.floor(1000 + Math.random() * 9000)}`,
+          status: 'PAID',
+          createdAt: orderDate,
+        },
+      });
+    }
+  }
+
+  console.log(`🛒 Seeded ${orderTemplates.length} realistic customer orders across 8 Indian metros.`);
+
+  // 8. Create Audit Logs for Admin tracking
+  await prisma.auditLog.create({
     data: {
-      userId: customer1.id,
-      productId: createdProducts[15].id, // Bauhaus Watch
+      userId: superAdmin.id,
+      action: 'SYSTEM_BOOTSTRAP',
+      entity: 'SYSTEM',
+      metadata: JSON.stringify({ message: 'ShopSphere Indian Retail Database initialized successfully.' }),
     },
-  });
-
-  // 9. Initial Audit Logs
-  await prisma.auditLog.createMany({
-    data: [
-      {
-        userId: superAdmin.id,
-        action: 'STORE_INITIALIZATION',
-        entity: 'SYSTEM',
-        entityId: 'SYSTEM-ROOT',
-        metadata: { message: 'ShopSphere production seed initialized with standard catalog' },
-      },
-      {
-        userId: admin.id,
-        action: 'ORDER_STATUS_UPDATE',
-        entity: 'ORDER',
-        entityId: order1.id,
-        metadata: { previousStatus: 'SHIPPED', newStatus: 'DELIVERED' },
-      },
-      {
-        userId: admin.id,
-        action: 'ORDER_STATUS_UPDATE',
-        entity: 'ORDER',
-        entityId: order2.id,
-        metadata: { previousStatus: 'CONFIRMED', newStatus: 'PROCESSING' },
-      },
-    ],
   });
 
   console.log('✅ Seeding completed successfully!');
-  console.log('\n----------------------------------------');
-  console.log('🔐 Demo Credentials for Testing:');
   console.log('----------------------------------------');
-  console.log('1. Super Admin: superadmin@shopsphere.com / SuperAdmin@123');
-  console.log('2. Admin:       admin@shopsphere.com / Admin@123');
-  console.log('3. Customer:    customer@shopsphere.com / Customer@123');
-  console.log('4. Customer 2:  priya@example.com / Customer@123');
-  console.log('----------------------------------------\n');
+  console.log('🔐 Verified Login Credentials:');
+  console.log('----------------------------------------');
+  console.log('1. Super Admin: superadmin@shopsphere.com / SuperAdmin@123 (Admin Portal)');
+  console.log('2. Store Manager: admin@shopsphere.com / Admin@123 (Admin Portal)');
+  console.log('3. Demo Customer: customer@shopsphere.com / Customer@123 (Customer Storefront)');
+  console.log('4. Customer 2: priya.iyer@gmail.com / Customer@123 (Customer Storefront)');
+  console.log('----------------------------------------');
 }
 
 main()
   .catch((e) => {
-    console.error('❌ Error during seeding:', e);
+    console.error('❌ Seeding Error:', e);
     process.exit(1);
   })
   .finally(async () => {

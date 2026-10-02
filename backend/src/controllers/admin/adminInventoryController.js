@@ -1,5 +1,6 @@
 const prisma = require('../../config/prisma');
 const { sendSuccess, sendError } = require('../../utils/response');
+const { createAuditLog } = require('../../utils/auditLogger');
 
 /**
  * Get Inventory Items with Stock Overview & Alerts
@@ -16,8 +17,8 @@ const getInventory = async (req, res, next) => {
     if (search && search.trim()) {
       const q = search.trim();
       where.OR = [
-        { name: { contains: q, mode: 'insensitive' } },
-        { sku: { contains: q, mode: 'insensitive' } },
+        { name: { contains: q } },
+        { sku: { contains: q } },
       ];
     }
 
@@ -118,18 +119,16 @@ const adjustStock = async (req, res, next) => {
       return { updatedProduct, transaction };
     });
 
-    await prisma.auditLog.create({
-      data: {
-        userId: req.user.id,
-        action: 'INVENTORY_ADJUST',
-        entity: 'PRODUCT',
-        entityId: productId,
-        metadata: {
-          previousQuantity: product.stockQuantity,
-          newQuantity: calculatedNewQuantity,
-          change: actualChange,
-          reason,
-        },
+    await createAuditLog(prisma, {
+      userId: req.user.id,
+      action: 'INVENTORY_ADJUST',
+      entity: 'PRODUCT',
+      entityId: productId,
+      metadata: {
+        previousQuantity: product.stockQuantity,
+        newQuantity: calculatedNewQuantity,
+        change: actualChange,
+        reason,
       },
     });
 

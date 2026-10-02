@@ -11,7 +11,9 @@ import {
   MapPin,
   LogOut,
   ChevronDown,
-  Sparkles,
+  Truck,
+  ShieldCheck,
+  Tag,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
@@ -35,7 +37,6 @@ export default function Navbar() {
   const categoryMenuRef = useRef(null);
 
   useEffect(() => {
-    // Fetch categories for navbar navigation
     api.get('/categories')
       .then((res) => {
         if (res.data) setCategories(res.data.categories || []);
@@ -43,7 +44,6 @@ export default function Navbar() {
       .catch(() => {});
   }, []);
 
-  // Close menus when route changes or clicked outside
   useEffect(() => {
     setIsMobileMenuOpen(false);
     setIsUserMenuOpen(false);
@@ -71,27 +71,38 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-xl">
-      {/* Top Announcement Bar */}
-      <div className="bg-gradient-to-r from-brand-950 via-slate-900 to-brand-950 border-b border-brand-500/20 py-1.5 px-4 text-center text-xs font-medium text-brand-300 flex items-center justify-center gap-2">
-        <Sparkles className="w-3.5 h-3.5 text-brand-400 shrink-0" />
-        <span>Free Express Delivery on all orders above ₹1,500 across India.</span>
+    <header className="sticky top-0 z-40 w-full bg-white border-b border-slate-200 shadow-sm">
+      {/* Top Value Banner */}
+      <div className="bg-slate-900 text-slate-200 py-1.5 px-4 text-xs font-medium">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Truck className="w-3.5 h-3.5 text-accent-500 shrink-0" />
+            <span>Free delivery across India on orders above ₹499</span>
+          </div>
+          <div className="hidden sm:flex items-center gap-6 text-slate-300">
+            <span className="flex items-center gap-1">
+              <ShieldCheck className="w-3.5 h-3.5 text-success-500" /> 100% Genuine Products
+            </span>
+            <span>Easy 7-Day Returns</span>
+            <span>Cash on Delivery Available</span>
+          </div>
+        </div>
       </div>
 
       {/* Main Navbar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20 gap-4">
+        <div className="flex items-center justify-between h-16 md:h-20 gap-4 md:gap-8">
           {/* Brand Logo */}
-          <Link to="/" className="flex items-center gap-3 shrink-0 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-400 to-emerald-600 flex items-center justify-center shadow-glow group-hover:scale-105 transition">
-              <span className="text-slate-950 font-black text-xl tracking-tighter">S</span>
+          <Link to="/" className="flex items-center gap-2.5 shrink-0 group">
+            <div className="w-9 h-9 md:w-10 md:h-10 rounded-lg bg-slate-900 flex items-center justify-center text-white font-bold text-lg md:text-xl shadow-sm group-hover:bg-slate-800 transition">
+              <span className="text-accent-500">S</span>S
             </div>
             <div>
-              <span className="text-xl font-black tracking-tight text-white group-hover:text-brand-400 transition">
-                Shop<span className="text-brand-400">Sphere</span>
+              <span className="text-xl md:text-2xl font-bold tracking-tight text-slate-900 block leading-none">
+                Shop<span className="text-accent-600">Sphere</span>
               </span>
-              <span className="block text-[10px] uppercase font-semibold tracking-wider text-slate-400 -mt-1">
-                At the End of Your Streets
+              <span className="text-[10px] uppercase font-medium tracking-wider text-slate-500 block -mt-0.5">
+                At the end of your streets
               </span>
             </div>
           </Link>
@@ -99,216 +110,313 @@ export default function Navbar() {
           {/* Desktop Search Bar */}
           <form
             onSubmit={handleSearchSubmit}
-            className="hidden md:flex flex-1 max-w-md relative items-center mx-4"
+            className="hidden md:flex flex-1 max-w-xl relative items-center"
           >
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search products, headphones, sneakers, watches..."
-              className="w-full bg-slate-900/90 text-sm text-slate-100 placeholder-slate-400 pl-11 pr-4 py-2.5 rounded-full border border-slate-800 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 transition"
-            />
-            <Search className="w-4 h-4 text-slate-400 absolute left-4 pointer-events-none" />
+            <div className="relative w-full">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search for essentials, cookware, earphones, shirts..."
+                className="w-full pl-10 pr-24 py-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:bg-white transition"
+              />
+              <button
+                type="submit"
+                className="absolute right-1.5 top-1/2 -translate-y-1/2 px-4 py-1.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-md transition"
+              >
+                Search
+              </button>
+            </div>
           </form>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-6 text-sm font-medium text-slate-300">
-            <Link to="/products" className="hover:text-brand-400 transition">
-              Catalog
+          {/* Desktop Navigation Actions */}
+          <div className="hidden md:flex items-center gap-6 shrink-0">
+            <Link
+              to="/products"
+              className="text-sm font-semibold text-slate-700 hover:text-slate-900 transition flex items-center gap-1.5"
+            >
+              All Products
             </Link>
 
             {/* Categories Dropdown */}
             <div className="relative" ref={categoryMenuRef}>
               <button
                 onClick={() => setIsCategoryDropdownOpen(!isCategoryDropdownOpen)}
-                className="flex items-center gap-1.5 hover:text-brand-400 transition py-2"
+                className="text-sm font-semibold text-slate-700 hover:text-slate-900 transition flex items-center gap-1"
               >
                 <span>Categories</span>
-                <ChevronDown className="w-4 h-4" />
+                <ChevronDown className="w-4 h-4 text-slate-400" />
               </button>
 
               {isCategoryDropdownOpen && (
-                <div className="absolute top-full left-0 mt-2 w-56 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-2 z-50 animate-in fade-in slide-in-from-top-2">
-                  <div className="text-xs font-bold text-slate-500 uppercase px-3 py-1.5">
-                    Browse Departments
+                <div className="absolute top-full left-0 mt-2 w-64 bg-white border border-slate-200 rounded-xl shadow-dropdown py-2 z-50 animate-in fade-in zoom-in-95 duration-100">
+                  <div className="px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100">
+                    Explore Departments
                   </div>
                   {categories.map((cat) => (
                     <Link
                       key={cat.id}
                       to={`/products?category=${cat.slug}`}
-                      className="flex items-center justify-between px-3 py-2 rounded-xl text-sm text-slate-200 hover:bg-slate-800 hover:text-brand-400 transition"
+                      className="flex items-center justify-between px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition"
                     >
                       <span>{cat.name}</span>
-                      <span className="text-xs text-slate-500">{cat._count?.products || 0}</span>
                     </Link>
                   ))}
-                  <div className="border-t border-slate-800 mt-1 pt-1">
+                  <div className="border-t border-slate-100 mt-1 pt-1">
                     <Link
                       to="/products"
-                      className="block px-3 py-2 text-xs font-semibold text-brand-400 hover:bg-slate-800 rounded-xl"
+                      className="block px-3 py-1.5 text-xs font-semibold text-accent-600 hover:text-accent-700"
                     >
-                      View All Products →
+                      View All Categories →
                     </Link>
                   </div>
                 </div>
               )}
             </div>
 
-            <Link to="/about" className="hover:text-brand-400 transition">
-              About
-            </Link>
-          </nav>
-
-          {/* Action Icons */}
-          <div className="flex items-center gap-3">
-            {/* Wishlist Icon */}
+            {/* Wishlist Link */}
             <Link
               to="/wishlist"
-              className="relative p-2.5 text-slate-300 hover:text-brand-400 hover:bg-slate-900 rounded-xl border border-transparent hover:border-slate-800 transition"
+              className="relative p-2 text-slate-700 hover:text-slate-900 transition rounded-lg hover:bg-slate-100"
               title="Saved Wishlist"
             >
               <Heart className="w-5 h-5" />
               {wishlistCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-5 h-5 bg-brand-500 text-slate-950 font-bold text-[11px] rounded-full flex items-center justify-center shadow-glow">
-                  {wishlistCount}
+                <span className="absolute top-1 right-1 w-4 h-4 bg-accent-600 text-white rounded-full text-[10px] font-bold flex items-center justify-center">
+                  {wishlistCount > 9 ? '9+' : wishlistCount}
                 </span>
               )}
             </Link>
 
-            {/* Shopping Bag Button */}
+            {/* Shopping Cart Drawer Trigger */}
             <button
               onClick={() => setIsCartDrawerOpen(true)}
-              className="relative p-2.5 text-slate-300 hover:text-brand-400 hover:bg-slate-900 rounded-xl border border-transparent hover:border-slate-800 transition"
-              title="Shopping Bag"
+              className="relative flex items-center gap-2 px-3 py-2 text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition"
+              title="Shopping Cart"
             >
-              <ShoppingBag className="w-5 h-5" />
-              {itemCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-5 h-5 bg-brand-500 text-slate-950 font-bold text-[11px] rounded-full flex items-center justify-center shadow-glow animate-pulse">
-                  {itemCount}
-                </span>
-              )}
+              <div className="relative">
+                <ShoppingBag className="w-5 h-5" />
+                {itemCount > 0 && (
+                  <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-slate-900 text-white rounded-full text-[10px] font-bold flex items-center justify-center">
+                    {itemCount > 9 ? '9+' : itemCount}
+                  </span>
+                )}
+              </div>
+              <span className="text-sm font-semibold">Cart</span>
             </button>
 
-            {/* User Account Menu */}
+            {/* Customer Account Dropdown */}
             <div className="relative" ref={userMenuRef}>
               {isAuthenticated ? (
-                <button
-                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                  className="flex items-center gap-2 p-1.5 pl-3 rounded-full bg-slate-900 hover:bg-slate-850 border border-slate-800 text-sm font-medium transition"
-                >
-                  <span className="text-slate-200 hidden sm:inline max-w-[100px] truncate">
-                    {user?.name?.split(' ')[0]}
-                  </span>
-                  <div className="w-7 h-7 rounded-full bg-brand-500/20 text-brand-400 border border-brand-500/40 flex items-center justify-center font-bold text-xs">
-                    {user?.name?.charAt(0) || 'U'}
-                  </div>
-                </button>
+                <div>
+                  <button
+                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                    className="flex items-center gap-2 pl-3 pr-2 py-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-lg transition"
+                  >
+                    <div className="w-6 h-6 rounded-full bg-slate-900 text-white text-xs font-bold flex items-center justify-center">
+                      {user?.name ? user.name[0].toUpperCase() : 'U'}
+                    </div>
+                    <span className="text-xs font-semibold text-slate-800 max-w-[100px] truncate">
+                      {user?.name?.split(' ')[0] || 'Account'}
+                    </span>
+                    <ChevronDown className="w-3.5 h-3.5 text-slate-500" />
+                  </button>
+
+                  {isUserMenuOpen && (
+                    <div className="absolute right-0 top-full mt-2 w-56 bg-white border border-slate-200 rounded-xl shadow-dropdown py-2 z-50 animate-in fade-in duration-100">
+                      <div className="px-4 py-2 border-b border-slate-100">
+                        <p className="text-xs text-slate-500 font-medium">Signed in as</p>
+                        <p className="text-sm font-semibold text-slate-900 truncate">{user?.email}</p>
+                      </div>
+                      <Link
+                        to="/orders"
+                        className="flex items-center gap-2.5 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition"
+                      >
+                        <Package className="w-4 h-4 text-slate-400" />
+                        <span>My Orders</span>
+                      </Link>
+                      <Link
+                        to="/wishlist"
+                        className="flex items-center gap-2.5 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition"
+                      >
+                        <Heart className="w-4 h-4 text-slate-400" />
+                        <span>Wishlist</span>
+                      </Link>
+                      <Link
+                        to="/profile"
+                        className="flex items-center gap-2.5 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition"
+                      >
+                        <MapPin className="w-4 h-4 text-slate-400" />
+                        <span>Saved Addresses</span>
+                      </Link>
+                      <div className="border-t border-slate-100 mt-1 pt-1">
+                        <button
+                          onClick={logout}
+                          className="w-full flex items-center gap-2.5 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition text-left"
+                        >
+                          <LogOut className="w-4 h-4" />
+                          <span>Sign Out</span>
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
               ) : (
                 <div className="flex items-center gap-2">
                   <Link
                     to="/login"
-                    className="px-4 py-2 text-xs sm:text-sm font-semibold text-slate-200 hover:text-white transition"
+                    className="px-4 py-2 text-sm font-semibold text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition"
                   >
                     Sign In
                   </Link>
                   <Link
                     to="/register"
-                    className="px-4 py-2 text-xs sm:text-sm font-semibold bg-brand-500 hover:bg-brand-400 text-slate-950 rounded-xl transition shadow-glow"
+                    className="px-4 py-2 text-sm font-semibold text-white bg-slate-900 hover:bg-slate-800 rounded-lg transition shadow-sm"
                   >
                     Register
                   </Link>
                 </div>
               )}
-
-              {/* User Dropdown */}
-              {isAuthenticated && isUserMenuOpen && (
-                <div className="absolute right-0 top-full mt-2 w-56 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-2 z-50 animate-in fade-in slide-in-from-top-2">
-                  <div className="px-3 py-2 border-b border-slate-800 mb-1">
-                    <p className="text-xs text-slate-400">Signed in as</p>
-                    <p className="text-sm font-bold text-slate-100 truncate">{user?.name}</p>
-                    <p className="text-xs text-slate-400 truncate">{user?.email}</p>
-                  </div>
-
-                  <Link
-                    to="/orders"
-                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-200 hover:bg-slate-800 hover:text-brand-400 rounded-xl transition"
-                  >
-                    <Package className="w-4 h-4 text-slate-400" />
-                    <span>My Orders</span>
-                  </Link>
-
-                  <Link
-                    to="/profile"
-                    className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-200 hover:bg-slate-800 hover:text-brand-400 rounded-xl transition"
-                  >
-                    <MapPin className="w-4 h-4 text-slate-400" />
-                    <span>Addresses & Profile</span>
-                  </Link>
-
-                  <div className="border-t border-slate-800 my-1 pt-1">
-                    <button
-                      onClick={logout}
-                      className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-rose-400 hover:bg-rose-500/10 rounded-xl transition text-left"
-                    >
-                      <LogOut className="w-4 h-4" />
-                      <span>Sign Out</span>
-                    </button>
-                  </div>
-                </div>
-              )}
             </div>
+          </div>
 
-            {/* Mobile menu hamburger */}
+          {/* Mobile Menu & Cart Trigger */}
+          <div className="flex items-center gap-2 md:hidden">
+            <button
+              onClick={() => setIsCartDrawerOpen(true)}
+              className="relative p-2 text-slate-700 hover:text-slate-900"
+              aria-label="Open cart"
+            >
+              <ShoppingBag className="w-6 h-6" />
+              {itemCount > 0 && (
+                <span className="absolute top-0 right-0 w-4 h-4 bg-slate-900 text-white rounded-full text-[10px] font-bold flex items-center justify-center">
+                  {itemCount > 9 ? '9+' : itemCount}
+                </span>
+              )}
+            </button>
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 text-slate-400 hover:text-slate-100"
+              className="p-2 text-slate-700 hover:text-slate-900"
+              aria-label="Toggle navigation menu"
             >
               {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Search Bar & Menu */}
-        {isMobileMenuOpen && (
-          <div className="lg:hidden pb-6 pt-2 border-t border-slate-800 space-y-4">
-            <form onSubmit={handleSearchSubmit} className="relative">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search products..."
-                className="w-full bg-slate-900 text-sm text-slate-100 pl-10 pr-4 py-2.5 rounded-xl border border-slate-800 focus:outline-none focus:border-brand-500"
-              />
-              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3.5" />
-            </form>
+        {/* Mobile Search Input */}
+        <div className="pb-3 md:hidden">
+          <form onSubmit={handleSearchSubmit} className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search products across categories..."
+              className="w-full pl-9 pr-20 py-2 bg-slate-50 border border-slate-300 rounded-lg text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:bg-white"
+            />
+            <button
+              type="submit"
+              className="absolute right-1 top-1/2 -translate-y-1/2 px-3 py-1 bg-slate-900 text-white text-xs font-semibold rounded"
+            >
+              Go
+            </button>
+          </form>
+        </div>
+      </div>
 
-            <div className="space-y-1">
-              <Link
-                to="/products"
-                className="block px-3 py-2 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-900"
-              >
-                All Products
-              </Link>
-              <div className="px-3 py-2 text-xs font-bold text-slate-500 uppercase">Categories</div>
+      {/* Mobile Drawer Menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden border-t border-slate-200 bg-white px-4 py-4 space-y-4">
+          <div className="space-y-1">
+            <Link
+              to="/"
+              className="block px-3 py-2 rounded-lg text-base font-semibold text-slate-800 hover:bg-slate-100"
+            >
+              Home
+            </Link>
+            <Link
+              to="/products"
+              className="block px-3 py-2 rounded-lg text-base font-semibold text-slate-800 hover:bg-slate-100"
+            >
+              All Products
+            </Link>
+            <Link
+              to="/wishlist"
+              className="flex items-center justify-between px-3 py-2 rounded-lg text-base font-semibold text-slate-800 hover:bg-slate-100"
+            >
+              <span>Wishlist</span>
+              {wishlistCount > 0 && (
+                <span className="px-2 py-0.5 bg-accent-100 text-accent-700 text-xs font-bold rounded-full">
+                  {wishlistCount}
+                </span>
+              )}
+            </Link>
+          </div>
+
+          <div className="border-t border-slate-100 pt-3">
+            <p className="px-3 text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+              Popular Categories
+            </p>
+            <div className="grid grid-cols-2 gap-1">
               {categories.map((cat) => (
                 <Link
                   key={cat.id}
                   to={`/products?category=${cat.slug}`}
-                  className="block px-5 py-1.5 text-sm text-slate-300 hover:text-brand-400"
+                  className="px-3 py-1.5 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded"
                 >
                   {cat.name}
                 </Link>
               ))}
-              <Link
-                to="/about"
-                className="block px-3 py-2 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-900"
-              >
-                About ShopSphere
-              </Link>
             </div>
           </div>
-        )}
-      </div>
+
+          <div className="border-t border-slate-100 pt-3">
+            {isAuthenticated ? (
+              <div className="space-y-1">
+                <div className="px-3 py-1">
+                  <p className="text-xs text-slate-500">Signed in as</p>
+                  <p className="text-sm font-semibold text-slate-900">{user?.name} ({user?.email})</p>
+                </div>
+                <Link
+                  to="/orders"
+                  className="block px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 rounded"
+                >
+                  My Orders
+                </Link>
+                <Link
+                  to="/profile"
+                  className="block px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 rounded"
+                >
+                  Saved Addresses & Profile
+                </Link>
+                <button
+                  onClick={logout}
+                  className="w-full text-left px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 rounded"
+                >
+                  Sign Out
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 gap-2 pt-1">
+                <Link
+                  to="/login"
+                  className="w-full py-2.5 text-center text-sm font-semibold text-slate-800 bg-slate-100 hover:bg-slate-200 rounded-lg transition"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  to="/register"
+                  className="w-full py-2.5 text-center text-sm font-semibold text-white bg-slate-900 hover:bg-slate-800 rounded-lg transition"
+                >
+                  Register
+                </Link>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </header>
   );
 }

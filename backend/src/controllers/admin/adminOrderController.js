@@ -1,5 +1,6 @@
 const prisma = require('../../config/prisma');
 const { sendSuccess, sendError } = require('../../utils/response');
+const { createAuditLog } = require('../../utils/auditLogger');
 
 /**
  * Valid Status Transitions Matrix
@@ -36,9 +37,9 @@ const getAdminOrders = async (req, res, next) => {
     if (search && search.trim()) {
       const q = search.trim();
       where.OR = [
-        { id: { contains: q, mode: 'insensitive' } },
-        { user: { name: { contains: q, mode: 'insensitive' } } },
-        { user: { email: { contains: q, mode: 'insensitive' } } },
+        { id: { contains: q } },
+        { user: { name: { contains: q } } },
+        { user: { email: { contains: q } } },
       ];
     }
 
@@ -199,19 +200,17 @@ const updateOrderStatus = async (req, res, next) => {
     });
 
     // Record audit log
-    await prisma.auditLog.create({
-      data: {
-        userId: req.user.id,
-        action: 'ORDER_STATUS_UPDATE',
-        entity: 'ORDER',
-        entityId: id,
-        metadata: {
-          previousStatus: order.status,
-          newStatus: newStatus || order.status,
-          previousPaymentStatus: order.paymentStatus,
-          newPaymentStatus: paymentStatus || order.paymentStatus,
-          note,
-        },
+    await createAuditLog(prisma, {
+      userId: req.user.id,
+      action: 'ORDER_STATUS_UPDATE',
+      entity: 'ORDER',
+      entityId: id,
+      metadata: {
+        previousStatus: order.status,
+        newStatus: newStatus || order.status,
+        previousPaymentStatus: order.paymentStatus,
+        newPaymentStatus: paymentStatus || order.paymentStatus,
+        note,
       },
     });
 

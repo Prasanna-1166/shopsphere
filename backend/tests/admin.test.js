@@ -64,6 +64,13 @@ describe('ShopSphere — Admin Portal RBAC & Management Tests', () => {
     expect(res.body.data.overview).toBeDefined();
   });
 
+  test('GET /api/admin/dashboard/metrics - Denies unauthenticated request with 401 Unauthorized', async () => {
+    const res = await request(app).get('/api/admin/dashboard/metrics');
+
+    expect(res.statusCode).toBe(401);
+    expect(res.body.success).toBe(false);
+  });
+
   test('GET /api/admin/dashboard/metrics - Denies CUSTOMER access with 403 Forbidden', async () => {
     const res = await request(app)
       .get('/api/admin/dashboard/metrics')

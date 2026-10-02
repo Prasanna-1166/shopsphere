@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   ShoppingBag,
@@ -9,6 +9,7 @@ import {
   ShieldCheck,
   Truck,
   RotateCcw,
+  Tag,
 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
@@ -19,15 +20,33 @@ export default function CartPage() {
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
+  const [couponCode, setCouponCode] = useState('');
+  const [couponDiscount, setCouponDiscount] = useState(0);
+  const [couponMessage, setCouponMessage] = useState(null);
+
+  const handleApplyCoupon = (e) => {
+    e.preventDefault();
+    const code = couponCode.trim().toUpperCase();
+    if (code === 'WELCOME100' || code === 'SAVE100') {
+      setCouponDiscount(100);
+      setCouponMessage({ type: 'success', text: '₹100 discount coupon applied successfully!' });
+    } else if (code === 'SPHERE50') {
+      setCouponDiscount(50);
+      setCouponMessage({ type: 'success', text: '₹50 discount coupon applied!' });
+    } else {
+      setCouponDiscount(0);
+      setCouponMessage({ type: 'error', text: 'Invalid coupon code. Try WELCOME100' });
+    }
+  };
+
   if (!isAuthenticated) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-16">
         <EmptyState
-          icon={ShoppingBag}
-          title="Sign in to view your bag"
-          description="Your saved shopping cart items will be synced across all your devices once you sign in."
-          actionText="Sign In to ShopSphere"
-          actionLink="/login"
+          title="Please sign in to view your cart"
+          message="Your cart items are saved securely in your customer account."
+          actionLabel="Sign In to ShopSphere"
+          onAction={() => navigate('/login')}
         />
       </div>
     );
@@ -37,182 +56,227 @@ export default function CartPage() {
     return (
       <div className="max-w-7xl mx-auto px-4 py-16">
         <EmptyState
-          icon={ShoppingBag}
-          title="Your shopping bag is empty"
-          description="Explore our collection of studio audio, Japanese denim, sneakers, and modern desk gear."
-          actionText="Start Shopping"
-          actionLink="/products"
+          title="Your shopping cart is empty"
+          message="Looks like you haven't added anything to your cart yet. Explore our everyday essentials."
+          actionLabel="Explore Catalog"
+          onAction={() => navigate('/products')}
         />
       </div>
     );
   }
 
+  const freeDeliveryThreshold = 499;
+  const deliveryFee = summary.subtotal >= freeDeliveryThreshold ? 0 : 49;
+  const finalTotal = Math.max(0, summary.subtotal + deliveryFee - couponDiscount);
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Title */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
         <div>
-          <h1 className="text-3xl font-black text-white tracking-tight">Shopping Bag</h1>
-          <p className="text-sm text-slate-400 mt-1">
-            {summary.totalQuantity} item(s) selected for checkout
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Your Shopping Cart</h1>
+          <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+            {summary.totalQuantity} item(s) in your basket
           </p>
         </div>
         <button
           onClick={clearCart}
-          className="text-xs font-semibold text-rose-400 hover:text-rose-300 self-start sm:self-auto flex items-center gap-1.5"
+          className="text-xs font-semibold text-rose-600 hover:text-rose-700 transition"
         >
-          <Trash2 className="w-3.5 h-3.5" />
-          <span>Clear All Items</span>
+          Clear entire cart
         </button>
       </div>
 
-      {/* Main 2-Column Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-        {/* Items List */}
-        <div className="lg:col-span-8 space-y-4">
-          {items.map((item) => {
-            const imgUrl =
-              item.product.images?.[0]?.url ||
-              'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400';
-            const isLow = item.availableStock <= 5 && item.availableStock > 0;
+      {/* Free Delivery Banner */}
+      {summary.subtotal < freeDeliveryThreshold && (
+        <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900 flex items-center justify-between">
+          <span>
+            Add <strong>₹{(freeDeliveryThreshold - summary.subtotal).toLocaleString('en-IN')}</strong> more for <strong>FREE Delivery</strong>!
+          </span>
+          <Link to="/products" className="font-bold underline">Add Items</Link>
+        </div>
+      )}
 
-            return (
-              <div
-                key={item.id}
-                className="p-5 rounded-2xl bg-slate-900 border border-slate-800/90 flex flex-col sm:flex-row gap-5 items-start sm:items-center justify-between"
-              >
-                {/* Product Image & Info */}
-                <div className="flex gap-4 items-center flex-1 min-w-0">
-                  <img
-                    src={imgUrl}
-                    alt={item.product.name}
-                    className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl object-cover bg-slate-950 shrink-0"
-                  />
-                  <div className="space-y-1 flex-1 min-w-0">
-                    <span className="text-[11px] font-bold text-brand-400 uppercase tracking-wider block">
-                      {item.product.category?.name || 'Item'}
+      {/* 2-Column Cart Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Left Column: Cart Items List */}
+        <div className="lg:col-span-8 space-y-4">
+          <div className="bg-white border border-slate-200 rounded-xl divide-y divide-slate-100 shadow-sm overflow-hidden">
+            {items.map((item) => {
+              const prod = item.product;
+              const imgUrl = prod.images?.[0]?.url || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300';
+              const price = prod.discountPrice || prod.price;
+
+              return (
+                <div key={item.id} className="p-4 sm:p-5 flex gap-4 items-center">
+                  {/* Thumbnail */}
+                  <Link to={`/products/${prod.slug}`} className="w-20 h-20 sm:w-24 sm:h-24 rounded-lg bg-slate-100 overflow-hidden shrink-0 border border-slate-200">
+                    <img src={imgUrl} alt={prod.name} className="w-full h-full object-cover" />
+                  </Link>
+
+                  {/* Info */}
+                  <div className="flex-1 min-w-0 space-y-1">
+                    <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 block">
+                      {prod.category?.name || 'Item'}
                     </span>
                     <Link
-                      to={`/products/${item.product.slug}`}
-                      className="text-sm sm:text-base font-bold text-white hover:text-brand-300 transition truncate block"
+                      to={`/products/${prod.slug}`}
+                      className="text-sm font-semibold text-slate-900 hover:text-accent-600 transition block truncate"
                     >
-                      {item.product.name}
+                      {prod.name}
                     </Link>
-                    <div className="text-xs text-slate-400">
-                      ₹{item.unitPrice.toLocaleString('en-IN')} / unit
-                    </div>
-                    {isLow && (
-                      <span className="text-[11px] text-amber-400 font-semibold block">
-                        Only {item.availableStock} in stock!
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-sm font-bold text-slate-900">
+                        ₹{price.toLocaleString('en-IN')}
                       </span>
-                    )}
-                  </div>
-                </div>
-
-                {/* Quantity Controls & Subtotal */}
-                <div className="flex items-center justify-between sm:justify-end gap-6 w-full sm:w-auto pt-3 sm:pt-0 border-t sm:border-t-0 border-slate-800">
-                  <div className="flex items-center gap-2 bg-slate-950 border border-slate-800 px-2.5 py-1.5 rounded-xl">
-                    <button
-                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                      className="p-1 text-slate-400 hover:text-white"
-                      title="Decrease quantity"
-                    >
-                      <Minus className="w-3.5 h-3.5" />
-                    </button>
-                    <span className="text-xs font-bold text-white px-2">{item.quantity}</span>
-                    <button
-                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                      disabled={item.quantity >= item.availableStock}
-                      className="p-1 text-slate-400 hover:text-white disabled:opacity-30"
-                      title="Increase quantity"
-                    >
-                      <Plus className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-
-                  <div className="text-right">
-                    <div className="text-base font-extrabold text-white">
-                      ₹{item.itemSubtotal.toLocaleString('en-IN')}
+                      {prod.discountPrice && (
+                        <span className="text-xs text-slate-400 line-through">
+                          ₹{prod.price.toLocaleString('en-IN')}
+                        </span>
+                      )}
                     </div>
-                    {item.discountPrice && (
-                      <div className="text-[10px] text-brand-400 font-semibold">
-                        Discount applied
+
+                    {/* Quantity Controls */}
+                    <div className="flex items-center gap-4 pt-2">
+                      <div className="flex items-center border border-slate-300 rounded-lg bg-slate-50">
+                        <button
+                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                          className="p-1 text-slate-600 hover:text-slate-900"
+                        >
+                          <Minus className="w-3.5 h-3.5" />
+                        </button>
+                        <span className="w-8 text-center text-xs font-bold text-slate-900">
+                          {item.quantity}
+                        </span>
+                        <button
+                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                          disabled={item.quantity >= prod.stockQuantity}
+                          className="p-1 text-slate-600 hover:text-slate-900 disabled:opacity-30"
+                        >
+                          <Plus className="w-3.5 h-3.5" />
+                        </button>
                       </div>
-                    )}
+
+                      <button
+                        onClick={() => removeFromCart(item.id)}
+                        className="text-xs text-slate-400 hover:text-rose-600 transition flex items-center gap-1"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                        <span>Remove</span>
+                      </button>
+                    </div>
                   </div>
 
-                  <button
-                    onClick={() => removeFromCart(item.id)}
-                    className="text-slate-500 hover:text-rose-400 p-1.5 transition rounded-lg hover:bg-slate-800"
-                    title="Remove item"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
+                  {/* Line Subtotal */}
+                  <div className="text-right shrink-0">
+                    <span className="text-sm sm:text-base font-bold text-slate-900">
+                      ₹{(price * item.quantity).toLocaleString('en-IN')}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
+
+          <div className="flex justify-between items-center pt-2">
+            <Link
+              to="/products"
+              className="text-xs font-semibold text-slate-700 hover:text-slate-900 flex items-center gap-1"
+            >
+              ← Continue Shopping
+            </Link>
+          </div>
         </div>
 
-        {/* Order Summary Sidebar */}
-        <div className="lg:col-span-4 space-y-6">
-          <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 space-y-6 sticky top-28 shadow-xl">
-            <h2 className="text-lg font-black text-white tracking-tight">Order Summary</h2>
+        {/* Right Column: Order Summary & Checkout */}
+        <div className="lg:col-span-4 space-y-4">
+          <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
+            <h3 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3">
+              Order Summary
+            </h3>
 
-            <div className="space-y-3 text-sm">
-              <div className="flex justify-between text-slate-400">
+            {/* Coupon Code Section */}
+            <div>
+              <form onSubmit={handleApplyCoupon} className="flex gap-2">
+                <input
+                  type="text"
+                  value={couponCode}
+                  onChange={(e) => setCouponCode(e.target.value)}
+                  placeholder="Coupon code (e.g. WELCOME100)"
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs text-slate-900 uppercase font-semibold focus:outline-none focus:ring-2 focus:ring-slate-900"
+                />
+                <button
+                  type="submit"
+                  className="px-3 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-lg shrink-0 transition"
+                >
+                  Apply
+                </button>
+              </form>
+              {couponMessage && (
+                <p className={`text-[11px] font-semibold mt-1.5 ${couponMessage.type === 'success' ? 'text-emerald-600' : 'text-rose-600'}`}>
+                  {couponMessage.text}
+                </p>
+              )}
+            </div>
+
+            {/* Breakdown */}
+            <div className="space-y-2 text-xs text-slate-600 border-t border-slate-100 pt-3">
+              <div className="flex justify-between">
                 <span>Items Subtotal</span>
-                <span className="text-white font-medium">
-                  ₹{summary.subtotal?.toLocaleString('en-IN')}
+                <span className="font-semibold text-slate-900">
+                  ₹{summary.subtotal.toLocaleString('en-IN')}
                 </span>
               </div>
-
-              <div className="flex justify-between text-slate-400">
-                <span>Estimated Shipping</span>
-                <span className="text-brand-400 font-medium">
-                  {summary.shipping === 0 ? 'FREE' : `₹${summary.shipping}`}
-                </span>
-              </div>
-
-              {summary.totalSavings > 0 && (
-                <div className="flex justify-between text-brand-400 text-xs font-bold">
-                  <span>Total Discount Savings</span>
-                  <span>-₹{summary.totalSavings?.toLocaleString('en-IN')}</span>
+              {couponDiscount > 0 && (
+                <div className="flex justify-between text-emerald-600 font-semibold">
+                  <span>Coupon Discount</span>
+                  <span>-₹{couponDiscount.toLocaleString('en-IN')}</span>
                 </div>
               )}
-
-              <div className="border-t border-slate-800 pt-4 flex justify-between items-baseline">
-                <span className="text-base font-bold text-white">Total Amount</span>
-                <span className="text-2xl font-black text-brand-400">
-                  ₹{summary.finalTotal?.toLocaleString('en-IN')}
+              <div className="flex justify-between">
+                <span>Estimated Delivery</span>
+                <span>
+                  {deliveryFee === 0 ? (
+                    <span className="font-bold text-emerald-600">FREE</span>
+                  ) : (
+                    <span className="font-semibold text-slate-900">₹{deliveryFee}</span>
+                  )}
                 </span>
+              </div>
+              <div className="flex justify-between">
+                <span>Estimated GST & Taxes</span>
+                <span className="text-slate-400">Included</span>
+              </div>
+
+              <div className="flex justify-between text-base font-bold text-slate-900 border-t border-slate-200 pt-3">
+                <span>Total Payable</span>
+                <span>₹{finalTotal.toLocaleString('en-IN')}</span>
               </div>
             </div>
 
-            {summary.shipping > 0 && (
-              <p className="text-xs text-slate-400 bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
-                Add <strong className="text-white">₹{1500 - summary.subtotal}</strong> more to qualify for <span className="text-brand-400 font-bold">FREE Express Delivery</span>!
-              </p>
-            )}
-
+            {/* Checkout CTA */}
             <button
               onClick={() => navigate('/checkout')}
-              className="w-full py-4 px-6 bg-brand-500 hover:bg-brand-400 text-slate-950 font-black text-sm rounded-2xl transition shadow-glow flex items-center justify-center gap-2"
+              className="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm rounded-lg transition shadow-sm flex items-center justify-center gap-2"
             >
               <span>Proceed to Checkout</span>
               <ArrowRight className="w-4 h-4" />
             </button>
+          </div>
 
-            <div className="pt-2 flex items-center justify-center gap-4 text-[11px] text-slate-500 font-medium">
-              <span className="flex items-center gap-1">
-                <ShieldCheck className="w-3.5 h-3.5 text-brand-400" />
-                <span>Secure Checkout</span>
-              </span>
-              <span>•</span>
-              <span className="flex items-center gap-1">
-                <RotateCcw className="w-3.5 h-3.5 text-brand-400" />
-                <span>7-Day Return</span>
-              </span>
+          {/* Assurances */}
+          <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2 text-xs text-slate-600">
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-emerald-600" />
+              <span>100% Safe & Encrypted Payments</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <RotateCcw className="w-4 h-4 text-accent-600" />
+              <span>7-Day Easy Returns with Doorstep Pickup</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Truck className="w-4 h-4 text-slate-700" />
+              <span>Free Delivery on all orders above ₹499</span>
             </div>
           </div>
         </div>
