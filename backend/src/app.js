@@ -55,29 +55,34 @@ if (config.env !== 'test') {
   app.use(morgan(config.isProduction ? 'combined' : 'dev'));
 }
 
-// 5. CSRF Cookie generation & Verification
-app.use(setCsrfCookie);
-app.use(verifyCsrfToken);
-
-// 6. Global API Rate Limiter
-app.use('/api', apiLimiter);
-
-// 7. Mount Application API Routes
-app.use('/api', routes);
-
-// 8. 404 Route Handler
-app.use('/api/*', (req, res) => {
-  return sendError(res, `API route not found: ${req.method} ${req.originalUrl}`, [], 404);
-});
-
-// 9. Root Welcome Route
+// 5. Root Welcome & Health Check Routes
 app.get('/', (req, res) => {
   res.json({
     name: 'ShopSphere API',
     status: 'online',
+    version: '1.0.0',
     documentation: '/docs/api.md',
     healthCheck: '/api/health',
   });
+});
+
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+// 6. CSRF Cookie generation & Verification
+app.use(setCsrfCookie);
+app.use(verifyCsrfToken);
+
+// 7. Global API Rate Limiter
+app.use('/api', apiLimiter);
+
+// 8. Mount Application API Routes
+app.use('/api', routes);
+
+// 9. 404 Route Handler
+app.use('*', (req, res) => {
+  return sendError(res, `Route not found: ${req.method} ${req.originalUrl}`, [], 404);
 });
 
 // 10. Centralized Error Handling Middleware
