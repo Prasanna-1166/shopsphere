@@ -1,4 +1,5 @@
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
+const rawEnvUrl = (import.meta.env.VITE_API_BASE_URL || '/api').trim().replace(/\/+$/, '');
+const BASE_URL = rawEnvUrl.startsWith('http') && !rawEnvUrl.endsWith('/api') ? `${rawEnvUrl}/api` : rawEnvUrl;
 
 function getCookie(name) {
   const value = `; ${document.cookie}`;

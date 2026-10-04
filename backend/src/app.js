@@ -20,20 +20,30 @@ app.use(
 );
 
 // 2. CORS Configuration
-const allowedOrigins = [
-  config.cors.customerOrigin,
-  config.cors.adminOrigin,
+const normalizeOrigin = (url) => (url ? url.trim().replace(/\/+$/, '') : '');
+
+const rawAllowedOrigins = [
+  normalizeOrigin(config.cors.customerOrigin),
+  normalizeOrigin(config.cors.adminOrigin),
+  normalizeOrigin(config.cors.apiOrigin),
   'http://localhost:5173',
   'http://localhost:5174',
+  'http://localhost:5000',
   'http://127.0.0.1:5173',
   'http://127.0.0.1:5174',
-];
+  'http://127.0.0.1:5000',
+].filter(Boolean);
+
+const isOriginAllowed = (origin) => {
+  if (!origin) return true; // Mobile apps, curl, server-to-server
+  const clean = origin.trim().replace(/\/+$/, '');
+  return rawAllowedOrigins.includes(clean);
+};
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (e.g. mobile apps, curl, server-to-server)
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (isOriginAllowed(origin)) {
         return callback(null, true);
       }
       return callback(new Error(`CORS policy blocked access from origin: ${origin}`));
