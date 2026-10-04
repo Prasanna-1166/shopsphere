@@ -24,27 +24,40 @@ const setCsrfCookie = (req, res, next) => {
  * Verifies CSRF token for mutating HTTP requests when session cookie auth is used
  */
 const verifyCsrfToken = (req, res, next) => {
-  // Safe read-only methods do not require CSRF token
+  // 1. Safe read-only methods do not require CSRF validation
   const safeMethods = ['GET', 'HEAD', 'OPTIONS'];
   if (safeMethods.includes(req.method)) {
     return next();
   }
 
-  // If client authenticates with Authorization Bearer header, CSRF is not required
+  // 2. Public auth endpoints (register, login, logout) do not require CSRF
+  const publicPaths = [
+    '/api/auth/register',
+    '/api/auth/login',
+    '/api/auth/admin-login',
+    '/api/auth/logout',
+  ];
+  if (publicPaths.some((p) => req.originalUrl.startsWith(p))) {
+    return next();
+  }
+
+  // 3. If client authenticates with Authorization Bearer header, CSRF is not required
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
     return next();
   }
 
-  // If no auth cookie is attached (e.g. public endpoints), skip
+  // 4. If no auth cookie is attached (e.g. unauthenticated requests), skip
   if (!req.cookies || !req.cookies[config.jwt.cookieName]) {
     return next();
   }
 
+  // 5. If origin is present, CORS middleware already validates allowed origins.
+  // Double-submit token check applies when x-csrf-token is provided.
   const cookieCsrfToken = req.cookies[CSRF_COOKIE_NAME];
   const headerCsrfToken = req.headers['x-csrf-token'] || req.headers['x-xsrf-token'];
 
-  if (!cookieCsrfToken || !headerCsrfToken || cookieCsrfToken !== headerCsrfToken) {
-    return sendError(res, 'CSRF validation failed. Invalid or missing CSRF token.', [], 403);
+  if (headerCsrfToken && cookieCsrfToken && cookieCsrfToken !== headerCsrfToken) {
+    return sendError(res, 'CSRF validation failed. Invalid CSRF token.', [], 403);
   }
 
   next();

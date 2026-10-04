@@ -36,6 +36,9 @@ export function AdminAuthProvider({ children }) {
   const login = async (email, password) => {
     try {
       const res = await api.post('/auth/admin-login', { email, password });
+      if (res.data.token) {
+        localStorage.setItem('shopsphere_admin_token', res.data.token);
+      }
       setAdminUser(res.data.user);
       showToast(`Welcome, ${res.data.user.name}`, 'success');
       return { success: true };
@@ -49,10 +52,12 @@ export function AdminAuthProvider({ children }) {
   const logout = async () => {
     try {
       await api.post('/auth/logout');
+    } catch (err) {
+      // Ignore network error on logout
+    } finally {
+      localStorage.removeItem('shopsphere_admin_token');
       setAdminUser(null);
       showToast('Signed out of admin console.', 'info');
-    } catch (err) {
-      setAdminUser(null);
     }
   };
 

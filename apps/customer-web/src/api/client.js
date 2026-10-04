@@ -22,6 +22,12 @@ async function request(endpoint, options = {}) {
     ...options.headers,
   };
 
+  // Attach stored JWT token if present
+  const token = localStorage.getItem('shopsphere_customer_token');
+  if (token && !headers['Authorization']) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+
   // Attach CSRF token header for mutating requests
   const csrfToken = getCookie('shopsphere_csrf');
   if (csrfToken && !['GET', 'HEAD'].includes(options.method || 'GET')) {

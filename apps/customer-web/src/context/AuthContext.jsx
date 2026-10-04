@@ -31,6 +31,9 @@ export function AuthProvider({ children }) {
   const login = async (email, password) => {
     try {
       const res = await api.post('/auth/login', { email, password });
+      if (res.data.token) {
+        localStorage.setItem('shopsphere_customer_token', res.data.token);
+      }
       setUser(res.data.user);
       showToast('Welcome back to ShopSphere!', 'success');
       return { success: true };
@@ -44,6 +47,9 @@ export function AuthProvider({ children }) {
   const register = async (name, email, password) => {
     try {
       const res = await api.post('/auth/register', { name, email, password });
+      if (res.data.token) {
+        localStorage.setItem('shopsphere_customer_token', res.data.token);
+      }
       setUser(res.data.user);
       showToast('Account created successfully! Welcome to ShopSphere.', 'success');
       return { success: true };
@@ -57,10 +63,12 @@ export function AuthProvider({ children }) {
   const logout = async () => {
     try {
       await api.post('/auth/logout');
+    } catch (err) {
+      // Ignore network error on logout
+    } finally {
+      localStorage.removeItem('shopsphere_customer_token');
       setUser(null);
       showToast('You have been logged out.', 'info');
-    } catch (err) {
-      setUser(null);
     }
   };
 
