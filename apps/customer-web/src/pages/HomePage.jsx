@@ -7,8 +7,12 @@ import {
   Truck,
   RotateCcw,
   BadgePercent,
-  CheckCircle2,
   Sparkles,
+  ShoppingBasket,
+  Flame,
+  Clock,
+  CheckCircle2,
+  Package,
 } from 'lucide-react';
 import api from '../api/client';
 import ProductCard from '../components/common/ProductCard';
@@ -19,6 +23,7 @@ export default function HomePage() {
   const [featured, setFeatured] = useState([]);
   const [newArrivals, setNewArrivals] = useState([]);
   const [bestDeals, setBestDeals] = useState([]);
+  const [grocery, setGrocery] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -35,6 +40,7 @@ export default function HomePage() {
           setFeatured(showcaseRes.data.featured || []);
           setNewArrivals(showcaseRes.data.newArrivals || []);
           setBestDeals(showcaseRes.data.bestDeals || []);
+          setGrocery(showcaseRes.data.grocery || []);
         }
       } catch (err) {
         console.error('Error loading home data:', err);
@@ -46,45 +52,46 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="space-y-12 pb-16">
-      {/* 1. Practical Consumer Hero Section */}
-      <section className="bg-gradient-to-b from-slate-100 to-slate-50 border-b border-slate-200 py-10 md:py-16">
+    <div className="space-y-12 sm:space-y-16 pb-16">
+      {/* 1. Practical Consumer Hero Banner */}
+      <section className="bg-gradient-to-b from-slate-100 via-slate-50 to-white border-b border-slate-200/80 py-10 md:py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Left Content */}
             <div className="lg:col-span-7 space-y-5 text-center lg:text-left">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent-50 border border-accent-200 text-accent-700 text-xs font-semibold">
-                <BadgePercent className="w-3.5 h-3.5" />
-                <span>Everyday essentials starting at ₹249</span>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold">
+                <ShoppingBasket className="w-3.5 h-3.5 text-emerald-600" />
+                <span>Pantry Staples, Home & Everyday Gear Starting at ₹25</span>
               </div>
 
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
-                Good products. Fair prices. <br />
-                <span className="text-accent-600">Delivered to your door.</span>
+                Everyday essentials, <br />
+                <span className="text-accent-600">at prices that make sense.</span>
               </h1>
 
               <p className="text-base sm:text-lg text-slate-600 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                Discover everyday kitchen essentials, reliable audio accessories, comfortable apparel, and workspace organizers — curated for quality and priced honestly.
+                Everything your home and family need daily — unpolished pulses, aged basmati rice, pure cooking oils, kitchen cookware, tech accessories, and comfortable clothing.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 pt-2">
                 <Link
-                  to="/products"
-                  className="w-full sm:w-auto px-7 py-3 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm rounded-lg transition shadow-sm flex items-center justify-center gap-2"
+                  to="/products?category=grocery-daily-needs"
+                  className="w-full sm:w-auto px-7 py-3.5 bg-emerald-700 hover:bg-emerald-800 text-white font-semibold text-sm rounded-xl transition shadow-sm flex items-center justify-center gap-2"
                 >
-                  <ShoppingBag className="w-4 h-4" />
-                  <span>Shop Catalog</span>
+                  <ShoppingBasket className="w-4 h-4" />
+                  <span>Shop Daily Groceries</span>
                 </Link>
                 <Link
-                  to="/products?category=home-kitchen"
-                  className="w-full sm:w-auto px-6 py-3 bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 font-semibold text-sm rounded-lg transition flex items-center justify-center gap-2"
+                  to="/products"
+                  className="w-full sm:w-auto px-6 py-3.5 bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 font-semibold text-sm rounded-xl transition flex items-center justify-center gap-2 shadow-sm"
                 >
-                  <span>Kitchen & Home</span>
-                  <ArrowRight className="w-4 h-4 text-slate-500" />
+                  <ShoppingBag className="w-4 h-4 text-slate-500" />
+                  <span>Explore All Products</span>
+                  <ArrowRight className="w-4 h-4 text-slate-400" />
                 </Link>
               </div>
 
-              {/* 4 Trust Props */}
+              {/* Trust Value Props */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-slate-200 text-left">
                 <div className="flex items-center gap-2 text-xs font-medium text-slate-700">
                   <Truck className="w-4 h-4 text-accent-600 shrink-0" />
@@ -99,62 +106,79 @@ export default function HomePage() {
                   <span>7-Day Returns</span>
                 </div>
                 <div className="flex items-center gap-2 text-xs font-medium text-slate-700">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <BadgePercent className="w-4 h-4 text-emerald-600 shrink-0" />
                   <span>Cash on Delivery</span>
                 </div>
               </div>
             </div>
 
-            {/* Right Hero Product Collage */}
-            <div className="lg:col-span-5 relative">
-              <div className="grid grid-cols-2 gap-3 max-w-md mx-auto">
-                <div className="space-y-3">
-                  <div className="bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm">
-                    <img
-                      src="https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&auto=format&fit=crop&q=80"
-                      alt="Wireless Earbuds"
-                      className="w-full h-36 object-cover rounded-lg"
-                    />
-                    <div className="pt-2 text-left">
-                      <p className="text-xs font-bold text-slate-900 truncate">BoltAudio Earbuds</p>
-                      <p className="text-xs font-bold text-slate-900">₹1,299 <span className="text-[10px] text-slate-400 line-through">₹1,899</span></p>
-                    </div>
+            {/* Right Visual Feature Card */}
+            <div className="lg:col-span-5">
+              <div className="relative bg-white border border-slate-200 rounded-2xl p-6 shadow-xl space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                    <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                      Daily Indian Market Fresh
+                    </span>
                   </div>
-                  <div className="bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm">
-                    <img
-                      src="https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=500&auto=format&fit=crop&q=80"
-                      alt="Stainless Steel Water Bottle"
-                      className="w-full h-36 object-cover rounded-lg"
-                    />
-                    <div className="pt-2 text-left">
-                      <p className="text-xs font-bold text-slate-900 truncate">Thermosteel 1L</p>
-                      <p className="text-xs font-bold text-slate-900">₹649 <span className="text-[10px] text-slate-400 line-through">₹899</span></p>
-                    </div>
-                  </div>
+                  <span className="text-xs font-bold text-accent-600 bg-accent-50 px-2 py-0.5 rounded">
+                    106+ Items
+                  </span>
                 </div>
-                <div className="space-y-3 pt-6">
-                  <div className="bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm">
-                    <img
-                      src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500&auto=format&fit=crop&q=80"
-                      alt="UrbanShield Laptop Backpack"
-                      className="w-full h-36 object-cover rounded-lg"
-                    />
-                    <div className="pt-2 text-left">
-                      <p className="text-xs font-bold text-slate-900 truncate">Laptop Backpack</p>
-                      <p className="text-xs font-bold text-slate-900">₹1,199 <span className="text-[10px] text-slate-400 line-through">₹1,799</span></p>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <Link
+                    to="/products?category=grocery-daily-needs"
+                    className="p-3 rounded-xl bg-emerald-50/70 border border-emerald-100 hover:border-emerald-300 transition group block"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center mb-2">
+                      <ShoppingBasket className="w-4 h-4" />
                     </div>
-                  </div>
-                  <div className="bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm">
-                    <img
-                      src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500&auto=format&fit=crop&q=80"
-                      alt="Cotton Crewneck T-Shirt"
-                      className="w-full h-36 object-cover rounded-lg"
-                    />
-                    <div className="pt-2 text-left">
-                      <p className="text-xs font-bold text-slate-900 truncate">Cotton Tee</p>
-                      <p className="text-xs font-bold text-slate-900">₹449 <span className="text-[10px] text-slate-400 line-through">₹699</span></p>
+                    <p className="text-xs font-bold text-slate-900 group-hover:text-emerald-700">
+                      Grocery Staples
+                    </p>
+                    <p className="text-[11px] text-slate-500">Rice, Atta, Dals, Oils</p>
+                  </Link>
+
+                  <Link
+                    to="/products?category=home-kitchen"
+                    className="p-3 rounded-xl bg-amber-50/70 border border-amber-100 hover:border-amber-300 transition group block"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-amber-600 text-white flex items-center justify-center mb-2">
+                      <ShoppingBag className="w-4 h-4" />
                     </div>
-                  </div>
+                    <p className="text-xs font-bold text-slate-900 group-hover:text-amber-700">
+                      Kitchen Cookware
+                    </p>
+                    <p className="text-[11px] text-slate-500">Tawas, Bottles, Jars</p>
+                  </Link>
+
+                  <Link
+                    to="/products?category=electronics-accessories"
+                    className="p-3 rounded-xl bg-sky-50/70 border border-sky-100 hover:border-sky-300 transition group block"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-sky-600 text-white flex items-center justify-center mb-2">
+                      <Sparkles className="w-4 h-4" />
+                    </div>
+                    <p className="text-xs font-bold text-slate-900 group-hover:text-sky-700">
+                      Audio & Tech
+                    </p>
+                    <p className="text-[11px] text-slate-500">Earbuds, Chargers, Hubs</p>
+                  </Link>
+
+                  <Link
+                    to="/products?category=fashion-apparel"
+                    className="p-3 rounded-xl bg-purple-50/70 border border-purple-100 hover:border-purple-300 transition group block"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-purple-600 text-white flex items-center justify-center mb-2">
+                      <Package className="w-4 h-4" />
+                    </div>
+                    <p className="text-xs font-bold text-slate-900 group-hover:text-purple-700">
+                      Pure Cotton Wear
+                    </p>
+                    <p className="text-[11px] text-slate-500">Tees, Belts, Wallets</p>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -162,12 +186,16 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 2. Popular Categories */}
+      {/* 2. Shop By Department / Category Tiles */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h2 className="text-xl sm:text-2xl font-bold text-slate-900">Explore by Category</h2>
-            <p className="text-xs sm:text-sm text-slate-500 mt-0.5">Handpicked collections for everyday living</p>
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+              Shop by Department
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+              Explore categories curated for everyday Indian living
+            </p>
           </div>
           <Link
             to="/products"
@@ -178,55 +206,136 @@ export default function HomePage() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-          {categories.map((cat) => (
-            <Link
-              key={cat.id}
-              to={`/products?category=${cat.slug}`}
-              className="group bg-white border border-slate-200 rounded-xl p-3 text-center hover:border-slate-300 hover:shadow-md transition flex flex-col items-center justify-between"
-            >
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden bg-slate-100 mb-2 border border-slate-200">
-                <img
-                  src={cat.image || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200&auto=format&fit=crop&q=80'}
-                  alt={cat.name}
-                  loading="lazy"
-                  className="w-full h-full object-cover group-hover:scale-110 transition duration-300"
-                />
-              </div>
-              <h3 className="text-xs font-semibold text-slate-800 group-hover:text-slate-900 line-clamp-1">
-                {cat.name}
-              </h3>
-              <span className="text-[10px] text-slate-400 mt-0.5">Explore →</span>
-            </Link>
-          ))}
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 sm:gap-4">
+          {categories.map((cat) => {
+            const isGroceries = cat.slug === 'grocery-daily-needs';
+            return (
+              <Link
+                key={cat.id}
+                to={`/products?category=${cat.slug}`}
+                className={`group flex flex-col items-center text-center p-3 rounded-2xl border transition-all duration-200 ${
+                  isGroceries
+                    ? 'bg-emerald-50/80 border-emerald-200 hover:border-emerald-400 shadow-sm'
+                    : 'bg-white border-slate-200 hover:border-slate-300 hover:shadow-md'
+                }`}
+              >
+                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl overflow-hidden bg-slate-100 mb-2.5 relative">
+                  <img
+                    src={cat.image}
+                    alt={cat.name}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    loading="lazy"
+                  />
+                  {isGroceries && (
+                    <span className="absolute bottom-0 inset-x-0 bg-emerald-700 text-white text-[9px] font-bold py-0.5 text-center">
+                      ESSENTIAL
+                    </span>
+                  )}
+                </div>
+                <span className="text-xs font-bold text-slate-900 group-hover:text-accent-600 line-clamp-2 leading-tight">
+                  {cat.name}
+                </span>
+              </Link>
+            );
+          })}
         </div>
       </section>
 
-      {/* 3. Featured Products */}
+      {/* 3. DEDICATED GROCERY & DAILY NEEDS SPOTLIGHT */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-gradient-to-r from-emerald-900 to-teal-900 rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-white mb-6 relative overflow-hidden shadow-lg">
+          <div className="relative z-10 max-w-2xl space-y-2">
+            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-emerald-200 text-xs font-bold">
+              <ShoppingBasket className="w-3.5 h-3.5" />
+              <span>Pantry & Kitchen Staples</span>
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+              Grocery & Daily Needs
+            </h2>
+            <p className="text-emerald-100 text-sm leading-relaxed">
+              Unpolished pulses, aged basmati rice, cold-pressed oils, pure spices, detergent liquids, and family care essentials.
+            </p>
+            <div className="pt-2">
+              <Link
+                to="/products?category=grocery-daily-needs"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-emerald-900 font-bold text-xs rounded-xl hover:bg-emerald-50 transition shadow-sm"
+              >
+                <span>View All 32 Grocery Items</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {loading ? (
+          <ProductSkeletonGrid count={8} />
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+            {grocery.slice(0, 8).map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* 4. BEST VALUE DEALS (Honest Discounts) */}
+      {bestDeals.length > 0 && (
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-2.5">
+              <div className="p-2 rounded-xl bg-rose-50 text-rose-600">
+                <Flame className="w-5 h-5" />
+              </div>
+              <div>
+                <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+                  Best Value Deals
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+                  Top-rated everyday products with genuine discount pricing
+                </p>
+              </div>
+            </div>
+            <Link
+              to="/products"
+              className="text-xs sm:text-sm font-semibold text-accent-600 hover:text-accent-700 flex items-center gap-1"
+            >
+              <span>View All</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+            {bestDeals.slice(0, 8).map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* 5. POPULAR & TRENDING ESSENTIALS */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <div className="flex items-center gap-2">
-              <h2 className="text-xl sm:text-2xl font-bold text-slate-900">Featured Essentials</h2>
-              <span className="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[11px] font-bold rounded">
-                Top Rated
-              </span>
-            </div>
-            <p className="text-xs sm:text-sm text-slate-500 mt-0.5">Most loved products by customers across India</p>
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+              Popular Everyday Products
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+              Proven bestsellers across kitchen, electronics, and fashion
+            </p>
           </div>
           <Link
             to="/products"
             className="text-xs sm:text-sm font-semibold text-accent-600 hover:text-accent-700 flex items-center gap-1"
           >
-            <span>View All</span>
+            <span>Explore All</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
         {loading ? (
-          <ProductSkeletonGrid count={4} />
+          <ProductSkeletonGrid count={8} />
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
             {featured.slice(0, 8).map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
@@ -234,106 +343,155 @@ export default function HomePage() {
         )}
       </section>
 
-      {/* 4. Value / Promo Banner */}
+      {/* 6. SHOP BY NEED / CURATED COLLECTIONS */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-slate-900 text-white rounded-2xl p-6 sm:p-10 relative overflow-hidden border border-slate-800">
-          <div className="relative z-10 max-w-xl space-y-3">
-            <span className="px-2.5 py-1 bg-accent-600 text-white text-xs font-bold rounded uppercase tracking-wider inline-block">
-              Budget Friendly
+        <div className="mb-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+            Shop by Need
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+            Handpicked collections for your home, work, and lifestyle
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <Link
+            to="/products?category=grocery-daily-needs"
+            className="p-5 rounded-2xl bg-slate-50 border border-slate-200 hover:border-slate-300 hover:shadow-md transition space-y-2 group block"
+          >
+            <span className="text-xs font-bold text-emerald-700 uppercase tracking-wider">
+              Daily Pantry
             </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-              Quality Kitchenware & Essentials Under ₹999
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-              Upgrade your home with stainless steel insulated bottles, airtight glass containers, and durable cookware backed by our 7-day doorstep replacement guarantee.
+            <h3 className="text-base font-bold text-slate-900 group-hover:text-accent-600">
+              Monthly Grocery Stock
+            </h3>
+            <p className="text-xs text-slate-500 leading-relaxed">
+              Atta, rice, unpolished lentils, cooking oils, and spices for regular home cooking.
             </p>
-            <div className="pt-2">
-              <Link
-                to="/products?category=home-kitchen"
-                className="inline-flex items-center gap-2 px-6 py-2.5 bg-white hover:bg-slate-100 text-slate-900 text-xs font-bold rounded-lg transition"
-              >
-                <span>Shop Kitchen Essentials</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-          </div>
+          </Link>
+
+          <Link
+            to="/products?category=home-kitchen"
+            className="p-5 rounded-2xl bg-slate-50 border border-slate-200 hover:border-slate-300 hover:shadow-md transition space-y-2 group block"
+          >
+            <span className="text-xs font-bold text-amber-700 uppercase tracking-wider">
+              Cookware & Dining
+            </span>
+            <h3 className="text-base font-bold text-slate-900 group-hover:text-accent-600">
+              Kitchen Essentials
+            </h3>
+            <p className="text-xs text-slate-500 leading-relaxed">
+              Tri-ply fry pans, non-stick tawas, glass containers, and vacuum thermal bottles.
+            </p>
+          </Link>
+
+          <Link
+            to="/products?category=stationery-office"
+            className="p-5 rounded-2xl bg-slate-50 border border-slate-200 hover:border-slate-300 hover:shadow-md transition space-y-2 group block"
+          >
+            <span className="text-xs font-bold text-indigo-700 uppercase tracking-wider">
+              Work & Study
+            </span>
+            <h3 className="text-base font-bold text-slate-900 group-hover:text-accent-600">
+              Desk & Office Setup
+            </h3>
+            <p className="text-xs text-slate-500 leading-relaxed">
+              Aluminium laptop stands, executive journals, gel pens, and desk organizers.
+            </p>
+          </Link>
+
+          <Link
+            to="/products?category=travel-lifestyle"
+            className="p-5 rounded-2xl bg-slate-50 border border-slate-200 hover:border-slate-300 hover:shadow-md transition space-y-2 group block"
+          >
+            <span className="text-xs font-bold text-teal-700 uppercase tracking-wider">
+              Commute & Travel
+            </span>
+            <h3 className="text-base font-bold text-slate-900 group-hover:text-accent-600">
+              Travel Gear
+            </h3>
+            <p className="text-xs text-slate-500 leading-relaxed">
+              Neck pillows, packing cubes, compact umbrellas, and worldwide travel adapters.
+            </p>
+          </Link>
         </div>
       </section>
 
-      {/* 5. Best Deals Section */}
-      {bestDeals.length > 0 && (
+      {/* 7. NEW ARRIVALS */}
+      {newArrivals.length > 0 && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-6">
-            <div>
-              <div className="flex items-center gap-2">
-                <h2 className="text-xl sm:text-2xl font-bold text-slate-900">Best Value Deals</h2>
-                <span className="px-2 py-0.5 bg-rose-100 text-rose-700 text-[11px] font-bold rounded">
-                  Limited Period
-                </span>
+            <div className="flex items-center gap-2.5">
+              <div className="p-2 rounded-xl bg-accent-50 text-accent-700">
+                <Clock className="w-5 h-5" />
               </div>
-              <p className="text-xs sm:text-sm text-slate-500 mt-0.5">Top discounts on high-utility items</p>
+              <div>
+                <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+                  New Arrivals
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+                  Recently added catalog products for modern Indian households
+                </p>
+              </div>
             </div>
             <Link
-              to="/products"
+              to="/products?sortBy=newest"
               className="text-xs sm:text-sm font-semibold text-accent-600 hover:text-accent-700 flex items-center gap-1"
             >
-              <span>See All Deals</span>
+              <span>View All New</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
 
-          {loading ? (
-            <ProductSkeletonGrid count={4} />
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              {bestDeals.slice(0, 4).map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-          )}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+            {newArrivals.slice(0, 8).map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
         </section>
       )}
 
-      {/* 6. Why ShopSphere Trust Section */}
-      <section className="bg-white border-y border-slate-200 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-10">
-            <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
-              Why ShopSphere?
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-500 mt-1">
-              At the end of your streets — honest pricing, verified items, and neighborhood support.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-5 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2">
-              <div className="w-10 h-10 rounded-lg bg-slate-900 text-white flex items-center justify-center text-base font-bold">
-                ₹
+      {/* 8. TRUST & COMMITMENT BANNER */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-slate-900 text-white rounded-2xl sm:rounded-3xl p-6 sm:p-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center sm:text-left">
+            <div className="space-y-2">
+              <div className="w-10 h-10 rounded-xl bg-accent-500 text-slate-900 flex items-center justify-center mx-auto sm:mx-0 font-bold">
+                <Truck className="w-5 h-5" />
               </div>
-              <h3 className="text-sm font-bold text-slate-900">Transparent & Honest Pricing</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                No inflated markups or artificial discounts. Every item is priced sensibly for middle-class Indian households.
+              <h4 className="font-bold text-sm">Free Delivery on ₹499+</h4>
+              <p className="text-xs text-slate-400">
+                Direct shipping to all serviceable pin codes across India with tracking.
               </p>
             </div>
 
-            <div className="p-5 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2">
-              <div className="w-10 h-10 rounded-lg bg-slate-900 text-white flex items-center justify-center">
-                <ShieldCheck className="w-5 h-5 text-emerald-400" />
+            <div className="space-y-2">
+              <div className="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center mx-auto sm:mx-0 font-bold">
+                <ShieldCheck className="w-5 h-5" />
               </div>
-              <h3 className="text-sm font-bold text-slate-900">Verified Quality Sourcing</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                We inspect materials, durability, and manufacturer reliability before adding any product to the ShopSphere catalog.
+              <h4 className="font-bold text-sm">100% Genuine Products</h4>
+              <p className="text-xs text-slate-400">
+                Directly sourced from verified Indian manufacturers and genuine brands.
               </p>
             </div>
 
-            <div className="p-5 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2">
-              <div className="w-10 h-10 rounded-lg bg-slate-900 text-white flex items-center justify-center">
-                <Truck className="w-5 h-5 text-accent-400" />
+            <div className="space-y-2">
+              <div className="w-10 h-10 rounded-xl bg-accent-500 text-slate-900 flex items-center justify-center mx-auto sm:mx-0 font-bold">
+                <RotateCcw className="w-5 h-5" />
               </div>
-              <h3 className="text-sm font-bold text-slate-900">Reliable Doorstep Delivery</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Fast courier partnerships across 19,000+ Indian pincodes with real-time tracking and Cash on Delivery support.
+              <h4 className="font-bold text-sm">Easy 7-Day Returns</h4>
+              <p className="text-xs text-slate-400">
+                Hassle-free replacement or full refund if items arrive damaged or defective.
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <div className="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center mx-auto sm:mx-0 font-bold">
+                <BadgePercent className="w-5 h-5" />
+              </div>
+              <h4 className="font-bold text-sm">Affordable & Fair Prices</h4>
+              <p className="text-xs text-slate-400">
+                Everyday realistic pricing tailored for practical middle-class Indian families.
               </p>
             </div>
           </div>

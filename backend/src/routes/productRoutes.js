@@ -4,6 +4,7 @@ const productController = require('../controllers/productController');
 
 router.get('/', productController.getProducts);
 router.get('/showcase/featured', productController.getFeaturedProducts);
+router.get('/suggestions', productController.getSearchSuggestions);
 router.get('/slug/:slug', productController.getProductBySlug);
 router.get('/:id/related', productController.getRelatedProducts);
 router.get('/:id', productController.getProductById);

@@ -199,8 +199,8 @@ const getRelatedProducts = async (req, res, next) => {
  */
 const getFeaturedProducts = async (req, res, next) => {
   try {
-    const [featured, newArrivals, bestDeals] = await Promise.all([
-      // High rating / featured
+    const [featured, newArrivals, bestDeals, grocery] = await Promise.all([
+      // Popular / Featured essentials
       prisma.product.findMany({
         where: { active: true, stockQuantity: { gt: 0 } },
         include: {
@@ -220,7 +220,7 @@ const getFeaturedProducts = async (req, res, next) => {
         take: 8,
         orderBy: { createdAt: 'desc' },
       }),
-      // Best discounted deals
+      // Best discounted value deals
       prisma.product.findMany({
         where: {
           active: true,
@@ -231,8 +231,22 @@ const getFeaturedProducts = async (req, res, next) => {
           category: { select: { id: true, name: true, slug: true } },
           images: { orderBy: { sortOrder: 'asc' } },
         },
-        take: 6,
+        take: 8,
         orderBy: { discountPrice: 'asc' },
+      }),
+      // Dedicated Grocery & Daily Needs essentials
+      prisma.product.findMany({
+        where: {
+          active: true,
+          categoryId: 'cat_grocery_daily_needs',
+          stockQuantity: { gt: 0 },
+        },
+        include: {
+          category: { select: { id: true, name: true, slug: true } },
+          images: { orderBy: { sortOrder: 'asc' } },
+        },
+        take: 8,
+        orderBy: { createdAt: 'desc' },
       }),
     ]);
 
@@ -240,7 +254,52 @@ const getFeaturedProducts = async (req, res, next) => {
       featured,
       newArrivals,
       bestDeals,
+      grocery,
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * Get Instant Search Autocomplete Suggestions
+ */
+const getSearchSuggestions = async (req, res, next) => {
+  try {
+    const { q } = req.query;
+    if (!q || !q.trim() || q.trim().length < 2) {
+      return sendSuccess(res, 'Suggestions fetched.', { suggestions: [] });
+    }
+
+    const query = q.trim();
+    const suggestions = await prisma.product.findMany({
+      where: {
+        active: true,
+        OR: [
+          { name: { contains: query, mode: 'insensitive' } },
+          { category: { name: { contains: query, mode: 'insensitive' } } },
+          { description: { contains: query, mode: 'insensitive' } },
+        ],
+      },
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        price: true,
+        discountPrice: true,
+        category: {
+          select: { name: true, slug: true },
+        },
+        images: {
+          select: { url: true, altText: true },
+          take: 1,
+          orderBy: { sortOrder: 'asc' },
+        },
+      },
+      take: 6,
+    });
+
+    return sendSuccess(res, 'Suggestions fetched.', { suggestions });
   } catch (error) {
     next(error);
   }
@@ -252,4 +311,5 @@ module.exports = {
   getProductById,
   getRelatedProducts,
   getFeaturedProducts,
+  getSearchSuggestions,
 };
