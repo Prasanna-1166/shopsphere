@@ -51,20 +51,18 @@ const getAdminOrders = async (req, res, next) => {
       where.paymentStatus = paymentStatus;
     }
 
-    const [total, orders] = await Promise.all([
-      prisma.order.count({ where }),
-      prisma.order.findMany({
-        where,
-        include: {
-          user: { select: { id: true, name: true, email: true } },
-          items: true,
-          payments: { take: 1, orderBy: { createdAt: 'desc' } },
-        },
-        orderBy: { createdAt: 'desc' },
-        skip,
-        take,
-      }),
-    ]);
+    const total = await prisma.order.count({ where });
+    const orders = await prisma.order.findMany({
+      where,
+      include: {
+        user: { select: { id: true, name: true, email: true } },
+        items: true,
+        payments: { take: 1, orderBy: { createdAt: 'desc' } },
+      },
+      orderBy: { createdAt: 'desc' },
+      skip,
+      take,
+    });
 
     return sendSuccess(res, 'Orders fetched.', {
       orders,

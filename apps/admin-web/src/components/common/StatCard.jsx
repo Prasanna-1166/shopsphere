@@ -17,12 +17,12 @@ export default function StatCard({
   };
 
   return (
-    <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl">
+    <div className="p-5 rounded-xl bg-slate-900 border border-slate-800 space-y-3 shadow-sm hover:border-slate-700 transition">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{title}</span>
+        <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">{title}</span>
         {Icon && (
-          <div className={`p-2.5 rounded-xl border ${colorMap[color] || colorMap.admin}`}>
-            <Icon className="w-5 h-5" />
+          <div className={`p-2 rounded-lg border ${colorMap[color] || colorMap.admin}`}>
+            <Icon className="w-4 h-4" />
           </div>
         )}
       </div>

@@ -70,20 +70,18 @@ const getAdminProducts = async (req, res, next) => {
     if (sortBy === 'stock_desc') orderBy = { stockQuantity: 'desc' };
     if (sortBy === 'name_asc') orderBy = { name: 'asc' };
 
-    const [total, products] = await Promise.all([
-      prisma.product.count({ where }),
-      prisma.product.findMany({
-        where,
-        include: {
-          category: { select: { id: true, name: true, slug: true } },
-          images: { orderBy: { sortOrder: 'asc' } },
-          _count: { select: { orderItems: true } },
-        },
-        orderBy,
-        skip,
-        take,
-      }),
-    ]);
+    const total = await prisma.product.count({ where });
+    const products = await prisma.product.findMany({
+      where,
+      include: {
+        category: { select: { id: true, name: true, slug: true } },
+        images: { orderBy: { sortOrder: 'asc' } },
+        _count: { select: { orderItems: true } },
+      },
+      orderBy,
+      skip,
+      take,
+    });
 
     return sendSuccess(res, 'Admin products fetched.', {
       products,

@@ -6,56 +6,52 @@ const { sendSuccess } = require('../../utils/response');
  */
 const getDashboardMetrics = async (req, res, next) => {
   try {
-    const [
-      revenueAggregate,
-      totalOrders,
-      totalCustomers,
-      totalProducts,
-      pendingOrders,
-      lowStockProductsCount,
-      recentOrders,
-      topOrderItems,
-    ] = await Promise.all([
-      // Total Revenue from Paid Orders
-      prisma.order.aggregate({
-        _sum: { totalAmount: true },
-        where: { paymentStatus: 'PAID' },
-      }),
-      // Total Orders Count
-      prisma.order.count(),
-      // Total Customers Count
-      prisma.user.count({
-        where: { role: 'CUSTOMER' },
-      }),
-      // Total Products Count
-      prisma.product.count(),
-      // Pending Orders
-      prisma.order.count({
-        where: { status: 'PENDING' },
-      }),
-      // Low Stock Products (<= 5)
-      prisma.product.count({
-        where: { stockQuantity: { lte: 5 }, active: true },
-      }),
-      // Recent 6 Orders
-      prisma.order.findMany({
-        take: 6,
-        orderBy: { createdAt: 'desc' },
-        include: {
-          user: { select: { id: true, name: true, email: true } },
-          items: { select: { id: true, productName: true, quantity: true, unitPrice: true } },
-        },
-      }),
-      // Aggregation for Top Products
-      prisma.orderItem.groupBy({
-        by: ['productId', 'productName', 'sku'],
-        _sum: { quantity: true, subtotal: true },
-        orderBy: {
-          _sum: { quantity: 'desc' },
-        },
-        take: 5,
-      }),
-    ]);
+    // 1. Total Revenue from Paid Orders
+    const revenueAggregate = await prisma.order.aggregate({
+      _sum: { totalAmount: true },
+      where: { paymentStatus: 'PAID' },
+    });
+
+    // 2. Total Orders Count
+    const totalOrders = await prisma.order.count();
+
+    // 3. Total Customers Count
+    const totalCustomers = await prisma.user.count({
+      where: { role: 'CUSTOMER' },
+    });
+
+    // 4. Total Products Count
+    const totalProducts = await prisma.product.count();
+
+    // 5. Pending Orders
+    const pendingOrders = await prisma.order.count({
+      where: { status: 'PENDING' },
+    });
+
+    // 6. Low Stock Products (<= 5)
+    const lowStockProductsCount = await prisma.product.count({
+      where: { stockQuantity: { lte: 5 }, active: true },
+    });
+
+    // 7. Recent 6 Orders
+    const recentOrders = await prisma.order.findMany({
+      take: 6,
+      orderBy: { createdAt: 'desc' },
+      include: {
+        user: { select: { id: true, name: true, email: true } },
+        items: { select: { id: true, productName: true, quantity: true, unitPrice: true } },
+      },
+    });
+
+    // 8. Aggregation for Top Products
+    const topOrderItems = await prisma.orderItem.groupBy({
+      by: ['productId', 'productName', 'sku'],
+      _sum: { quantity: true, subtotal: true },
+      orderBy: {
+        _sum: { quantity: 'desc' },
+      },
+      take: 5,
+    });
 
     const totalRevenue = revenueAggregate._sum.totalAmount || 0;
 

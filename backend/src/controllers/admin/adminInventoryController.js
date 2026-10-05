@@ -26,26 +26,24 @@ const getInventory = async (req, res, next) => {
       where.stockQuantity = { lte: 5 };
     }
 
-    const [total, products] = await Promise.all([
-      prisma.product.count({ where }),
-      prisma.product.findMany({
-        where,
-        select: {
-          id: true,
-          name: true,
-          sku: true,
-          price: true,
-          stockQuantity: true,
-          active: true,
-          category: { select: { name: true } },
-          updatedAt: true,
-          _count: { select: { inventoryTransactions: true } },
-        },
-        orderBy: { stockQuantity: 'asc' },
-        skip,
-        take,
-      }),
-    ]);
+    const total = await prisma.product.count({ where });
+    const products = await prisma.product.findMany({
+      where,
+      select: {
+        id: true,
+        name: true,
+        sku: true,
+        price: true,
+        stockQuantity: true,
+        active: true,
+        category: { select: { name: true } },
+        updatedAt: true,
+        _count: { select: { inventoryTransactions: true } },
+      },
+      orderBy: { stockQuantity: 'asc' },
+      skip,
+      take,
+    });
 
     return sendSuccess(res, 'Inventory items fetched.', {
       inventory: products,

@@ -26,19 +26,20 @@ const getProducts = async (req, res, next) => {
     };
 
     // Category filter (slug or ID)
-    if (category) {
+    if (category && category.trim()) {
+      const catVal = category.trim();
       where.category = {
-        OR: [{ id: category }, { slug: category }],
+        OR: [{ id: catVal }, { slug: catVal }],
       };
     }
 
-    // Search query across name, sku, and description
+    // Search query across name, sku, and description (case-insensitive for PostgreSQL)
     if (search && search.trim()) {
       const q = search.trim();
       where.OR = [
-        { name: { contains: q } },
-        { sku: { contains: q } },
-        { description: { contains: q } },
+        { name: { contains: q, mode: 'insensitive' } },
+        { sku: { contains: q, mode: 'insensitive' } },
+        { description: { contains: q, mode: 'insensitive' } },
       ];
     }
 
@@ -70,23 +71,21 @@ const getProducts = async (req, res, next) => {
       orderBy = { createdAt: 'desc' };
     }
 
-    const [total, products] = await Promise.all([
-      prisma.product.count({ where }),
-      prisma.product.findMany({
-        where,
-        include: {
-          category: {
-            select: { id: true, name: true, slug: true },
-          },
-          images: {
-            orderBy: { sortOrder: 'asc' },
-          },
+    const total = await prisma.product.count({ where });
+    const products = await prisma.product.findMany({
+      where,
+      include: {
+        category: {
+          select: { id: true, name: true, slug: true },
         },
-        orderBy,
-        skip,
-        take,
-      }),
-    ]);
+        images: {
+          orderBy: { sortOrder: 'asc' },
+        },
+      },
+      orderBy,
+      skip,
+      take,
+    });
 
     const totalPages = Math.ceil(total / take);
 

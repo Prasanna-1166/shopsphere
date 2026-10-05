@@ -29,29 +29,27 @@ const getAdminCustomers = async (req, res, next) => {
       where.status = status;
     }
 
-    const [total, customers] = await Promise.all([
-      prisma.user.count({ where }),
-      prisma.user.findMany({
-        where,
-        select: {
-          id: true,
-          name: true,
-          email: true,
-          status: true,
-          createdAt: true,
-          _count: {
-            select: { orders: true },
-          },
-          orders: {
-            where: { paymentStatus: 'PAID' },
-            select: { totalAmount: true },
-          },
+    const total = await prisma.user.count({ where });
+    const customers = await prisma.user.findMany({
+      where,
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        status: true,
+        createdAt: true,
+        _count: {
+          select: { orders: true },
         },
-        orderBy: { createdAt: 'desc' },
-        skip,
-        take,
-      }),
-    ]);
+        orders: {
+          where: { paymentStatus: 'PAID' },
+          select: { totalAmount: true },
+        },
+      },
+      orderBy: { createdAt: 'desc' },
+      skip,
+      take,
+    });
 
     const enrichedCustomers = customers.map((c) => {
       const totalSpent = c.orders.reduce((sum, ord) => sum + ord.totalAmount, 0);

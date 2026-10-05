@@ -1,5 +1,19 @@
-require('dotenv').config({ path: require('path').resolve(__dirname, '../../../.env') });
-require('dotenv').config(); // Also check local backend/.env if present
+const path = require('path');
+const dotenv = require('dotenv');
+
+// Load environment from workspace root or backend root
+dotenv.config({ path: path.resolve(__dirname, '../../../.env') });
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+dotenv.config();
+
+// Ensure DATABASE_URL uses direct Neon host for fast reliable connections
+if (process.env.DATABASE_URL) {
+  let cleaned = process.env.DATABASE_URL.replace('-pooler', '');
+  if (!cleaned.includes('connect_timeout')) {
+    cleaned += (cleaned.includes('?') ? '&' : '?') + 'connect_timeout=30';
+  }
+  process.env.DATABASE_URL = cleaned;
+}
 
 module.exports = {
   env: process.env.NODE_ENV || 'development',

@@ -10,6 +10,8 @@ import {
   ArrowRight,
   TrendingUp,
   RefreshCw,
+  Plus,
+  Boxes,
 } from 'lucide-react';
 import api from '../api/client';
 import StatCard from '../components/common/StatCard';
@@ -47,11 +49,11 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="space-y-8 animate-pulse">
+      <div className="space-y-6 animate-pulse">
         <div className="h-8 bg-slate-900 rounded w-48" />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="h-32 bg-slate-900 rounded-3xl" />
+            <div key={i} className="h-28 bg-slate-900 rounded-xl" />
           ))}
         </div>
       </div>
@@ -63,32 +65,41 @@ export default function DashboardPage() {
   const topProducts = data?.topProducts || [];
 
   return (
-    <div className="space-y-8 max-w-7xl mx-auto">
+    <div className="space-y-6 max-w-7xl mx-auto">
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-            Store Performance
+          <h1 className="text-2xl font-bold text-white tracking-tight">
+            Store Performance Overview
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-400 mt-0.5">
             Real-time server aggregated operational summary
           </p>
         </div>
 
-        <button
-          onClick={loadMetrics}
-          className="flex items-center gap-2 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-800 font-semibold text-xs rounded-xl transition self-start sm:self-auto"
-        >
-          <RefreshCw className="w-3.5 h-3.5" />
-          <span>Refresh Metrics</span>
-        </button>
+        <div className="flex items-center gap-2 self-start sm:self-auto">
+          <Link
+            to="/products"
+            className="flex items-center gap-1.5 px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs rounded-lg transition shadow-sm"
+          >
+            <Plus className="w-3.5 h-3.5" />
+            <span>Manage Catalog</span>
+          </Link>
+          <button
+            onClick={loadMetrics}
+            className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-800 font-semibold text-xs rounded-lg transition"
+          >
+            <RefreshCw className="w-3.5 h-3.5" />
+            <span>Refresh</span>
+          </button>
+        </div>
       </div>
 
       {/* 4 Primary Metric Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
           title="Total Revenue"
-          value={`₹${overview.totalRevenue?.toLocaleString('en-IN')}`}
+          value={`₹${(overview.totalRevenue || 0).toLocaleString('en-IN')}`}
           subtitle="Settled paid transactions"
           icon={DollarSign}
           color="emerald"
@@ -119,56 +130,56 @@ export default function DashboardPage() {
         />
       </div>
 
-      {/* Secondary Metric Highlights */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* Operational Highlights */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Pending Orders Alert */}
-        <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 flex items-center justify-between shadow-xl">
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-amber-500/10 text-amber-400 rounded-2xl border border-amber-500/20">
-              <Clock className="w-6 h-6" />
+        <div className="p-5 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+          <div className="flex items-center gap-3.5">
+            <div className="p-2.5 bg-amber-500/10 text-amber-400 rounded-lg border border-amber-500/20">
+              <Clock className="w-5 h-5" />
             </div>
             <div>
-              <div className="text-xs font-bold text-slate-400 uppercase">Pending Fulfillment</div>
-              <div className="text-2xl font-black text-white">{overview.pendingOrders || 0} orders</div>
+              <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Pending Orders</div>
+              <div className="text-xl font-bold text-white">{overview.pendingOrders || 0} orders</div>
             </div>
           </div>
           <Link
             to="/orders?status=PENDING"
-            className="px-4 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 font-bold text-xs rounded-xl border border-amber-500/30 transition flex items-center gap-1.5"
+            className="px-3.5 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 font-semibold text-xs rounded-lg border border-amber-500/30 transition flex items-center gap-1.5"
           >
-            <span>Process</span>
+            <span>View Orders</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
         {/* Low Stock Products Alert */}
-        <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 flex items-center justify-between shadow-xl">
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-rose-500/10 text-rose-400 rounded-2xl border border-rose-500/20">
-              <AlertTriangle className="w-6 h-6" />
+        <div className="p-5 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+          <div className="flex items-center gap-3.5">
+            <div className="p-2.5 bg-rose-500/10 text-rose-400 rounded-lg border border-rose-500/20">
+              <AlertTriangle className="w-5 h-5" />
             </div>
             <div>
-              <div className="text-xs font-bold text-slate-400 uppercase">Low Stock Alert</div>
-              <div className="text-2xl font-black text-white">{overview.lowStockProductsCount || 0} products</div>
+              <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Low Stock Inventory</div>
+              <div className="text-xl font-bold text-white">{overview.lowStockProductsCount || 0} items</div>
             </div>
           </div>
           <Link
-            to="/inventory?lowStockOnly=true"
-            className="px-4 py-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 font-bold text-xs rounded-xl border border-rose-500/30 transition flex items-center gap-1.5"
+            to="/inventory"
+            className="px-3.5 py-1.5 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 font-semibold text-xs rounded-lg border border-rose-500/30 transition flex items-center gap-1.5"
           >
-            <span>Restock</span>
+            <span>Manage Stock</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
       </div>
 
       {/* 2-Column Section: Recent Orders & Top Selling Products */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Recent Orders Table */}
-        <div className="lg:col-span-8 p-6 rounded-3xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl">
+        <div className="lg:col-span-8 p-5 rounded-xl bg-slate-900 border border-slate-800 space-y-4 shadow-sm">
           <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-            <h2 className="text-base font-bold text-white tracking-tight">Recent Orders</h2>
-            <Link to="/orders" className="text-xs font-bold text-admin-400 hover:underline">
+            <h2 className="text-sm font-bold text-white tracking-tight">Recent Orders</h2>
+            <Link to="/orders" className="text-xs font-semibold text-indigo-400 hover:text-indigo-300">
               View All Orders →
             </Link>
           </div>
@@ -176,29 +187,29 @@ export default function DashboardPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="text-slate-400 uppercase font-bold border-b border-slate-800">
-                  <th className="pb-3">Order ID</th>
-                  <th className="pb-3">Customer</th>
-                  <th className="pb-3">Total</th>
-                  <th className="pb-3">Status</th>
-                  <th className="pb-3 text-right">Action</th>
+                <tr className="text-slate-400 uppercase font-semibold border-b border-slate-800">
+                  <th className="pb-2.5">Order ID</th>
+                  <th className="pb-2.5">Customer</th>
+                  <th className="pb-2.5">Total</th>
+                  <th className="pb-2.5">Status</th>
+                  <th className="pb-2.5 text-right">Action</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-800/60">
                 {recentOrders.length === 0 ? (
                   <tr>
                     <td colSpan={5} className="py-8 text-center text-slate-500">
-                      No orders placed yet.
+                      No customer orders placed yet. Orders will appear here automatically once customers checkout.
                     </td>
                   </tr>
                 ) : (
                   recentOrders.map((ord) => (
-                    <tr key={ord.id} className="hover:bg-slate-850/50 transition">
-                      <td className="py-3 font-mono font-bold text-slate-300">
+                    <tr key={ord.id} className="hover:bg-slate-800/40 transition">
+                      <td className="py-3 font-mono font-medium text-slate-300">
                         #{ord.id.slice(0, 10)}...
                       </td>
                       <td className="py-3">
-                        <div className="font-bold text-white">{ord.user?.name}</div>
+                        <div className="font-semibold text-white">{ord.user?.name}</div>
                         <div className="text-[10px] text-slate-500">{ord.user?.email}</div>
                       </td>
                       <td className="py-3 font-bold text-white">
@@ -206,7 +217,7 @@ export default function DashboardPage() {
                       </td>
                       <td className="py-3">
                         <span
-                          className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold border uppercase tracking-wider ${
+                          className={`px-2 py-0.5 rounded-full text-[10px] font-semibold border uppercase tracking-wider ${
                             STATUS_PILLS[ord.status] || 'bg-slate-800 text-slate-300'
                           }`}
                         >
@@ -216,9 +227,9 @@ export default function DashboardPage() {
                       <td className="py-3 text-right">
                         <Link
                           to={`/orders?search=${ord.id}`}
-                          className="text-admin-400 hover:text-admin-300 font-bold"
+                          className="text-indigo-400 hover:text-indigo-300 font-semibold"
                         >
-                          Inspect
+                          View Details
                         </Link>
                       </td>
                     </tr>
@@ -230,28 +241,28 @@ export default function DashboardPage() {
         </div>
 
         {/* Top Selling Products */}
-        <div className="lg:col-span-4 p-6 rounded-3xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl">
+        <div className="lg:col-span-4 p-5 rounded-xl bg-slate-900 border border-slate-800 space-y-4 shadow-sm">
           <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-            <h2 className="text-base font-bold text-white tracking-tight flex items-center gap-2">
-              <TrendingUp className="w-4 h-4 text-brand-400" />
+            <h2 className="text-sm font-bold text-white tracking-tight flex items-center gap-2">
+              <TrendingUp className="w-4 h-4 text-indigo-400" />
               <span>Top Products</span>
             </h2>
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-2.5">
             {topProducts.length === 0 ? (
               <p className="text-xs text-slate-500 py-6 text-center">No sales recorded yet.</p>
             ) : (
               topProducts.map((p, idx) => (
                 <div
                   key={p.productId || idx}
-                  className="p-3 bg-slate-950 rounded-2xl border border-slate-800/80 space-y-1"
+                  className="p-3 bg-slate-950 rounded-lg border border-slate-800/80 space-y-1"
                 >
                   <div className="flex justify-between items-start gap-2">
-                    <span className="text-xs font-bold text-white truncate max-w-[180px]">
+                    <span className="text-xs font-semibold text-white truncate max-w-[180px]">
                       {p.productName}
                     </span>
-                    <span className="text-xs font-mono font-bold text-brand-400">
+                    <span className="text-xs font-mono font-bold text-indigo-400">
                       ₹{p.totalRevenue?.toLocaleString('en-IN')}
                     </span>
                   </div>

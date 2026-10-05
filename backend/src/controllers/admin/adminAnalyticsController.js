@@ -6,73 +6,64 @@ const { sendSuccess } = require('../../utils/response');
  */
 const getAnalytics = async (req, res, next) => {
   try {
-    const [
-      revenueAggregate,
-      ordersByStatus,
-      topProductsSold,
-      salesByCategory,
-      customerGrowth,
-      recentOrdersList,
-    ] = await Promise.all([
-      // Total Revenue & Total Paid Orders
-      prisma.order.aggregate({
-        _sum: { totalAmount: true },
-        _count: { id: true },
-        _avg: { totalAmount: true },
-        where: { paymentStatus: 'PAID' },
-      }),
+    // 1. Total Revenue & Total Paid Orders
+    const revenueAggregate = await prisma.order.aggregate({
+      _sum: { totalAmount: true },
+      _count: { id: true },
+      _avg: { totalAmount: true },
+      where: { paymentStatus: 'PAID' },
+    });
 
-      // Orders Grouped by Status
-      prisma.order.groupBy({
-        by: ['status'],
-        _count: { id: true },
-      }),
+    // 2. Orders Grouped by Status
+    const ordersByStatus = await prisma.order.groupBy({
+      by: ['status'],
+      _count: { id: true },
+    });
 
-      // Top Selling Products
-      prisma.orderItem.groupBy({
-        by: ['productId', 'productName'],
-        _sum: { quantity: true, subtotal: true },
-        orderBy: { _sum: { quantity: 'desc' } },
-        take: 6,
-      }),
+    // 3. Top Selling Products
+    const topProductsSold = await prisma.orderItem.groupBy({
+      by: ['productId', 'productName'],
+      _sum: { quantity: true, subtotal: true },
+      orderBy: { _sum: { quantity: 'desc' } },
+      take: 6,
+    });
 
-      // Sales Grouped by Category (via Product Category relations)
-      prisma.category.findMany({
-        select: {
-          id: true,
-          name: true,
-          products: {
-            select: {
-              orderItems: {
-                select: { subtotal: true, quantity: true },
-              },
+    // 4. Sales Grouped by Category (via Product Category relations)
+    const salesByCategory = await prisma.category.findMany({
+      select: {
+        id: true,
+        name: true,
+        products: {
+          select: {
+            orderItems: {
+              select: { subtotal: true, quantity: true },
             },
           },
         },
-      }),
+      },
+    });
 
-      // Customer Registration count
-      prisma.user.count({
-        where: { role: 'CUSTOMER' },
-      }),
+    // 5. Customer Registration count
+    const customerGrowth = await prisma.user.count({
+      where: { role: 'CUSTOMER' },
+    });
 
-      // Recent 30 days orders for trend
-      prisma.order.findMany({
-        where: {
-          createdAt: {
-            gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
-          },
+    // 6. Recent 30 days orders for trend
+    const recentOrdersList = await prisma.order.findMany({
+      where: {
+        createdAt: {
+          gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
         },
-        select: {
-          id: true,
-          totalAmount: true,
-          status: true,
-          paymentStatus: true,
-          createdAt: true,
-        },
-        orderBy: { createdAt: 'asc' },
-      }),
-    ]);
+      },
+      select: {
+        id: true,
+        totalAmount: true,
+        status: true,
+        paymentStatus: true,
+        createdAt: true,
+      },
+      orderBy: { createdAt: 'asc' },
+    });
 
     const totalRevenue = revenueAggregate._sum.totalAmount || 0;
     const totalPaidOrders = revenueAggregate._count.id || 0;

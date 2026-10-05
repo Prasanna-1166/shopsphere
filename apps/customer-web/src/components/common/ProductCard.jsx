@@ -1,14 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, ShoppingBag } from 'lucide-react';
+import { Heart, ShoppingBag, Check } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
 
 export default function ProductCard({ product }) {
   const { addToCart } = useCart();
   const { isInWishlist, toggleWishlist } = useWishlist();
+  const [justAdded, setJustAdded] = useState(false);
 
   if (!product) return null;
+
+  const handleAddToCart = async (e) => {
+    e.preventDefault();
+    if (product.stockQuantity <= 0) return;
+    await addToCart(product.id, 1);
+    setJustAdded(true);
+    setTimeout(() => setJustAdded(false), 1200);
+  };
 
   const inWish = isInWishlist(product.id);
   const isOutOfStock = product.stockQuantity <= 0;
@@ -109,17 +118,28 @@ export default function ProductCard({ product }) {
           </div>
 
           <button
-            onClick={() => addToCart(product.id, 1)}
+            onClick={handleAddToCart}
             disabled={isOutOfStock}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 shadow-sm ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 flex items-center gap-1.5 shadow-sm ${
               isOutOfStock
                 ? 'bg-slate-100 text-slate-400 cursor-not-allowed border border-slate-200'
+                : justAdded
+                ? 'bg-emerald-600 text-white scale-105'
                 : 'bg-slate-900 hover:bg-slate-800 text-white active:scale-95'
             }`}
-            title={isOutOfStock ? 'Sold Out' : 'Add to Cart'}
+            title={isOutOfStock ? 'Sold Out' : justAdded ? 'Added to Cart!' : 'Add to Cart'}
           >
-            <ShoppingBag className="w-3.5 h-3.5" />
-            <span>Add</span>
+            {justAdded ? (
+              <>
+                <Check className="w-3.5 h-3.5" />
+                <span>Added</span>
+              </>
+            ) : (
+              <>
+                <ShoppingBag className="w-3.5 h-3.5" />
+                <span>Add</span>
+              </>
+            )}
           </button>
         </div>
       </div>

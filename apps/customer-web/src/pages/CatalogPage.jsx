@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import {
   SlidersHorizontal,
   Search,
@@ -7,6 +7,9 @@ import {
   ChevronLeft,
   ChevronRight,
   RotateCcw,
+  AlertCircle,
+  RefreshCw,
+  ShoppingBag,
 } from 'lucide-react';
 import api from '../api/client';
 import ProductCard from '../components/common/ProductCard';
@@ -28,6 +31,7 @@ export default function CatalogPage() {
   const [categories, setCategories] = useState([]);
   const [pagination, setPagination] = useState({ total: 0, page: 1, limit: 12, totalPages: 1 });
   const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState(null);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
   // Filters from URL Search Params
@@ -51,13 +55,16 @@ export default function CatalogPage() {
       .then((res) => {
         if (res.data) setCategories(res.data.categories || []);
       })
-      .catch(() => {});
+      .catch((err) => {
+        console.error('Failed to load categories:', err);
+      });
   }, []);
 
   // Fetch Products whenever search params change
   const fetchProducts = useCallback(async () => {
     try {
       setLoading(true);
+      setFetchError(null);
       const queryParams = new URLSearchParams();
       if (search) queryParams.set('search', search);
       if (category) queryParams.set('category', category);
@@ -75,6 +82,7 @@ export default function CatalogPage() {
       }
     } catch (err) {
       console.error('Error fetching catalog products:', err);
+      setFetchError(err.message || 'Unable to connect to product catalog server.');
     } finally {
       setLoading(false);
     }
@@ -93,7 +101,7 @@ export default function CatalogPage() {
         nextParams.set(key, val);
       }
     });
-    // Reset to page 1 on filter changes
+    // Reset to page 1 on filter changes unless explicit page update
     if (!updates.page) {
       nextParams.set('page', 1);
     }
@@ -117,7 +125,7 @@ export default function CatalogPage() {
       {/* Breadcrumb & Header */}
       <div className="mb-6">
         <div className="text-xs text-slate-500 mb-1.5 flex items-center gap-1.5">
-          <span>Home</span>
+          <Link to="/" className="hover:text-slate-900 transition">Home</Link>
           <span>/</span>
           <span className="text-slate-800 font-medium">
             {selectedCategoryObj ? selectedCategoryObj.name : 'All Products'}
@@ -129,7 +137,11 @@ export default function CatalogPage() {
               {selectedCategoryObj ? selectedCategoryObj.name : 'Store Catalog'}
             </h1>
             <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-              Showing {pagination.total} genuine products with doorstep delivery
+              {loading
+                ? 'Loading genuine products...'
+                : fetchError
+                ? 'Server connection issue'
+                : `Showing ${products.length} of ${pagination.total} products with doorstep delivery`}
             </p>
           </div>
 
@@ -215,7 +227,7 @@ export default function CatalogPage() {
               <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
               <button
                 type="submit"
-                className="absolute right-1 top-1/2 -translate-y-1/2 px-2.5 py-1 bg-slate-900 text-white text-[10px] font-bold rounded"
+                className="absolute right-1 top-1/2 -translate-y-1/2 px-2.5 py-1 bg-slate-900 text-white text-[10px] font-bold rounded hover:bg-slate-800"
               >
                 Find
               </button>
@@ -284,7 +296,7 @@ export default function CatalogPage() {
             <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 mb-3">
               Availability
             </h4>
-            <label className="flex items-center gap-2.5 text-xs text-slate-700 cursor-pointer">
+            <label className="flex items-center gap-2.5 text-xs text-slate-700 cursor-pointer select-none">
               <input
                 type="checkbox"
                 checked={inStock}
@@ -300,10 +312,27 @@ export default function CatalogPage() {
         <main className="lg:col-span-3">
           {loading ? (
             <ProductSkeletonGrid count={6} />
+          ) : fetchError ? (
+            <div className="p-8 text-center bg-white border border-rose-200 rounded-2xl max-w-lg mx-auto space-y-4">
+              <div className="w-12 h-12 bg-rose-50 text-rose-500 rounded-full flex items-center justify-center mx-auto">
+                <AlertCircle className="w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-slate-900">Unable to load products right now</h3>
+                <p className="text-xs text-slate-500 mt-1">{fetchError}</p>
+              </div>
+              <button
+                onClick={fetchProducts}
+                className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg transition inline-flex items-center gap-2 shadow-sm"
+              >
+                <RefreshCw className="w-3.5 h-3.5" />
+                <span>Retry Connection</span>
+              </button>
+            </div>
           ) : products.length === 0 ? (
             <EmptyState
-              title="No matching products found"
-              message="We couldn't find any products matching your current filters or search term. Try resetting your filters."
+              title="No products match your filters"
+              message="We couldn't find any products matching your current category, price range, or search keyword. Try clearing or relaxing your filters."
               actionLabel="Clear All Filters"
               onAction={clearAllFilters}
             />
