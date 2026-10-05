@@ -30,12 +30,6 @@ export default function LoginPage() {
     }
   };
 
-  const handleFillDemoCustomer = () => {
-    setEmail('customer@shopsphere.com');
-    setPassword('Customer@123');
-    setErrorMessage('');
-  };
-
   return (
     <div className="min-h-[75vh] flex items-center justify-center px-4 py-12">
       <div className="max-w-md w-full space-y-6 bg-white border border-slate-200 p-8 sm:p-10 rounded-2xl shadow-sm">
@@ -50,21 +44,6 @@ export default function LoginPage() {
           <p className="text-xs text-slate-500">
             Sign in to access your orders, shopping cart, and saved addresses
           </p>
-        </div>
-
-        {/* Demo Account Quick Fill */}
-        <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
-          <div className="text-xs">
-            <span className="font-bold text-slate-800 block text-[11px]">Testing Customer Account?</span>
-            <span className="text-[11px] text-slate-500 font-mono">customer@shopsphere.com</span>
-          </div>
-          <button
-            type="button"
-            onClick={handleFillDemoCustomer}
-            className="px-3 py-1 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-md transition shrink-0"
-          >
-            Auto Fill
-          </button>
         </div>
 
         {errorMessage && (

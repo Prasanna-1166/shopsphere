@@ -6,7 +6,7 @@ import CartDrawer from '../cart/CartDrawer';
 
 export default function CustomerLayout() {
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 selection:bg-brand-500 selection:text-slate-950">
+    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 selection:bg-slate-900 selection:text-white">
       <Navbar />
       <main className="flex-1">
         <Outlet />
