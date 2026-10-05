@@ -24,6 +24,7 @@ services:
       - key: PAYMENT_PROVIDER
         value: MOCK
     healthCheckPath: /api/health
+    renderSubdomainPolicy: enabled
 
   # Customer Frontend Static Site
   - type: web
