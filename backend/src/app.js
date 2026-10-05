@@ -20,12 +20,23 @@ app.use(
 );
 
 // 2. CORS Configuration
-const normalizeOrigin = (url) => (url ? url.trim().replace(/\/+$/, '') : '');
+const parseOrigins = (val) => {
+  if (!val) return [];
+  return String(val)
+    .split(',')
+    .map((u) => u.trim().replace(/\/+$/, ''))
+    .filter(Boolean);
+};
 
 const rawAllowedOrigins = [
-  normalizeOrigin(config.cors.customerOrigin),
-  normalizeOrigin(config.cors.adminOrigin),
-  normalizeOrigin(config.cors.apiOrigin),
+  ...parseOrigins(config.cors.customerOrigin),
+  ...parseOrigins(config.cors.adminOrigin),
+  ...parseOrigins(config.cors.apiOrigin),
+  ...parseOrigins(process.env.ALLOWED_ORIGINS),
+  'https://shop.dvlpr.dpdns.org',
+  'https://admin.dvlpr.dpdns.org',
+  'https://shopsphere-customer-web.onrender.com',
+  'https://shopsphere-admin-web.onrender.com',
   'http://localhost:5173',
   'http://localhost:5174',
   'http://localhost:5000',
@@ -35,25 +46,42 @@ const rawAllowedOrigins = [
 ].filter(Boolean);
 
 const isOriginAllowed = (origin) => {
-  if (!origin) return true; // Mobile apps, curl, server-to-server
+  if (!origin) return true; // Mobile apps, curl, server-to-server, Postman
   const clean = origin.trim().replace(/\/+$/, '');
-  return rawAllowedOrigins.includes(clean);
+  if (rawAllowedOrigins.includes(clean)) return true;
+
+  // Allow dynamically any *.dpdns.org or *.onrender.com domain
+  try {
+    const parsed = new URL(clean);
+    if (
+      parsed.hostname.endsWith('.dpdns.org') ||
+      parsed.hostname.endsWith('.onrender.com') ||
+      parsed.hostname === 'localhost' ||
+      parsed.hostname === '127.0.0.1'
+    ) {
+      return true;
+    }
+  } catch (e) {
+    // Malformed origin
+  }
+  return false;
 };
 
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (isOriginAllowed(origin)) {
-        return callback(null, true);
-      }
-      return callback(new Error(`CORS policy blocked access from origin: ${origin}`));
-    },
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-CSRF-Token', 'x-csrf-token', 'x-xsrf-token'],
-    exposedHeaders: ['Set-Cookie'],
-  })
-);
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (isOriginAllowed(origin)) {
+      return callback(null, true);
+    }
+    return callback(null, false);
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-CSRF-Token', 'x-csrf-token', 'x-xsrf-token'],
+  exposedHeaders: ['Set-Cookie'],
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 // 3. Body & Cookie Parsing
 app.use(express.json({ limit: '10mb' }));
