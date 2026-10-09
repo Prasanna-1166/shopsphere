@@ -66,9 +66,14 @@ export default function CartPage() {
     );
   }
 
+  const totalQty = summary?.totalQuantity ?? items.reduce((acc, it) => acc + (it.quantity || 1), 0);
+  const subtotal = summary?.subtotal ?? items.reduce((acc, it) => {
+    const p = it.product?.discountPrice ?? it.product?.price ?? 0;
+    return acc + p * (it.quantity || 1);
+  }, 0);
   const freeDeliveryThreshold = 499;
-  const deliveryFee = summary.subtotal >= freeDeliveryThreshold ? 0 : 49;
-  const finalTotal = Math.max(0, summary.subtotal + deliveryFee - couponDiscount);
+  const deliveryFee = subtotal >= freeDeliveryThreshold || subtotal === 0 ? 0 : 49;
+  const finalTotal = Math.max(0, subtotal + deliveryFee - couponDiscount);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
@@ -77,7 +82,7 @@ export default function CartPage() {
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Your Shopping Cart</h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-            {summary.totalQuantity} item(s) in your basket
+            {totalQty} item(s) in your basket
           </p>
         </div>
         <button
@@ -89,10 +94,10 @@ export default function CartPage() {
       </div>
 
       {/* Free Delivery Banner */}
-      {summary.subtotal < freeDeliveryThreshold && (
+      {subtotal < freeDeliveryThreshold && (
         <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900 flex items-center justify-between">
           <span>
-            Add <strong>₹{(freeDeliveryThreshold - summary.subtotal).toLocaleString('en-IN')}</strong> more for <strong>FREE Delivery</strong>!
+            Add <strong>₹{(freeDeliveryThreshold - subtotal).toLocaleString('en-IN')}</strong> more for <strong>FREE Delivery</strong>!
           </span>
           <Link to="/products" className="font-bold underline">Add Items</Link>
         </div>
@@ -104,15 +109,20 @@ export default function CartPage() {
         <div className="lg:col-span-8 space-y-4">
           <div className="bg-white border border-slate-200 rounded-xl divide-y divide-slate-100 shadow-sm overflow-hidden">
             {items.map((item) => {
-              const prod = item.product;
+              const prod = item.product || {};
               const imgUrl = prod.images?.[0]?.url || GENERIC_PRODUCT_FALLBACK_IMAGE;
-              const price = prod.discountPrice || prod.price;
+              const price = Number(prod.discountPrice ?? prod.price ?? item.unitPrice ?? 0);
+              const regularPrice = Number(prod.price ?? item.regularPrice ?? price);
+              const qty = Number(item.quantity || 1);
+              const stock = prod.stockQuantity ?? item.availableStock ?? 99;
+              const name = prod.name || item.productName || 'Product';
+              const slug = prod.slug || '';
 
               return (
                 <div key={item.id} className="p-4 sm:p-5 flex gap-4 items-center">
                   {/* Thumbnail */}
-                  <Link to={`/products/${prod.slug}`} className="w-20 h-20 sm:w-24 sm:h-24 rounded-lg bg-slate-100 overflow-hidden shrink-0 border border-slate-200">
-                    <img src={imgUrl} alt={prod.name} onError={handleImageError} className="w-full h-full object-cover" />
+                  <Link to={slug ? `/products/${slug}` : '/products'} className="w-20 h-20 sm:w-24 sm:h-24 rounded-lg bg-slate-100 overflow-hidden shrink-0 border border-slate-200">
+                    <img src={imgUrl} alt={name} onError={handleImageError} className="w-full h-full object-cover" />
                   </Link>
 
                   {/* Info */}
@@ -121,18 +131,18 @@ export default function CartPage() {
                       {prod.category?.name || 'Item'}
                     </span>
                     <Link
-                      to={`/products/${prod.slug}`}
+                      to={slug ? `/products/${slug}` : '/products'}
                       className="text-sm font-semibold text-slate-900 hover:text-accent-600 transition block truncate"
                     >
-                      {prod.name}
+                      {name}
                     </Link>
                     <div className="flex items-baseline gap-2">
                       <span className="text-sm font-bold text-slate-900">
                         ₹{price.toLocaleString('en-IN')}
                       </span>
-                      {prod.discountPrice && (
+                      {prod.discountPrice && regularPrice > price && (
                         <span className="text-xs text-slate-400 line-through">
-                          ₹{prod.price.toLocaleString('en-IN')}
+                          ₹{regularPrice.toLocaleString('en-IN')}
                         </span>
                       )}
                     </div>
@@ -141,17 +151,17 @@ export default function CartPage() {
                     <div className="flex items-center gap-4 pt-2">
                       <div className="flex items-center border border-slate-300 rounded-lg bg-slate-50">
                         <button
-                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                          onClick={() => updateQuantity(item.id, qty - 1)}
                           className="p-1 text-slate-600 hover:text-slate-900"
                         >
                           <Minus className="w-3.5 h-3.5" />
                         </button>
                         <span className="w-8 text-center text-xs font-bold text-slate-900">
-                          {item.quantity}
+                          {qty}
                         </span>
                         <button
-                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                          disabled={item.quantity >= prod.stockQuantity}
+                          onClick={() => updateQuantity(item.id, qty + 1)}
+                          disabled={qty >= stock}
                           className="p-1 text-slate-600 hover:text-slate-900 disabled:opacity-30"
                         >
                           <Plus className="w-3.5 h-3.5" />
@@ -171,7 +181,7 @@ export default function CartPage() {
                   {/* Line Subtotal */}
                   <div className="text-right shrink-0">
                     <span className="text-sm sm:text-base font-bold text-slate-900">
-                      ₹{(price * item.quantity).toLocaleString('en-IN')}
+                      ₹{(price * qty).toLocaleString('en-IN')}
                     </span>
                   </div>
                 </div>
@@ -225,7 +235,7 @@ export default function CartPage() {
               <div className="flex justify-between">
                 <span>Items Subtotal</span>
                 <span className="font-semibold text-slate-900">
-                  ₹{summary.subtotal.toLocaleString('en-IN')}
+                  ₹{subtotal.toLocaleString('en-IN')}
                 </span>
               </div>
               {couponDiscount > 0 && (

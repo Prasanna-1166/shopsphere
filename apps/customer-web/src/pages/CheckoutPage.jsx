@@ -343,9 +343,14 @@ export default function CheckoutPage() {
     );
   }
 
+  const totalQty = summary?.totalQuantity ?? items.reduce((acc, it) => acc + (it.quantity || 1), 0);
+  const subtotal = summary?.subtotal ?? items.reduce((acc, it) => {
+    const p = it.product?.discountPrice ?? it.product?.price ?? 0;
+    return acc + p * (it.quantity || 1);
+  }, 0);
   const freeDeliveryThreshold = 1500;
-  const deliveryFee = summary.subtotal >= freeDeliveryThreshold ? 0 : 99;
-  const finalTotal = summary.subtotal + deliveryFee;
+  const deliveryFee = subtotal >= freeDeliveryThreshold || subtotal === 0 ? 0 : 99;
+  const finalTotal = subtotal + deliveryFee;
   const isSim = paymentConfig?.isSimulated || paymentConfig?.provider === 'SIMULATOR';
 
   return (
@@ -733,24 +738,26 @@ export default function CheckoutPage() {
         <div className="lg:col-span-4 space-y-4">
           <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
             <h3 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3">
-              Order Summary ({summary.totalQuantity} items)
+              Order Summary ({totalQty} items)
             </h3>
 
             {/* Items Mini List */}
             <div className="space-y-3 max-h-56 overflow-y-auto pr-1">
               {items.map((item) => {
-                const prod = item.product;
-                const price = prod.discountPrice !== null ? prod.discountPrice : prod.price;
+                const prod = item.product || {};
+                const price = Number(prod.discountPrice ?? prod.price ?? item.unitPrice ?? 0);
+                const qty = Number(item.quantity || 1);
+                const name = prod.name || item.productName || 'Product';
                 return (
                   <div key={item.id} className="flex items-center justify-between text-xs">
                     <div className="flex items-center gap-2 min-w-0 pr-2">
                       <span className="w-5 h-5 rounded bg-slate-100 text-slate-700 font-bold flex items-center justify-center shrink-0 text-[10px]">
-                        {item.quantity}x
+                        {qty}x
                       </span>
-                      <span className="text-slate-800 truncate font-medium">{prod.name}</span>
+                      <span className="text-slate-800 truncate font-medium">{name}</span>
                     </div>
                     <span className="font-bold text-slate-900 shrink-0">
-                      ₹{(price * item.quantity).toLocaleString('en-IN')}
+                      ₹{(price * qty).toLocaleString('en-IN')}
                     </span>
                   </div>
                 );
@@ -762,7 +769,7 @@ export default function CheckoutPage() {
               <div className="flex justify-between">
                 <span>Items Subtotal</span>
                 <span className="font-semibold text-slate-900">
-                  ₹{summary.subtotal.toLocaleString('en-IN')}
+                  ₹{subtotal.toLocaleString('en-IN')}
                 </span>
               </div>
               <div className="flex justify-between">

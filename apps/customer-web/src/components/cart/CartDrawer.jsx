@@ -28,7 +28,7 @@ export default function CartDrawer() {
               </div>
               <div>
                 <h2 className="text-base font-bold text-slate-900">Your Cart</h2>
-                <p className="text-xs text-slate-500">{summary.totalQuantity} item(s)</p>
+                <p className="text-xs text-slate-500">{summary?.totalQuantity ?? items.length} item(s)</p>
               </div>
             </div>
             <button
@@ -62,20 +62,23 @@ export default function CartDrawer() {
               </div>
             ) : (
               items.map((item) => {
-                const prod = item.product;
+                const prod = item.product || {};
                 const imgUrl = prod.images?.[0]?.url || GENERIC_PRODUCT_FALLBACK_IMAGE;
-                const price = prod.discountPrice || prod.price;
+                const price = Number(prod.discountPrice ?? prod.price ?? item.unitPrice ?? 0);
+                const stock = prod.stockQuantity ?? item.availableStock ?? 99;
+                const name = prod.name || item.productName || 'Product';
+                const slug = prod.slug || '';
 
                 return (
                   <div key={item.id} className="p-3 bg-slate-50 border border-slate-200 rounded-xl flex gap-3 items-center">
-                    <img src={imgUrl} alt={prod.name} onError={handleImageError} className="w-16 h-16 rounded-lg object-cover bg-white shrink-0 border border-slate-200" />
+                    <img src={imgUrl} alt={name} onError={handleImageError} className="w-16 h-16 rounded-lg object-cover bg-white shrink-0 border border-slate-200" />
                     <div className="flex-1 min-w-0 space-y-1">
                       <Link
-                        to={`/products/${prod.slug}`}
+                        to={slug ? `/products/${slug}` : '/products'}
                         onClick={() => setIsCartDrawerOpen(false)}
                         className="text-xs font-semibold text-slate-900 hover:text-accent-600 block truncate"
                       >
-                        {prod.name}
+                        {name}
                       </Link>
                       <div className="text-xs font-bold text-slate-900">
                         ₹{price.toLocaleString('en-IN')}
@@ -83,15 +86,15 @@ export default function CartDrawer() {
                       <div className="flex items-center gap-3 pt-1">
                         <div className="flex items-center border border-slate-300 rounded bg-white">
                           <button
-                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            onClick={() => updateQuantity(item.id, (item.quantity || 1) - 1)}
                             className="p-1 text-slate-500 hover:text-slate-900"
                           >
                             <Minus className="w-3 h-3" />
                           </button>
-                          <span className="w-6 text-center text-xs font-bold text-slate-900">{item.quantity}</span>
+                          <span className="w-6 text-center text-xs font-bold text-slate-900">{item.quantity || 1}</span>
                           <button
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                            disabled={item.quantity >= prod.stockQuantity}
+                            onClick={() => updateQuantity(item.id, (item.quantity || 1) + 1)}
+                            disabled={(item.quantity || 1) >= stock}
                             className="p-1 text-slate-500 hover:text-slate-900 disabled:opacity-30"
                           >
                             <Plus className="w-3 h-3" />
@@ -118,7 +121,7 @@ export default function CartDrawer() {
               <div className="flex justify-between text-xs text-slate-600">
                 <span>Subtotal</span>
                 <span className="font-bold text-slate-900 text-sm">
-                  ₹{summary.subtotal.toLocaleString('en-IN')}
+                  ₹{(summary?.subtotal ?? items.reduce((acc, it) => acc + ((it.product?.discountPrice ?? it.product?.price ?? 0) * (it.quantity || 1)), 0)).toLocaleString('en-IN')}
                 </span>
               </div>
               <p className="text-[11px] text-slate-400">

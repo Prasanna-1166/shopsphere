@@ -24,13 +24,13 @@
     "prisma:studio": "npx prisma studio"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2",
-    "prisma": "^5.19.1"
+    "concurrently": "^8.2.2"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.10.0",
     "@prisma/client": "^5.19.1",
-    "pg": "^8.23.1"
+    "pg": "^8.23.1",
+    "prisma": "^5.19.1"
   },
   "keywords": [
     "ecommerce",
