@@ -1,29 +1,30 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
-  ShoppingCart,
+  ShoppingBag,
   Search,
-  Eye,
-  CheckCircle2,
+  Filter,
+  CheckCircle,
   XCircle,
+  Clock,
   Truck,
-  Package,
-  Calendar,
   ChevronLeft,
   ChevronRight,
-  Clock,
+  ExternalLink,
+  ShieldCheck,
+  CreditCard,
 } from 'lucide-react';
 import api from '../api/client';
 import { useToast } from '../context/ToastContext';
 import Modal from '../components/common/Modal';
 
 const STATUS_PILLS = {
-  PENDING: 'bg-amber-500/10 text-amber-400 border-amber-500/30',
-  CONFIRMED: 'bg-blue-500/10 text-blue-400 border-blue-500/30',
-  PROCESSING: 'bg-purple-500/10 text-purple-400 border-purple-500/30',
-  SHIPPED: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/30',
-  DELIVERED: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
-  CANCELLED: 'bg-rose-500/10 text-rose-400 border-rose-500/30',
+  PENDING: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
+  CONFIRMED: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
+  PROCESSING: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
+  SHIPPED: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20',
+  DELIVERED: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
+  CANCELLED: 'bg-rose-500/10 text-rose-400 border-rose-500/20',
 };
 
 const VALID_TRANSITIONS = {
@@ -43,13 +44,7 @@ export default function OrdersPage() {
   const [pagination, setPagination] = useState({ total: 0, page: 1, limit: 15, totalPages: 1 });
   const [loading, setLoading] = useState(true);
 
-  // Filters
-  const search = searchParams.get('search') || '';
-  const status = searchParams.get('status') || '';
-  const paymentStatus = searchParams.get('paymentStatus') || '';
-  const page = parseInt(searchParams.get('page'), 10) || 1;
-
-  // Selected Order for Inspection
+  // Inspection Modal State
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [detailLoading, setDetailLoading] = useState(false);
@@ -57,15 +52,33 @@ export default function OrdersPage() {
   const [statusNote, setStatusNote] = useState('');
   const [updatingStatus, setUpdatingStatus] = useState(false);
 
-  const loadOrders = useCallback(async () => {
+  // Filters from URL
+  const search = searchParams.get('search') || '';
+  const status = searchParams.get('status') || '';
+  const paymentStatus = searchParams.get('paymentStatus') || '';
+  const page = parseInt(searchParams.get('page') || '1', 10);
+
+  const updateParam = (key, value) => {
+    const nextParams = new URLSearchParams(searchParams);
+    if (value) {
+      nextParams.set(key, value);
+    } else {
+      nextParams.delete(key);
+    }
+    if (key !== 'page') nextParams.delete('page');
+    setSearchParams(nextParams);
+  };
+
+  const loadOrders = async () => {
     try {
       setLoading(true);
-      const query = new URLSearchParams();
-      if (search) query.set('search', search);
-      if (status) query.set('status', status);
-      if (paymentStatus) query.set('paymentStatus', paymentStatus);
-      query.set('page', page);
-      query.set('limit', '15');
+      const query = new URLSearchParams({
+        page: page.toString(),
+        limit: '15',
+        ...(search && { search }),
+        ...(status && { status }),
+        ...(paymentStatus && { paymentStatus }),
+      });
 
       const res = await api.get(`/admin/orders?${query.toString()}`);
       if (res.data) {
@@ -73,36 +86,29 @@ export default function OrdersPage() {
         setPagination(res.data.pagination || { total: 0, page: 1, limit: 15, totalPages: 1 });
       }
     } catch (err) {
-      console.error('Error fetching admin orders:', err);
+      showToast(err.message || 'Failed to fetch orders.', 'error');
     } finally {
       setLoading(false);
     }
-  }, [search, status, paymentStatus, page]);
+  };
 
   useEffect(() => {
     loadOrders();
-  }, [loadOrders]);
-
-  const updateParam = (key, value) => {
-    const params = new URLSearchParams(searchParams);
-    if (value) params.set(key, value);
-    else params.delete(key);
-    params.set('page', '1');
-    setSearchParams(params);
-  };
+  }, [search, status, paymentStatus, page]);
 
   const handleInspectOrder = async (orderId) => {
     try {
-      setIsDetailModalOpen(true);
       setDetailLoading(true);
+      setIsDetailModalOpen(true);
       const res = await api.get(`/admin/orders/${orderId}`);
-      if (res.data) {
+      if (res.data && res.data.order) {
         setSelectedOrder(res.data.order);
         setTargetStatus('');
         setStatusNote('');
       }
     } catch (err) {
-      showToast('Could not load order details.', 'error');
+      showToast(err.message || 'Failed to fetch order details.', 'error');
+      setIsDetailModalOpen(false);
     } finally {
       setDetailLoading(false);
     }
@@ -110,37 +116,39 @@ export default function OrdersPage() {
 
   const handleUpdateStatus = async (e) => {
     e.preventDefault();
-    if (!selectedOrder || !targetStatus) return;
+    if (!targetStatus) return;
 
     try {
       setUpdatingStatus(true);
       await api.patch(`/admin/orders/${selectedOrder.id}/status`, {
         status: targetStatus,
-        note: statusNote || `Status changed from ${selectedOrder.status} to ${targetStatus}`,
+        note: statusNote,
       });
 
       showToast(`Order status updated to ${targetStatus}.`, 'success');
-      await handleInspectOrder(selectedOrder.id);
+      setIsDetailModalOpen(false);
       await loadOrders();
     } catch (err) {
-      showToast(err.message || 'Status transition rejected.', 'error');
+      showToast(err.message || 'Failed to update order status.', 'error');
     } finally {
       setUpdatingStatus(false);
     }
   };
 
   const allowedNextStatuses = selectedOrder ? VALID_TRANSITIONS[selectedOrder.status] || [] : [];
+  const activePayment = selectedOrder?.payments?.[0];
 
   return (
-    <div className="space-y-8 max-w-7xl mx-auto">
+    <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-            Order Fulfillment & Processing
+          <h1 className="text-xl sm:text-2xl font-black text-white flex items-center gap-2.5">
+            <ShoppingBag className="w-6 h-6 text-admin-400" />
+            Order Fulfillment & Real Payment Audit
           </h1>
           <p className="text-xs text-slate-400 mt-1">
-            Track customer orders, validate state transitions, and process logistics
+            Track customer orders, verify real Razorpay payment provider references, and manage logistics
           </p>
         </div>
       </div>
@@ -150,7 +158,7 @@ export default function OrdersPage() {
         <div className="relative">
           <input
             type="text"
-            placeholder="Search by Order ID or customer email..."
+            placeholder="Search by Order ID, customer email..."
             value={search}
             onChange={(e) => updateParam('search', e.target.value)}
             className="w-full bg-slate-950 text-xs text-white pl-9 pr-3 py-2.5 rounded-xl border border-slate-800 focus:outline-none focus:border-admin-500"
@@ -195,8 +203,8 @@ export default function OrdersPage() {
                 <th className="p-4">Customer</th>
                 <th className="p-4">Date</th>
                 <th className="p-4">Amount</th>
+                <th className="p-4">Payment & Gateway</th>
                 <th className="p-4">Fulfillment</th>
-                <th className="p-4">Payment</th>
                 <th className="p-4 text-right">Action</th>
               </tr>
             </thead>
@@ -204,7 +212,7 @@ export default function OrdersPage() {
               {loading ? (
                 <tr>
                   <td colSpan={7} className="p-8 text-center text-slate-500">
-                    Loading orders...
+                    Loading orders from database...
                   </td>
                 </tr>
               ) : orders.length === 0 ? (
@@ -214,57 +222,81 @@ export default function OrdersPage() {
                   </td>
                 </tr>
               ) : (
-                orders.map((ord) => (
-                  <tr key={ord.id} className="hover:bg-slate-850/50 transition">
-                    <td className="p-4 font-mono font-bold text-slate-300">
-                      #{ord.id.slice(0, 10)}...
-                    </td>
-                    <td className="p-4">
-                      <div className="font-bold text-white">{ord.user?.name}</div>
-                      <div className="text-[10px] text-slate-500">{ord.user?.email}</div>
-                    </td>
-                    <td className="p-4 text-slate-400">
-                      {new Date(ord.createdAt).toLocaleDateString('en-IN', {
-                        day: 'numeric',
-                        month: 'short',
-                        year: 'numeric',
-                      })}
-                    </td>
-                    <td className="p-4 font-bold text-white">
-                      ₹{ord.totalAmount.toLocaleString('en-IN')}
-                    </td>
-                    <td className="p-4">
-                      <span
-                        className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold border uppercase tracking-wider ${
-                          STATUS_PILLS[ord.status] || 'bg-slate-800 text-slate-300'
-                        }`}
-                      >
-                        {ord.status}
-                      </span>
-                    </td>
-                    <td className="p-4">
-                      <span
-                        className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase font-mono ${
-                          ord.paymentStatus === 'PAID'
-                            ? 'bg-emerald-500/20 text-emerald-400'
-                            : ord.paymentStatus === 'REFUNDED'
-                            ? 'bg-purple-500/20 text-purple-400'
-                            : 'bg-amber-500/20 text-amber-400'
-                        }`}
-                      >
-                        {ord.paymentStatus}
-                      </span>
-                    </td>
-                    <td className="p-4 text-right">
-                      <button
-                        onClick={() => handleInspectOrder(ord.id)}
-                        className="px-3 py-1.5 bg-admin-600 hover:bg-admin-500 text-white font-bold text-xs rounded-xl transition"
-                      >
-                        Inspect
-                      </button>
-                    </td>
-                  </tr>
-                ))
+                orders.map((ord) => {
+                  const pay = ord.payments?.[0];
+                  return (
+                    <tr key={ord.id} className="hover:bg-slate-850/50 transition">
+                      <td className="p-4 font-mono font-bold text-slate-300">
+                        #{ord.id.slice(0, 10)}...
+                      </td>
+                      <td className="p-4">
+                        <div className="font-bold text-white">{ord.user?.name}</div>
+                        <div className="text-[10px] text-slate-500">{ord.user?.email}</div>
+                      </td>
+                      <td className="p-4 text-slate-400">
+                        {new Date(ord.createdAt).toLocaleDateString('en-IN', {
+                          day: 'numeric',
+                          month: 'short',
+                          year: 'numeric',
+                        })}
+                      </td>
+                      <td className="p-4 font-bold text-white">
+                        ₹{ord.totalAmount.toLocaleString('en-IN')}
+                      </td>
+                      <td className="p-4 space-y-1">
+                        <div className="flex items-center gap-1.5">
+                          <span
+                            className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase font-mono ${
+                              ord.paymentStatus === 'PAID'
+                                ? 'bg-emerald-500/20 text-emerald-400'
+                                : ord.paymentStatus === 'REFUNDED'
+                                ? 'bg-purple-500/20 text-purple-400'
+                                : ord.paymentStatus === 'FAILED'
+                                ? 'bg-rose-500/20 text-rose-400'
+                                : 'bg-amber-500/20 text-amber-400'
+                            }`}
+                          >
+                            {ord.paymentStatus}
+                          </span>
+                          <span className="text-[10px] font-semibold text-slate-300">
+                            {pay?.provider || 'SIMULATOR'}
+                          </span>
+                          {pay?.provider === 'SIMULATOR' || pay?.provider === 'MOCK' ? (
+                            <span className="px-1.5 py-0.2 bg-purple-500/20 text-purple-300 border border-purple-400/30 text-[9px] font-bold rounded">
+                              TEST
+                            </span>
+                          ) : pay?.provider === 'RAZORPAY' ? (
+                            <span className="px-1.5 py-0.2 bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 text-[9px] font-bold rounded">
+                              GATEWAY
+                            </span>
+                          ) : null}
+                        </div>
+                        {pay?.providerReference && (
+                          <div className="text-[10px] text-slate-500 font-mono truncate max-w-[150px]" title={pay.providerReference}>
+                            {pay.providerReference}
+                          </div>
+                        )}
+                      </td>
+                      <td className="p-4">
+                        <span
+                          className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold border uppercase tracking-wider ${
+                            STATUS_PILLS[ord.status] || 'bg-slate-800 text-slate-300'
+                          }`}
+                        >
+                          {ord.status}
+                        </span>
+                      </td>
+                      <td className="p-4 text-right">
+                        <button
+                          onClick={() => handleInspectOrder(ord.id)}
+                          className="px-3 py-1.5 bg-admin-600 hover:bg-admin-500 text-white font-bold text-xs rounded-xl transition"
+                        >
+                          Inspect
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })
               )}
             </tbody>
           </table>
@@ -305,9 +337,85 @@ export default function OrdersPage() {
         maxWidth="max-w-4xl"
       >
         {detailLoading ? (
-          <p className="text-xs text-slate-500 py-8 text-center">Loading full details...</p>
+          <p className="text-xs text-slate-500 py-8 text-center">Loading full order & payment records...</p>
         ) : selectedOrder ? (
           <div className="space-y-6 text-xs">
+            {/* Payment Information Card */}
+            <div className="p-4 bg-slate-950 rounded-2xl border border-slate-800 space-y-3">
+              <div className="flex items-center justify-between border-b border-slate-900 pb-2">
+                <span className="font-bold text-white flex items-center gap-2">
+                  <ShieldCheck className={`w-4 h-4 ${
+                    activePayment?.provider === 'SIMULATOR' || activePayment?.provider === 'MOCK'
+                      ? 'text-purple-400'
+                      : 'text-emerald-400'
+                  }`} />
+                  <span>
+                    {activePayment?.provider === 'SIMULATOR' || activePayment?.provider === 'MOCK'
+                      ? 'Local Simulator Payment Record (Test Sandbox — No Real Currency)'
+                      : activePayment?.provider === 'COD'
+                      ? 'Cash on Delivery (COD) Record'
+                      : 'Real Gateway Payment Record (Razorpay Standard)'}
+                  </span>
+                </span>
+                <span
+                  className={`px-2.5 py-0.5 rounded text-[10px] font-bold uppercase font-mono ${
+                    selectedOrder.paymentStatus === 'PAID'
+                      ? 'bg-emerald-500/20 text-emerald-400'
+                      : selectedOrder.paymentStatus === 'REFUNDED'
+                      ? 'bg-purple-500/20 text-purple-400'
+                      : selectedOrder.paymentStatus === 'FAILED'
+                      ? 'bg-rose-500/20 text-rose-400'
+                      : 'bg-amber-500/20 text-amber-400'
+                  }`}
+                >
+                  {selectedOrder.paymentStatus}
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-[11px]">
+                <div>
+                  <span className="text-slate-500 block">Payment Provider</span>
+                  <div className="flex items-center gap-1.5 mt-0.5">
+                    <strong className="text-slate-200">{activePayment?.provider || 'SIMULATOR'}</strong>
+                    {activePayment?.provider === 'SIMULATOR' || activePayment?.provider === 'MOCK' ? (
+                      <span className="px-1.5 py-0.2 bg-purple-500/20 text-purple-300 text-[9px] font-bold rounded">
+                        TEST
+                      </span>
+                    ) : activePayment?.provider === 'RAZORPAY' ? (
+                      <span className="px-1.5 py-0.2 bg-emerald-500/20 text-emerald-300 text-[9px] font-bold rounded">
+                        GATEWAY
+                      </span>
+                    ) : null}
+                  </div>
+                </div>
+                <div>
+                  <span className="text-slate-500 block">Provider Reference</span>
+                  <strong className="text-slate-300 font-mono truncate block mt-0.5" title={activePayment?.providerReference || 'N/A'}>
+                    {activePayment?.providerReference || 'Pending Init'}
+                  </strong>
+                </div>
+                <div>
+                  <span className="text-slate-500 block">Payable Amount</span>
+                  <strong className="text-white block mt-0.5">₹{selectedOrder.totalAmount.toLocaleString('en-IN')} INR</strong>
+                </div>
+                <div>
+                  <span className="text-slate-500 block">Payment Date</span>
+                  <strong className="text-slate-300 block mt-0.5">
+                    {new Date(activePayment?.createdAt || selectedOrder.createdAt).toLocaleString('en-IN')}
+                  </strong>
+                </div>
+              </div>
+
+              {selectedOrder.paymentStatus !== 'PAID' && activePayment?.provider !== 'COD' && (
+                <div className="p-2.5 bg-amber-500/10 border border-amber-500/20 rounded-xl text-amber-300 text-[11px] flex items-center gap-2">
+                  <Clock className="w-4 h-4 shrink-0" />
+                  <span>
+                    Notice: Order payment is unverified ({selectedOrder.paymentStatus}). Fulfillment (dispatch/shipping) is locked until payment is verified as PAID.
+                  </span>
+                </div>
+              )}
+            </div>
+
             {/* Status Transition Form */}
             {allowedNextStatuses.length > 0 ? (
               <form
@@ -345,7 +453,7 @@ export default function OrdersPage() {
                     <label className="text-[11px] text-slate-400 block mb-1">Audit Note</label>
                     <input
                       type="text"
-                      placeholder="e.g. Dispatched with BlueDart"
+                      placeholder="e.g. Dispatched with BlueDart AWB #9812456"
                       value={statusNote}
                       onChange={(e) => setStatusNote(e.target.value)}
                       className="w-full bg-slate-900 text-xs text-white p-2.5 rounded-xl border border-slate-800 focus:outline-none focus:border-admin-500"
@@ -372,7 +480,7 @@ export default function OrdersPage() {
             {/* Items Breakdown */}
             <div className="space-y-3">
               <h3 className="font-bold text-white uppercase tracking-wider text-[11px]">
-                Ordered Items
+                Ordered Items ({selectedOrder.items?.length})
               </h3>
               <div className="divide-y divide-slate-800/80 bg-slate-950 p-4 rounded-2xl border border-slate-800">
                 {selectedOrder.items?.map((item) => (

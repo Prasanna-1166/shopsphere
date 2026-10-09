@@ -4,6 +4,8 @@ import { Heart, ShoppingBag, Check } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
 
+import { GENERIC_PRODUCT_FALLBACK_IMAGE, handleImageError } from '../../utils/imageFallback';
+
 /**
  * Extracts pack size / weight from product name if enclosed in parentheses
  * Example: "India Gate Basmati Rice (5 kg)" -> "5 kg"
@@ -42,9 +44,7 @@ export default function ProductCard({ product }) {
   const packSize = extractPackSize(product.name);
   const isGrocery = product.categoryId === 'cat_grocery_daily_needs' || product.category?.slug === 'grocery-daily-needs';
 
-  const imgUrl =
-    product.images?.[0]?.url ||
-    'https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&auto=format&fit=crop&q=80';
+  const imgUrl = product.images?.[0]?.url || GENERIC_PRODUCT_FALLBACK_IMAGE;
 
   return (
     <div className="group relative bg-white border border-slate-200/90 rounded-xl overflow-hidden hover:border-slate-300 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-250 flex flex-col justify-between">
@@ -54,6 +54,7 @@ export default function ProductCard({ product }) {
           <img
             src={imgUrl}
             alt={product.images?.[0]?.altText || product.name}
+            onError={handleImageError}
             loading="lazy"
             className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
           />

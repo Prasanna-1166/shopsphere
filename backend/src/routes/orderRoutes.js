@@ -7,6 +7,7 @@ const { checkoutLimiter } = require('../middleware/rateLimiter');
 router.use(authenticate);
 
 router.post('/checkout', checkoutLimiter, orderController.createOrder);
+router.post('/', checkoutLimiter, orderController.createOrder);
 router.get('/my-orders', orderController.getMyOrders);
 router.get('/:id', orderController.getOrderById);
 router.post('/:id/cancel', orderController.cancelOrder);

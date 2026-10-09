@@ -1,0 +1,570 @@
+
+======================================================
+CATEGORY: Electronics & Audio
+======================================================
+
+SKU: EA-CAM-007
+NAME: 1080p Full HD Webcam with Stereo Microphone & Privacy Shutter
+IMAGE: https://images.unsplash.com/photo-1587826080692-f439cd0b70da?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Plug-and-play USB webcam with auto light correction and noise-cancelling dual mics. Perfect for Zoom meetings, online college classes, and video calls.
+------------------------------------------------------
+SKU: EA-HUB-004
+NAME: 7-in-1 Aluminium USB-C Multiport Hub Adapter (4K HDMI, 100W PD, SD Card)
+IMAGE: https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Expands a single USB-C port into 4K@30Hz HDMI, 100W Power Delivery charging, 3 x USB 3.0 5Gbps ports, and SD/TF micro card reader slots.
+------------------------------------------------------
+SKU: EA-TWS-001
+NAME: BassPro ANC True Wireless Bluetooth Earbuds with 40-Hour Battery
+IMAGE: https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Active Noise Cancellation up to 30dB with Quad-mic ENC for crystal-clear calls. 10mm dynamic bass drivers, IPX5 sweat resistance, and fast Type-C charging.
+------------------------------------------------------
+SKU: EA-HDM-011
+NAME: Braided High-Speed 4K 60Hz HDMI 2.0 Cable with Gold Connectors (2m)
+IMAGE: https://images.unsplash.com/photo-1558655146-d09347e92766?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Supports 18Gbps bandwidth, HDR, and ARC audio. Heavy-duty nylon braiding prevents kinks, providing reliable connection for TV, monitor, and gaming consoles.
+------------------------------------------------------
+SKU: EA-CLK-010
+NAME: Digital Alarm Clock with Wireless Phone Charging Station & Night Light
+IMAGE: https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Modern minimalist bedside clock with 10W fast wireless charging pad, dimmable LED time display, dual alarms, and warm ambient night light.
+------------------------------------------------------
+SKU: EA-HDP-009
+NAME: Over-Ear Studio Monitor Headphones with 50mm Neodymium Drivers
+IMAGE: https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Precision acoustic tuning with memory foam protein leather earcups. Delivers deep punchy bass, clear vocal mids, and passive noise isolation.
+------------------------------------------------------
+SKU: EA-KBD-005
+NAME: RGB Mechanical Gaming Keyboard with Hot-Swappable Red Switches
+IMAGE: https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Tenkeyless 87-key compact mechanical keyboard with smooth linear red switches, detachable Type-C braided cable, and 18 customizable RGB backlighting modes.
+------------------------------------------------------
+SKU: EA-MOU-006
+NAME: Silent Click Ergonomic 2.4GHz Wireless Optical Mouse with DPI Switch
+IMAGE: https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Contoured hand-fit design with 90% silent click buttons, 3-level adjustable DPI (800/1200/1600), nano USB receiver, and 18-month battery longevity.
+------------------------------------------------------
+SKU: EA-PLG-008
+NAME: Smart Wi-Fi Plug with Energy Monitoring (16A for Heavy Appliances)
+IMAGE: https://images.unsplash.com/photo-1558002038-1055907df827?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Control geysers, ACs, and water pumps from anywhere via smartphone app. Compatible with Alexa and Google Assistant for hands-free voice control.
+------------------------------------------------------
+SKU: EA-SPK-002
+NAME: SoundPulse 16W Waterproof IPX7 Portable Bluetooth Speaker
+IMAGE: https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Dual 8W acoustic drivers with passive bass radiator. Rugged shockproof fabric housing delivers 14 hours of continuous music on a single charge.
+------------------------------------------------------
+SKU: EA-PWR-003
+NAME: Ultra-Slim 10,000mAh 22.5W Fast Charging Power Bank with Dual Output
+IMAGE: https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Aviation-grade aluminium alloy enclosure with Type-C Power Delivery and USB-A Quick Charge 3.0. Charges smartphones 0 to 60% in just 30 minutes.
+------------------------------------------------------
+
+======================================================
+CATEGORY: Fashion & Apparel
+======================================================
+
+SKU: FA-TSH-001
+NAME: 100% Combed Organic Cotton Classic Crew Neck T-Shirt (Midnight Navy)
+IMAGE: https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: 180 GSM pre-shrunk bio-washed combed cotton. Super soft, breathable fabric with reinforced ribbed collar that maintains shape wash after wash.
+------------------------------------------------------
+SKU: FA-JOG-011
+NAME: Comfort-Fit Brushed Fleece Casual Track Pants / Joggers (Charcoal)
+IMAGE: https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Soft cotton-rich fleece with elasticated drawstring waistband and ribbed ankle cuffs. Deep zippered side pockets secure phone and keys.
+------------------------------------------------------
+SKU: FA-SCK-007
+NAME: Cushioned Cotton Ankle Sports Socks (Pack of 5 Pairs, Multi-Colour)
+IMAGE: https://images.unsplash.com/photo-1582966772680-860e372bb558?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Terry cushioned sole absorbs impact during running and gym workouts. Y-heel stitch and arch compression band prevent slipping inside shoes.
+------------------------------------------------------
+SKU: FA-WLT-006
+NAME: Full-Grain Leather Bi-Fold Wallet with RFID Blocking Lining
+IMAGE: https://images.unsplash.com/photo-1627123424574-724758594e93?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Slim handcrafted leather wallet with 8 card slots, 2 currency compartments, and military-grade RFID lining to prevent digital pickpocketing.
+------------------------------------------------------
+SKU: FA-BLT-005
+NAME: Genuine Leather Classic Reversible Pin Buckle Belt (Black & Brown)
+IMAGE: https://images.unsplash.com/photo-1624222247344-550fb60583dc?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Solid brass rotating buckle lets you switch between formal black and casual rich brown leather with one twist. 35mm width fits all trousers.
+------------------------------------------------------
+SKU: FA-JKT-008
+NAME: Lightweight Windproof Full-Zip Active Sports Running Jacket
+IMAGE: https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Breathable water-resistant nylon shell with zippered pockets and reflective night-running safety strips. Folds into its own pocket for easy storage.
+------------------------------------------------------
+SKU: FA-SUN-010
+NAME: Polarized UV400 Protection Wayfarer Sunglasses with Hard Case
+IMAGE: https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: TAC polarized shatterproof lenses eliminate reflective road and water glare with 100% UVA/B protection. Lightweight acetate frame with spring hinges.
+------------------------------------------------------
+SKU: FA-POL-004
+NAME: Pure Cotton Breathable Casual Henley Polo T-Shirt (Heather Grey)
+IMAGE: https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: 220 GSM pique knit fabric with classic button placket. Provides a sharp smart-casual look suitable for workplace and weekend outings.
+------------------------------------------------------
+SKU: FA-TRZ-002
+NAME: Pure Cotton Relaxed Fit Everyday Chino Trousers (Khaki Beige)
+IMAGE: https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Tailored from breathable 98% cotton with 2% elastane stretch for all-day office comfort. Wrinkle-resistant finish with deep slant pockets.
+------------------------------------------------------
+SKU: FA-KRT-009
+NAME: Pure Linen Handloom Short Kurta for Casual & Festive Wear (Off-White)
+IMAGE: https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: 100% breathable organic linen fabric with mandarin collar and coconut shell buttons. Keeps you cool in Indian summer weather.
+------------------------------------------------------
+SKU: FA-BAG-003
+NAME: Water-Resistant Everyday Commuter Laptop Backpack (26L, Fits 15.6")
+IMAGE: https://images.unsplash.com/photo-1546938576-6e6a64f317cc?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Durable 900D water-repellent oxford fabric with padded laptop sleeve, secret anti-theft back pocket, external USB pass-through, and luggage strap.
+------------------------------------------------------
+
+======================================================
+CATEGORY: Grocery & Daily Needs
+======================================================
+
+SKU: GR-ATT-001
+NAME: Aashirvaad Superior MP Sharbati Whole Wheat Atta (5 kg)
+IMAGE: https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Ground from the golden grains of Madhya Pradesh with traditional chakki process. High water absorption gives ultra-soft rotis that stay fresh longer.
+------------------------------------------------------
+SKU: GR-GHE-001
+NAME: Amul Pure Cow Ghee (1 Litre Tin)
+IMAGE: https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Rich granular texture and traditional golden aroma made from fresh cow milk cream. Free from preservatives, ideal for tempering dals, rotis, and sweets.
+------------------------------------------------------
+SKU: GR-SPC-005
+NAME: Catch Coriander / Dhaniya Powder (500 g)
+IMAGE: https://images.unsplash.com/photo-1532336414038-cf19250c5757?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Cold-ground whole coriander seeds retaining maximum natural volatile oils for a fresh, citrusy aroma and smooth gravy texture.
+------------------------------------------------------
+SKU: GR-SPC-002
+NAME: Catch Kashmiri Mirch Red Chilli Powder (500 g)
+IMAGE: https://images.unsplash.com/photo-1509358271058-acd22cc93898?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Premium mild-spicy red chilli powder known for its appetizing vibrant natural red color and subtle smoky flavor. No artificial colors added.
+------------------------------------------------------
+SKU: GR-SPC-004
+NAME: Catch Whole Cumin Seeds / Jeera (200 g)
+IMAGE: https://images.unsplash.com/photo-1599940824399-b87987ceb72a?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Cleaned, bold aromatic cumin seeds with high essential oil content. Delivers rich earthy fragrance to everyday tadkas, dal fry, and jeera rice.
+------------------------------------------------------
+SKU: GR-PC-002
+NAME: Colgate Total 12-Hour Antibacterial Toothpaste (150 g x Pack of 2)
+IMAGE: https://images.unsplash.com/photo-1559599101-f09722fb4948?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Dual-zinc and arginine formula actively fights plaque, cavities, tartar, and bad breath across teeth, tongue, cheeks, and gums for 12 hours.
+------------------------------------------------------
+SKU: GR-PC-001
+NAME: Dettol Skincare Moisturizing Bathing Soap Bar (125 g x Pack of 4)
+IMAGE: https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Trusted 99.9% germ protection enriched with added moisturizers and nourishing argan oil to prevent skin dryness. Dermatologically tested for entire family.
+------------------------------------------------------
+SKU: GR-SPC-003
+NAME: Everest Royal Garam Masala (100 g Box)
+IMAGE: https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: A traditional blend of 13 roasted aromatic spices including black cardamom, cinnamon, mace, and cloves for rich North and South Indian gravies.
+------------------------------------------------------
+SKU: GR-OIL-001
+NAME: Fortune Sunlite Refined Sunflower Oil (1 Litre Pouch)
+IMAGE: https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Light, clear, and fortified with Vitamin A and Vitamin D. High smoke point makes it suitable for deep frying, sautéing, and daily Indian cooking.
+------------------------------------------------------
+SKU: GR-HSD-006
+NAME: Freshwrap Heavy Duty Aluminium Food Foil (18 Metres)
+IMAGE: https://images.unsplash.com/photo-1584992236310-6edddc08acff?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: 11-micron thick food grade hygienic aluminium wrap. Keeps rotis, parathas, and sandwiches warm and moisture-fresh for school and office tiffins.
+------------------------------------------------------
+SKU: GR-HSD-004
+NAME: Harpic Power Plus 10X Max Toilet Cleaner (1 Litre)
+IMAGE: https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Thick liquid formula clings to toilet bowl surfaces to eliminate 99.9% germs, remove yellow limescale, and eliminate stubborn stains effortlessly.
+------------------------------------------------------
+SKU: GR-RIC-001
+NAME: India Gate Feast Rozzana Premium Basmati Rice (5 kg)
+IMAGE: https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Aged long-grain basmati rice with sweet natural aroma and slender, non-sticky grains upon cooking. Ideal for daily pulao, biryani, and steamed rice.
+------------------------------------------------------
+SKU: GR-BRK-002
+NAME: Kellogg's Real Almond & Honey Crunchy Corn Flakes (750 g)
+IMAGE: https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Crispy sun-ripened corn flakes loaded with real sliced Californian almonds and natural bee honey. Packed with iron and essential B-complex vitamins.
+------------------------------------------------------
+SKU: GR-PC-004
+NAME: Lifebuoy Total Germ Protection Liquid Handwash Refill Pouch (750 ml)
+IMAGE: https://images.unsplash.com/photo-1584744982491-665216d95f8b?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Powered by Activ Silver formula for 10-second fast germ fighting. Gentle foaming handwash that leaves hands clean and refreshed after meals.
+------------------------------------------------------
+SKU: GR-HSD-003
+NAME: Lizol Disinfectant Citrus Surface Floor Cleaner (1 Litre)
+IMAGE: https://images.unsplash.com/photo-1563453392212-326f5e854473?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Kills 99.9% of germs and virus strains while cutting through kitchen grease and floor grime. Leaves a long-lasting fresh citrus scent across tile and marble.
+------------------------------------------------------
+SKU: GR-SGR-001
+NAME: Madhur Pure & Hygienic Refined Sugar (1 kg Pack)
+IMAGE: https://images.unsplash.com/photo-1581441363689-1f3c3c414635?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Sulphur-free, untouched by hands refined sparkling white crystal sugar. Dissolves quickly and evenly in beverages, tea, and homemade desserts.
+------------------------------------------------------
+SKU: GR-BEV-002
+NAME: Nescafe Classic 100% Pure Instant Coffee (100 g Glass Jar)
+IMAGE: https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Crafted with premium selected Robusta coffee beans slow-roasted to perfection. Delivers bold aroma and signature refreshing taste.
+------------------------------------------------------
+SKU: GR-PC-003
+NAME: Oral-B CrossAction Pro-Health Soft Toothbrush (Pack of 4)
+IMAGE: https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: CrissCross bristles angled at 16 degrees reach deep between teeth to remove up to 99% of hard-to-reach plaque while being gentle on sensitive gums.
+------------------------------------------------------
+SKU: GR-HSD-005
+NAME: Origami 3-Ply Virgin Pulp Kitchen Towel Tissues (Pack of 4 Rolls)
+IMAGE: https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Highly absorbent food-contact safe paper towels. Ideal for absorbing excess oil from fried snacks, wiping kitchen counters, and cleaning microwave spills.
+------------------------------------------------------
+SKU: GR-PC-005
+NAME: Parachute 100% Pure Unrefined Coconut Oil (500 ml Bottle)
+IMAGE: https://images.unsplash.com/photo-1615397349754-cfa2066a298e?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Made from sun-dried superior copras through a multi-stage filtration process without chemicals. Multipurpose oil for deep hair nourishment and skin hydration.
+------------------------------------------------------
+SKU: GR-BRK-001
+NAME: Quaker Rolled Oats with Beta Glucan Fibre (1 kg Pouch)
+IMAGE: https://images.unsplash.com/photo-1521483451569-e33803c0330c?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: 100% whole grain oats rich in soluble beta-glucan fibre that helps maintain healthy cholesterol and provides long-lasting energy for active mornings.
+------------------------------------------------------
+SKU: GR-HSD-007
+NAME: Shalimar Oxo-Biodegradable Heavy Duty Garbage Bags (Medium 30 Bags x 2 Rolls)
+IMAGE: https://images.unsplash.com/photo-1530587191325-3db32d826c18?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: 19 x 21 inch tear-resistant bags with convenient tie-string closure. Eco-conscious oxo-biodegradable formulation prevents leakage and foul odors.
+------------------------------------------------------
+SKU: GR-HSD-001
+NAME: Surf Excel Matic Front & Top Load Liquid Detergent (2 Litre)
+IMAGE: https://images.unsplash.com/photo-1585421514738-01798e348b17?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Advanced stain-lifting formula dissolves instantly in washing machines to remove tough grease, tea, and food stains without leaving white powder residue.
+------------------------------------------------------
+SKU: GR-SLT-001
+NAME: Tata Salt Vacuum Evaporated Iodized Salt (1 kg)
+IMAGE: https://images.unsplash.com/photo-1518110925495-5fe2fda0442c?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: India’s trusted vacuum-evaporated table salt ensuring the right proportion of iodine for normal physical and mental growth. Free flowing and pure.
+------------------------------------------------------
+SKU: GR-SPC-001
+NAME: Tata Sampann High Curcumin Pure Turmeric Powder (500 g)
+IMAGE: https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Contains at least 3% natural curcumin guaranteed. Sourced from Salem farmlands, ground hygienically to give deep golden color and healing aroma.
+------------------------------------------------------
+SKU: GR-DAL-002
+NAME: Tata Sampann Moong Dal Split (1 kg)
+IMAGE: https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: High-protein split yellow moong lentils with zero polish. Easy to digest, quick cooking, and rich in natural dietary fibre and essential minerals.
+------------------------------------------------------
+SKU: GR-BRK-003
+NAME: Tata Sampann Organic Thick Poha / Flattened Rice (500 g)
+IMAGE: https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Hygienically cleaned and processed thick rice flakes that retain moisture and stay fluffy without turning soggy. Natural source of iron and dietary fibre.
+------------------------------------------------------
+SKU: GR-BRK-004
+NAME: Tata Sampann Roasted Sooji / Rava (500 g)
+IMAGE: https://images.unsplash.com/photo-1589367920969-ab8e050bbb04?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Pre-roasted durum wheat semolina made with strict quality checks. Ready for instant preparation of non-sticky upma, sheera, halwa, and crispy rava dosas.
+------------------------------------------------------
+SKU: GR-DAL-003
+NAME: Tata Sampann Unpolished Chana Dal (1 kg)
+IMAGE: https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Naturally unpolished split Bengal gram packed with wholesome plant protein. Ideal for tadka dals, dry curries, and savoury homemade snacks.
+------------------------------------------------------
+SKU: GR-DAL-001
+NAME: Tata Sampann Unpolished Toor Dal / Arhar Dal (1 kg)
+IMAGE: https://images.unsplash.com/photo-1540420773420-3366772f4999?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: 100% unpolished yellow pigeon peas sourced from fertile Indian farmlands. Retains natural wholesome proteins, dietary fibre, and authentic taste without artificial polish.
+------------------------------------------------------
+SKU: GR-BEV-001
+NAME: Tata Tea Gold Pure CTC & Long Leaf Tea (500 g)
+IMAGE: https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Exquisite blend of strong Assam CTC tea with 15% gently rolled long tea leaves for rich taste and irresistible aroma in every cup of chai.
+------------------------------------------------------
+SKU: GR-HSD-002
+NAME: Vim Lemon Power Dishwash Liquid Gel (750 ml Bottle)
+IMAGE: https://images.unsplash.com/photo-1585421514284-efb74c2b69ba?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Concentrated lemon degreaser formula cleans 1 sink-full of oily utensils with just 1 spoon of gel. Leaves stainless steel and glass sparkling clean.
+------------------------------------------------------
+
+======================================================
+CATEGORY: Home & Kitchen
+======================================================
+
+SKU: HK-SPCR-011
+NAME: 360-Degree Rotating 12-Jar Spice Carousel Rack Organiser
+IMAGE: https://images.unsplash.com/photo-1588854337236-6889d631faa8?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Compact revolving spice stand made from durable ABS with 12 refillable glass spice containers with dual sift-and-pour shaker lids.
+------------------------------------------------------
+SKU: HK-EGG-009
+NAME: Automatic Rapid Stainless Steel Electric Egg Boiler (7 Eggs Capacity)
+IMAGE: https://images.unsplash.com/photo-1587486913049-53fc88980cfc?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Boils up to 7 eggs in soft, medium, or hard consistency with one-touch operation and automatic dry-boil safety shutoff.
+------------------------------------------------------
+SKU: HK-BOWL-007
+NAME: Borosilicate Heat-Resistant Glass Food Storage Bowls with Clip Lids (Set of 3)
+IMAGE: https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Microwave, oven, freezer, and dishwasher safe bowls (400ml, 650ml, 950ml). Non-porous glass does not absorb food stains or odors.
+------------------------------------------------------
+SKU: HK-PAN-002
+NAME: ChefPro Tri-Ply Stainless Steel Fry Pan (24cm, Induction Base)
+IMAGE: https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Heavy-gauge 3-layer body for even heat distribution with zero hotspots. Riveted stay-cool ergonomic handle suitable for gas and induction cooktops.
+------------------------------------------------------
+SKU: HK-KTL-010
+NAME: Cordless Fast-Boil Stainless Steel Electric Kettle (1.5 Litre, 1500W)
+IMAGE: https://images.unsplash.com/photo-1570222094114-d054a817e56b?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: 304 food-grade stainless steel interior with concealed heating element. Boils water in under 4 minutes with auto shut-off and boil-dry protection.
+------------------------------------------------------
+SKU: HK-UTL-008
+NAME: Ergonomic Stainless Steel Whisk & Silicone Spatula Combo (Pack of 3)
+IMAGE: https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Heat resistant up to 230°C food grade silicone spatulas and sturdy balloon wire whisk. Safe for all non-stick cookware surfaces.
+------------------------------------------------------
+SKU: HK-TWA-004
+NAME: Heavy-Gauge Die-Cast Aluminium Non-Stick Dosa Tawa (28cm)
+IMAGE: https://images.unsplash.com/photo-1590794056226-79ef3a8147e1?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: 5-layer scratch-resistant granite non-stick coating requires minimum cooking oil for crisp paper dosas, rotis, and parathas without sticking.
+------------------------------------------------------
+SKU: HK-KNF-005
+NAME: High-Carbon German Stainless Steel Kitchen Knife Set with Wooden Block (6 Pcs)
+IMAGE: https://images.unsplash.com/photo-1593618998160-e34014e67546?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Precision-tapered ground blades for effortless vegetable and meat slicing. Includes Chef knife, Santoku knife, utility knife, paring knife, kitchen shears, and pine wooden block.
+------------------------------------------------------
+SKU: HK-CNT-003
+NAME: Modular Stackable Airtight Food Storage Containers (Set of 6, 1200ml)
+IMAGE: https://images.unsplash.com/photo-1590736969955-71cc94801759?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: BPA-free crystal clear containers with silicone sealed locking lids. Stackable space-saving design keeps pulses, snacks, and grains dry and bug-free.
+------------------------------------------------------
+SKU: HK-DRK-013
+NAME: Multi-Purpose Stainless Steel Over-the-Sink Dish Drying Rack
+IMAGE: https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Roll-up silicone rimmed heat-resistant stainless steel drying trivet. Drains water directly into the sink, saving precious kitchen counter space.
+------------------------------------------------------
+SKU: HK-BRD-006
+NAME: Organic Bamboo Wood Cutting Chopping Board with Juice Groove
+IMAGE: https://images.unsplash.com/photo-1546554137-f86b9593a222?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Extra thick knife-friendly organic bamboo board with perimeter juice groove to prevent countertop spills. Naturally antimicrobial and easy to wash.
+------------------------------------------------------
+SKU: HK-TWL-012
+NAME: Pure Cotton Waffle Weave Kitchen Cleaning Towels (Pack of 6)
+IMAGE: https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Super absorbent, lint-free honeycomb weave towels (40x60cm). Fast-drying fabric ideal for dish drying, wiping countertops, and dining tables.
+------------------------------------------------------
+SKU: HK-BOT-001
+NAME: Thermosteel 1000ml Vacuum Insulated Stainless Steel Bottle
+IMAGE: https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Double-wall food-grade 304 stainless steel keeps beverages cold for 24 hours and hot for 18 hours. Leak-proof cap with carrying handle for gym, office, and travel.
+------------------------------------------------------
+
+======================================================
+CATEGORY: Mobile Accessories
+======================================================
+
+SKU: MA-WCH-004
+NAME: 15W Qi-Certified Fast Wireless Charging Pad with LED Indicator
+IMAGE: https://images.unsplash.com/photo-1616401784845-180882ba9ba8?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Ultra-thin 6mm aluminium alloy base with foreign object detection and smart temperature control. Works through phone cases up to 5mm thickness.
+------------------------------------------------------
+SKU: MA-SPL-009
+NAME: 2-in-1 Type-C to 3.5mm Headphone Jack & Fast Charging Splitter
+IMAGE: https://images.unsplash.com/photo-1563770660941-20978e870e26?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Built-in Hi-Res DAC audio chip ensures crisp lossless sound while charging your smartphone at up to 30W Power Delivery simultaneously.
+------------------------------------------------------
+SKU: MA-GAN-005
+NAME: 65W GaN Dual Port USB-C Power Delivery Fast Wall Charger
+IMAGE: https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Gallium Nitride (GaN) technology delivers high-power charging in a 50% smaller footprint. Fast-charges laptops, iPads, and iPhones simultaneously.
+------------------------------------------------------
+SKU: MA-STD-008
+NAME: Foldable Aluminium Mobile & Tablet Desktop Stand Holder
+IMAGE: https://images.unsplash.com/photo-1586105251261-72a756497a11?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Dual-hinge 270-degree adjustable viewing angle for video calls, recipe reading, and gaming with dedicated cable charging pass-through slot.
+------------------------------------------------------
+SKU: MA-CBL-006
+NAME: Heavy-Duty Braided 60W Type-C to Type-C Fast Charging Cable (1.5m)
+IMAGE: https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Reinforced ballistic nylon weave withstands 25,000+ bends. Supports 480Mbps data transfer and fast Power Delivery for Android & MacBooks.
+------------------------------------------------------
+SKU: MA-CAR-007
+NAME: High-Speed Dual Metal 38W Fast Car Charger (Type-C PD & QC 3.0)
+IMAGE: https://images.unsplash.com/photo-1517400508447-f8dd518b86db?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: All-metal zinc alloy body fits flush into 12V/24V cigarette lighter socket with soft blue circular LED ring for nighttime visibility.
+------------------------------------------------------
+SKU: MA-MNT-001
+NAME: Magnetic 360-Degree Rotating Car Dashboard Phone Mount
+IMAGE: https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Equipped with 6 ultra-strong N52 neodymium magnets and high-strength 3M VHB base adhesive. Secure one-handed phone placement during bumpy drives.
+------------------------------------------------------
+SKU: MA-CSE-003
+NAME: Shockproof Matte Finish Hybrid Phone Case with Ring Kickstand
+IMAGE: https://images.unsplash.com/photo-1580910051074-3eb694886505?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Dual-layer TPU bumper with translucent scratch-resistant PC back. Integrated 360-degree zinc alloy finger ring kickstand and raised camera lip.
+------------------------------------------------------
+SKU: MA-GLS-002
+NAME: Super-Tough 9H Tempered Glass Screen Protector with Easy Align Frame (Pack of 2)
+IMAGE: https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Oleophobic anti-fingerprint coating with edge-to-edge 2.5D curved protection and 99.9% optical clarity. Includes precision auto-alignment installation frame.
+------------------------------------------------------
+SKU: MA-RNG-010
+NAME: Ultra-Slim Ring Grip Holder & Magnetic Kickstand for Smartphones
+IMAGE: https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Premium zinc alloy 3mm ultra-thin phone grip rotates 360 degrees and flips 180 degrees. Compatible with magnetic car dashboard phone holders.
+------------------------------------------------------
+
+======================================================
+CATEGORY: Personal Care & Grooming
+======================================================
+
+SKU: PC-SUN-004
+NAME: Broad Spectrum SPF 50 PA++++ Lightweight Matte Sunscreen Gel (50g)
+IMAGE: https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Non-greasy, ultra-light water-gel formula leaves zero white cast. Enriched with Centella Asiatica and Vitamin C to protect against UV and blue light.
+------------------------------------------------------
+SKU: PC-DRY-002
+NAME: Ceramic Ionic Hair Dryer with 3 Heat Settings & Cool Shot (1600W)
+IMAGE: https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Advanced negative ionic technology neutralizes static frizz for smooth salon-like blowouts. Includes concentrator nozzle and foldable handle for travel.
+------------------------------------------------------
+SKU: PC-TRM-001
+NAME: Cordless Waterproof Beard Trimmer with 20 Length Settings (Titanium Blades)
+IMAGE: https://images.unsplash.com/photo-1621607512214-68297480165e?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Self-sharpening titanium-coated skin-friendly blades with 0.5mm precision zoom wheel. 90-minute cordless runtime on a fast 1-hour USB quick charge.
+------------------------------------------------------
+SKU: PC-GEL-010
+NAME: Hydrating Hyaluronic Acid Lightweight Oil-Free Water Gel Cream (50g)
+IMAGE: https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Quick-absorbing oil-free gel moisturizer delivers intense 72-hour continuous hydration without clogging pores or feeling sticky in humid climates.
+------------------------------------------------------
+SKU: PC-MNK-009
+NAME: Multi-Purpose Stainless Steel Pedicure & Manicure Grooming Kit (12 Pcs)
+IMAGE: https://images.unsplash.com/photo-1629198688000-71f23e745b6e?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Surgical grade stainless steel nail clippers, cuticle scissors, tweezers, and files in a luxurious compact PU leather travel case.
+------------------------------------------------------
+SKU: PC-ALM-008
+NAME: Natural Cold-Pressed Sweet Almond Oil for Hair & Skin (200ml)
+IMAGE: https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: 100% pure edible grade sweet almond oil rich in Vitamin E and antioxidants. Strengthens hair roots, softens skin, and works as gentle baby massage oil.
+------------------------------------------------------
+SKU: PC-FCW-003
+NAME: Natural Tea Tree & Salicylic Acid Anti-Acne Oil-Control Face Wash (150ml)
+IMAGE: https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Sulphate-free purifying gentle foaming cleanser unclogs pores, controls excess sebum, and prevents pimples without stripping natural moisture.
+------------------------------------------------------
+SKU: PC-SRM-005
+NAME: Niacinamide 10% & Zinc 1% Dark Spot Clarifying Face Serum (30ml)
+IMAGE: https://images.unsplash.com/photo-1617897903246-719242758050?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Pure grade Vitamin B3 clinically proven to fade dark acne spots, reduce enlarged pores, and balance uneven skin tone within 4 weeks.
+------------------------------------------------------
+SKU: PC-MSK-011
+NAME: Pure Activated Charcoal Deep Cleansing Peel-Off Face Mask (100g)
+IMAGE: https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Natural bamboo charcoal acts like a magnet to extract stubborn blackheads, whiteheads, environmental pollutants, and dead skin cells.
+------------------------------------------------------
+SKU: PC-LTN-007
+NAME: Pure Shea Butter & Vitamin E Deep Nourishing Body Lotion (400ml)
+IMAGE: https://images.unsplash.com/photo-1526947425960-945c6e72858f?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Non-sticky fast-absorbing body lotion locks in deep moisture for 48 hours. Heals rough elbows, knees, and dry skin in cold weather.
+------------------------------------------------------
+SKU: PC-TBH-006
+NAME: Sonic Electric Toothbrush with 40,000 VPM & 3 Replacement Heads
+IMAGE: https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: 5 cleaning modes (Clean, White, Polish, Massage, Sensitive) with built-in 2-minute smart timer and 30-day battery life per USB charge.
+------------------------------------------------------
+
+======================================================
+CATEGORY: Stationery & Office
+======================================================
+
+SKU: SO-STP-010
+NAME: Compact Metal Stapler with 1000 Standard Staples & Staple Remover
+IMAGE: https://images.unsplash.com/photo-1568667256549-094345857637?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Jam-free 25-sheet capacity metal body stapler with built-in staple reload indicator and ergonomic palm pressure pad.
+------------------------------------------------------
+SKU: SO-CBL-009
+NAME: Desktop Cable Clips & Wire Management Organizers (Pack of 10)
+IMAGE: https://images.unsplash.com/photo-1508746829417-e6f548d8d6ed?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Strong 3M adhesive backed silicone clips keep phone chargers, USB cords, and headphone cables neatly organized and off the floor.
+------------------------------------------------------
+SKU: SO-LST-003
+NAME: Ergonomic Aluminium Folding Laptop Stand with 6-Level Height Adjustment
+IMAGE: https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Aviation-grade aluminium alloy stand with non-slip silicone pads. Foldable, portable design promotes healthy posture and laptop heat dissipation.
+------------------------------------------------------
+SKU: SO-MAT-006
+NAME: Extended Anti-Fray Waterproof Desk Mat Pad (800x300mm, Dual Color)
+IMAGE: https://images.unsplash.com/photo-1593062096033-9a26b09da705?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Dual-sided waterproof PU leather desk blotter protects your table from scratches, stains, and spills while providing a smooth mouse gliding surface.
+------------------------------------------------------
+SKU: SO-LMP-004
+NAME: Eye-Care LED Desk Lamp with 3 Color Modes & Touch Dimming (USB Rechargeable)
+IMAGE: https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Flicker-free warm, cool, and natural light modes with stepless brightness control. Flexible 180-degree gooseneck and USB rechargeable lithium battery.
+------------------------------------------------------
+SKU: SO-NBK-001
+NAME: Hardbound Executive Ruled Notebook (A5, 200 Pages, 100 GSM Cream Paper)
+IMAGE: https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Premium faux leather hardbound journal with acid-free, bleed-resistant 100 GSM cream pages. Includes elastic band closure, ribbon bookmark, and inner rear pocket.
+------------------------------------------------------
+SKU: SO-SCS-007
+NAME: Heavy Duty Multi-Purpose Stainless Steel Craft Scissors (Pack of 2)
+IMAGE: https://images.unsplash.com/photo-1503792501406-2c40da09e1e2?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Ultra-sharp titanium-coated blades for cutting paper, cardboard, fabric, and plastic packaging effortlessly. Soft-touch comfort grip handles.
+------------------------------------------------------
+SKU: SO-ORG-005
+NAME: Multi-Compartment Mesh Metal Desk Organizer Caddy with Drawer
+IMAGE: https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Durable rust-resistant powder-coated steel mesh with 6 compartments and slide-out drawer for pens, sticky notes, paperclips, and stationery.
+------------------------------------------------------
+SKU: SO-STK-008
+NAME: Pastel Neon Sticky Notes with Index Flags (400 Sheets Pack)
+IMAGE: https://images.unsplash.com/photo-1586075010923-2dd4570fb338?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Strong self-adhesive memo notes that stick reliably to monitors, books, and walls without leaving residue. Includes color-coded page flags.
+------------------------------------------------------
+SKU: SO-PEN-002
+NAME: SmoothFlow 0.5mm Retractable Gel Ink Pen Set (Pack of 10, Blue & Black)
+IMAGE: https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Japanese quick-drying waterproof pigment ink with precision tungsten carbide ball tip. Comfortable rubberized finger grip prevents writing fatigue.
+------------------------------------------------------
+
+======================================================
+CATEGORY: Travel & Lifestyle
+======================================================
+
+SKU: TL-UMB-003
+NAME: Automatic Open-Close Windproof Teflon Travel Umbrella (Compact)
+IMAGE: https://images.unsplash.com/photo-1517404215738-15263e9f9178?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: 9-rib reinforced fiberglass frame with water-repellent 210T Teflon canopy. Withstands heavy downpours and strong wind gusts without flipping inside out.
+------------------------------------------------------
+SKU: TL-DUF-005
+NAME: Foldable Lightweight Water-Resistant Gym & Travel Duffle Bag (35L)
+IMAGE: https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Spacious main compartment with ventilated side shoe pocket and wet-dry separation pouch. Folds down into a small compact pouch when not in use.
+------------------------------------------------------
+SKU: TL-TOI-008
+NAME: Hanging Waterproof Toiletry & Cosmetic Organizer Bag with Swivel Hook
+IMAGE: https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: 4 separate clear zippered compartments with elastic loops for bottles, shampoo, shaving kit, and cosmetics. 360-degree metal hook hangs on towel bars and bathroom doors.
+------------------------------------------------------
+SKU: TL-PLW-001
+NAME: Memory Foam Ergonomic Travel Neck Pillow with Washable Velvet Cover
+IMAGE: https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: 100% pure high-density memory foam with 360-degree chin and neck support. Includes breathable washable cover, sleep eye mask, and earplugs.
+------------------------------------------------------
+SKU: TL-WLT-007
+NAME: RFID Blocking Multi-Pocket Travel Passport Wallet & Document Organizer
+IMAGE: https://images.unsplash.com/photo-1544816155-12df9643f363?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Stores up to 4 passports, boarding passes, credit cards, cash, and SIM cards in organized zippered compartments with external quick-access boarding pass slip.
+------------------------------------------------------
+SKU: TL-LCK-004
+NAME: TSA Approved 3-Digit Combination Cable Luggage Locks (Pack of 2)
+IMAGE: https://images.unsplash.com/photo-1584982751601-97dcc096659c?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Durable zinc alloy lock body with flexible braided steel cable that threads easily through multiple zipper pulls on suitcases and backpacks.
+------------------------------------------------------
+SKU: TL-ADP-006
+NAME: Universal All-in-One Worldwide Travel Adapter with 4 USB Ports
+IMAGE: https://images.unsplash.com/photo-1527631746610-bca00a040d60?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Covers over 150 countries with US/EU/UK/AUS plugs. 4 USB ports plus Type-C fast output with dual 6A safety fuses for global travel.
+------------------------------------------------------
+SKU: TL-CUB-002
+NAME: Water-Resistant Compression Luggage Packing Cubes Set (6 Pcs Organizer)
+IMAGE: https://images.unsplash.com/photo-1581553680321-4fffae59fccd?w=800&auto=format&fit=crop&q=80
+DESCRIPTION: Ripstop honeycomb nylon cubes with double compression zippers save up to 40% suitcase space. Includes dedicated laundry and shoe bags.
+------------------------------------------------------

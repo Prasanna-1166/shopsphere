@@ -18,6 +18,7 @@ import {
 import api from '../api/client';
 import { useToast } from '../context/ToastContext';
 import Modal from '../components/common/Modal';
+import { GENERIC_PRODUCT_FALLBACK_IMAGE, handleImageError } from '../utils/imageFallback';
 
 export default function ProductsPage() {
   const { showToast } = useToast();
@@ -437,12 +438,10 @@ export default function ProductsPage() {
                       <td className="p-4">
                         <div className="flex items-center gap-3">
                           <img
-                            src={
-                              p.images?.[0]?.url ||
-                              'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=100'
-                            }
+                            src={p.images?.[0]?.url || GENERIC_PRODUCT_FALLBACK_IMAGE}
                             alt=""
-                            className="w-10 h-10 rounded-lg object-cover bg-slate-950 shrink-0"
+                            onError={handleImageError}
+                            className="w-10 h-10 rounded-lg object-cover bg-slate-950 shrink-0 border border-slate-800"
                           />
                           <div className="min-w-0">
                             <span className="font-bold text-white block truncate max-w-[200px]">
@@ -653,10 +652,10 @@ export default function ProductsPage() {
             </div>
           </div>
 
-          {/* Image URLs */}
+          {/* Image URLs & Live Preview */}
           <div>
-            <div className="flex justify-between items-center mb-1">
-              <label className="text-xs text-slate-400">Product Image URLs</label>
+            <div className="flex justify-between items-center mb-2">
+              <label className="text-xs text-slate-400 font-medium">Product Image URLs & Live Preview</label>
               <button
                 type="button"
                 onClick={() => setProductForm({ ...productForm, images: [...productForm.images, ''] })}
@@ -665,20 +664,46 @@ export default function ProductsPage() {
                 + Add Another Image URL
               </button>
             </div>
-            <div className="space-y-2">
+            <div className="space-y-3">
               {productForm.images.map((url, idx) => (
-                <input
-                  key={idx}
-                  type="url"
-                  placeholder="https://images.unsplash.com/..."
-                  value={url}
-                  onChange={(e) => {
-                    const newImages = [...productForm.images];
-                    newImages[idx] = e.target.value;
-                    setProductForm({ ...productForm, images: newImages });
-                  }}
-                  className="w-full bg-slate-950 text-xs text-white p-2 rounded-xl border border-slate-800 focus:outline-none focus:border-admin-500"
-                />
+                <div key={idx} className="flex items-center gap-3 bg-slate-950/60 p-2 rounded-xl border border-slate-800">
+                  <div className="w-12 h-12 rounded-lg bg-slate-900 border border-slate-800 overflow-hidden shrink-0 flex items-center justify-center">
+                    {url && url.trim() ? (
+                      <img
+                        src={url}
+                        alt="Preview"
+                        onError={handleImageError}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <span className="text-[9px] text-slate-500 text-center font-mono">No URL</span>
+                    )}
+                  </div>
+                  <input
+                    type="url"
+                    placeholder="https://images.unsplash.com/... or verified image URL"
+                    value={url}
+                    onChange={(e) => {
+                      const newImages = [...productForm.images];
+                      newImages[idx] = e.target.value;
+                      setProductForm({ ...productForm, images: newImages });
+                    }}
+                    className="flex-1 bg-slate-950 text-xs text-white p-2 rounded-lg border border-slate-800 focus:outline-none focus:border-admin-500 font-mono text-[11px]"
+                  />
+                  {productForm.images.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const newImages = productForm.images.filter((_, i) => i !== idx);
+                        setProductForm({ ...productForm, images: newImages });
+                      }}
+                      className="p-2 text-slate-500 hover:text-rose-400 rounded-lg hover:bg-slate-900 transition"
+                      title="Remove image"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
               ))}
             </div>
           </div>

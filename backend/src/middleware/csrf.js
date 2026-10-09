@@ -30,12 +30,14 @@ const verifyCsrfToken = (req, res, next) => {
     return next();
   }
 
-  // 2. Public auth endpoints (register, login, logout) do not require CSRF
+  // 2. Public auth and webhook endpoints do not require CSRF
   const publicPaths = [
     '/api/auth/register',
     '/api/auth/login',
     '/api/auth/admin-login',
     '/api/auth/logout',
+    '/api/payments/webhook',
+    '/api/webhooks/razorpay',
   ];
   if (publicPaths.some((p) => req.originalUrl.startsWith(p))) {
     return next();

@@ -22,6 +22,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
 import api from '../../api/client';
+import { GENERIC_PRODUCT_FALLBACK_IMAGE, handleImageError } from '../../utils/imageFallback';
 
 export default function Navbar() {
   const { user, isAuthenticated, logout } = useAuth();
@@ -193,7 +194,7 @@ export default function Navbar() {
                 <div className="divide-y divide-slate-100">
                   {suggestions.map((item) => {
                     const price = item.discountPrice || item.price;
-                    const thumb = item.images?.[0]?.url || 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=100';
+                    const thumb = item.images?.[0]?.url || GENERIC_PRODUCT_FALLBACK_IMAGE;
                     return (
                       <button
                         key={item.id}
@@ -204,6 +205,7 @@ export default function Navbar() {
                         <img
                           src={thumb}
                           alt={item.name}
+                          onError={handleImageError}
                           className="w-9 h-9 rounded-lg object-cover bg-slate-100 shrink-0"
                         />
                         <div className="flex-1 min-w-0">

@@ -1,5 +1,6 @@
 const prisma = require('../config/prisma');
 const paymentService = require('../services/payment/PaymentService');
+const config = require('../config');
 const { sendSuccess, sendError } = require('../utils/response');
 const { createAuditLog } = require('../utils/auditLogger');
 
@@ -14,11 +15,11 @@ const parseJsonSafe = (val) => {
 };
 
 /**
- * Perform Atomic Checkout & Create Order
+ * Perform Server-Side Authorized Checkout & Create Order
  */
 const createOrder = async (req, res, next) => {
   try {
-    const { addressId, shippingAddress: directAddress, paymentMethod = 'MOCK_CARD' } = req.body;
+    const { addressId, shippingAddress: directAddress, paymentMethod = 'RAZORPAY', autoConfirmMock = false } = req.body;
 
     // 1. Resolve Shipping Address snapshot
     let finalShippingAddress = null;
@@ -38,10 +39,17 @@ const createOrder = async (req, res, next) => {
         city: savedAddr.city,
         state: savedAddr.state,
         postalCode: savedAddr.postalCode,
-        country: savedAddr.country,
+        country: savedAddr.country || 'India',
       };
     } else if (directAddress) {
-      if (!directAddress.fullName || !directAddress.phone || !directAddress.addressLine1 || !directAddress.city || !directAddress.state || !directAddress.postalCode) {
+      if (
+        !directAddress.fullName ||
+        !directAddress.phone ||
+        !directAddress.addressLine1 ||
+        !directAddress.city ||
+        !directAddress.state ||
+        !directAddress.postalCode
+      ) {
         return sendError(res, 'Complete shipping address details are required.', [], 400);
       }
       finalShippingAddress = {
@@ -72,53 +80,64 @@ const createOrder = async (req, res, next) => {
       return sendError(res, 'Your shopping cart is empty. Add products to cart before checkout.', [], 400);
     }
 
-    // 3. Execute Atomic Database Transaction (Order + Items + Inventory Deduction + Inventory Tx + Clear Cart)
-    const orderResult = await prisma.$transaction(async (tx) => {
-      let subtotal = 0;
-      const orderItemsToCreate = [];
-      const inventoryUpdates = [];
+    // 3. Recalculate Subtotal, check stock, and prepare order items
+    let subtotal = 0;
+    const orderItemsToCreate = [];
+    const inventoryDeductions = [];
 
-      for (const item of cart.items) {
-        const freshProduct = await tx.product.findUnique({
-          where: { id: item.productId },
-        });
+    for (const item of cart.items) {
+      const freshProduct = await prisma.product.findUnique({
+        where: { id: item.productId },
+      });
 
-        if (!freshProduct || !freshProduct.active) {
-          throw new Error(`Product "${freshProduct ? freshProduct.name : 'Unknown'}" is no longer available.`);
-        }
-
-        if (freshProduct.stockQuantity < item.quantity) {
-          throw new Error(
-            `Insufficient stock for "${freshProduct.name}". Only ${freshProduct.stockQuantity} remaining.`
-          );
-        }
-
-        const authoritativePrice = freshProduct.discountPrice !== null ? freshProduct.discountPrice : freshProduct.price;
-        const itemSubtotal = authoritativePrice * item.quantity;
-        subtotal += itemSubtotal;
-
-        orderItemsToCreate.push({
-          productId: freshProduct.id,
-          productName: freshProduct.name,
-          sku: freshProduct.sku,
-          unitPrice: authoritativePrice,
-          quantity: item.quantity,
-          subtotal: itemSubtotal,
-        });
-
-        // Prepare inventory reduction
-        inventoryUpdates.push({
-          productId: freshProduct.id,
-          previousStock: freshProduct.stockQuantity,
-          newStock: freshProduct.stockQuantity - item.quantity,
-          quantityChange: -item.quantity,
-        });
+      if (!freshProduct || !freshProduct.active) {
+        return sendError(
+          res,
+          `Product "${freshProduct ? freshProduct.name : 'Unknown'}" is no longer available.`,
+          [],
+          400
+        );
       }
 
-      const shippingAmount = subtotal > 1500 ? 0 : 99;
-      const totalAmount = subtotal + shippingAmount;
+      if (freshProduct.stockQuantity < item.quantity) {
+        return sendError(
+          res,
+          `Insufficient stock for "${freshProduct.name}". Only ${freshProduct.stockQuantity} remaining.`,
+          [],
+          400
+        );
+      }
 
-      // Create Order
+      const authoritativePrice =
+        freshProduct.discountPrice !== null ? freshProduct.discountPrice : freshProduct.price;
+      const itemSubtotal = authoritativePrice * item.quantity;
+      subtotal += itemSubtotal;
+
+      orderItemsToCreate.push({
+        productId: freshProduct.id,
+        productName: freshProduct.name,
+        sku: freshProduct.sku,
+        unitPrice: authoritativePrice,
+        quantity: item.quantity,
+        subtotal: itemSubtotal,
+      });
+
+      inventoryDeductions.push({
+        productId: freshProduct.id,
+        quantityChange: -item.quantity,
+        previousStock: freshProduct.stockQuantity,
+        newStock: freshProduct.stockQuantity - item.quantity,
+      });
+    }
+
+    const shippingAmount = subtotal > 1500 ? 0 : 99;
+    const totalAmount = subtotal + shippingAmount;
+
+    const isCod = paymentMethod === 'COD' || paymentMethod === 'CASH_ON_DELIVERY';
+    const isMockAutoPay = autoConfirmMock && (config.payment.provider === 'MOCK' || paymentMethod === 'MOCK_CARD');
+
+    // 4. Create Order in Database Transaction
+    const orderResult = await prisma.$transaction(async (tx) => {
       const newOrder = await tx.order.create({
         data: {
           userId: req.user.id,
@@ -126,8 +145,8 @@ const createOrder = async (req, res, next) => {
           discount: 0,
           shippingAmount,
           totalAmount,
-          status: 'PENDING',
-          paymentStatus: 'PAID', // In mock simulation, auto-mark as paid
+          status: isCod ? 'CONFIRMED' : isMockAutoPay ? 'CONFIRMED' : 'PENDING',
+          paymentStatus: isMockAutoPay ? 'PAID' : 'PENDING',
           shippingAddress: JSON.stringify(finalShippingAddress),
           items: {
             create: orderItemsToCreate,
@@ -138,65 +157,112 @@ const createOrder = async (req, res, next) => {
         },
       });
 
-      // Deduct inventory & record inventory transactions
-      for (const inv of inventoryUpdates) {
-        await tx.product.update({
-          where: { id: inv.productId },
-          data: { stockQuantity: inv.newStock },
-        });
+      // If Cash On Delivery or Mock Auto Pay, deduct inventory immediately and clear cart
+      if (isCod || isMockAutoPay) {
+        for (const inv of inventoryDeductions) {
+          await tx.product.update({
+            where: { id: inv.productId },
+            data: { stockQuantity: inv.newStock },
+          });
 
-        await tx.inventoryTransaction.create({
+          await tx.inventoryTransaction.create({
+            data: {
+              productId: inv.productId,
+              quantityChange: inv.quantityChange,
+              previousQuantity: inv.previousStock,
+              newQuantity: inv.newStock,
+              type: 'SALE',
+              reason: `Order #${newOrder.id} ${isCod ? 'COD' : 'mock'} checkout deduction`,
+              performedBy: req.user.id,
+            },
+          });
+        }
+
+        await tx.payment.create({
           data: {
-            productId: inv.productId,
-            quantityChange: inv.quantityChange,
-            previousQuantity: inv.previousStock,
-            newQuantity: inv.newStock,
-            type: 'SALE',
-            reason: `Order #${newOrder.id} checkout deduction`,
-            performedBy: req.user.id,
+            orderId: newOrder.id,
+            provider: isCod ? 'COD' : 'MOCK',
+            providerReference: isCod ? `COD-${newOrder.id.slice(-8).toUpperCase()}` : `MOCK-TXN-${Date.now()}`,
+            amount: totalAmount,
+            currency: 'INR',
+            status: isMockAutoPay ? 'PAID' : 'PENDING',
+            metadata: JSON.stringify({
+              paymentMethod: isCod ? 'Cash on Delivery' : 'Mock Card',
+              timestamp: new Date().toISOString(),
+            }),
           },
         });
+
+        // Clear cart
+        await tx.cartItem.deleteMany({
+          where: { cartId: cart.id },
+        });
       }
-
-      // Create Payment record
-      await tx.payment.create({
-        data: {
-          orderId: newOrder.id,
-          provider: 'MOCK',
-          providerReference: `MOCK-ORD-${Date.now().toString(36).toUpperCase()}`,
-          amount: totalAmount,
-          currency: 'INR',
-          status: 'PAID',
-          metadata: JSON.stringify({
-            paymentMethod,
-            simulated: true,
-            checkoutTimestamp: new Date().toISOString(),
-          }),
-        },
-      });
-
-      // Clear customer's cart
-      await tx.cartItem.deleteMany({
-        where: { cartId: cart.id },
-      });
 
       return newOrder;
     });
 
-    // Audit log
+    // 5. If Online Payment (Razorpay or Mock with verification flow), create payment intent
+    let paymentIntent = null;
+    let paymentRequired = false;
+
+    if (!isCod && !isMockAutoPay) {
+      paymentRequired = true;
+      try {
+        paymentIntent = await paymentService.createPaymentIntent(orderResult, {
+          paymentMethod,
+          addressId,
+        });
+
+        // Persist payment intent record
+        await prisma.payment.create({
+          data: {
+            orderId: orderResult.id,
+            provider: paymentIntent.provider,
+            providerReference: paymentIntent.providerReference || paymentIntent.razorpayOrderId,
+            amount: totalAmount,
+            currency: paymentIntent.currency || 'INR',
+            status: 'PENDING',
+            metadata: JSON.stringify(paymentIntent.metadata || {}),
+          },
+        });
+      } catch (intentErr) {
+        console.error('Payment intent generation error:', intentErr.message);
+        return sendError(res, intentErr.message || 'Failed to initialize payment gateway order.', [], 500);
+      }
+    }
+
+    // 6. Audit Log
     await createAuditLog(prisma, {
       userId: req.user.id,
       action: 'ORDER_PLACED',
       entity: 'ORDER',
       entityId: orderResult.id,
-      metadata: { totalAmount: orderResult.totalAmount, itemsCount: orderResult.items.length },
+      metadata: {
+        totalAmount: orderResult.totalAmount,
+        itemsCount: orderResult.items.length,
+        paymentMethod,
+        isCod,
+      },
     });
 
     orderResult.shippingAddress = parseJsonSafe(orderResult.shippingAddress);
 
-    return sendSuccess(res, 'Order placed successfully! Thank you for shopping with ShopSphere.', { order: orderResult }, 201);
+    return sendSuccess(
+      res,
+      isCod ? 'Order placed successfully with Cash on Delivery.' : 'Order initialized. Complete payment to confirm.',
+      {
+        order: orderResult,
+        paymentIntent,
+        paymentRequired,
+      },
+      201
+    );
   } catch (error) {
-    if (error.message && (error.message.includes('Insufficient stock') || error.message.includes('is no longer available'))) {
+    if (
+      error.message &&
+      (error.message.includes('Insufficient stock') || error.message.includes('is no longer available'))
+    ) {
       return sendError(res, error.message, [], 400);
     }
     next(error);
@@ -218,7 +284,7 @@ const getMyOrders = async (req, res, next) => {
             },
           },
         },
-        payments: true,
+        payments: { orderBy: { createdAt: 'desc' } },
       },
       orderBy: { createdAt: 'desc' },
     });
@@ -252,7 +318,7 @@ const getOrderById = async (req, res, next) => {
             },
           },
         },
-        payments: true,
+        payments: { orderBy: { createdAt: 'desc' } },
       },
     });
 
@@ -282,7 +348,7 @@ const cancelOrder = async (req, res, next) => {
 
     const order = await prisma.order.findUnique({
       where: { id },
-      include: { items: true },
+      include: { items: true, payments: true },
     });
 
     if (!order || order.userId !== req.user.id) {
@@ -308,27 +374,33 @@ const cancelOrder = async (req, res, next) => {
         },
       });
 
-      // Restore inventory
-      for (const item of order.items) {
-        const prod = await tx.product.findUnique({ where: { id: item.productId } });
-        if (prod) {
-          const newStock = prod.stockQuantity + item.quantity;
-          await tx.product.update({
-            where: { id: prod.id },
-            data: { stockQuantity: newStock },
-          });
+      // Restore inventory only if inventory was previously deducted
+      const inventoryTx = await tx.inventoryTransaction.findFirst({
+        where: { reason: { contains: id } },
+      });
 
-          await tx.inventoryTransaction.create({
-            data: {
-              productId: prod.id,
-              quantityChange: item.quantity,
-              previousQuantity: prod.stockQuantity,
-              newQuantity: newStock,
-              type: 'CANCELLATION_RESTORE',
-              reason: `Order #${id} cancellation restoration: ${reason}`,
-              performedBy: req.user.id,
-            },
-          });
+      if (inventoryTx) {
+        for (const item of order.items) {
+          const prod = await tx.product.findUnique({ where: { id: item.productId } });
+          if (prod) {
+            const newStock = prod.stockQuantity + item.quantity;
+            await tx.product.update({
+              where: { id: prod.id },
+              data: { stockQuantity: newStock },
+            });
+
+            await tx.inventoryTransaction.create({
+              data: {
+                productId: prod.id,
+                quantityChange: item.quantity,
+                previousQuantity: prod.stockQuantity,
+                newQuantity: newStock,
+                type: 'CANCELLATION_RESTORE',
+                reason: `Order #${id} cancellation restoration: ${reason}`,
+                performedBy: req.user.id,
+              },
+            });
+          }
         }
       }
 
@@ -345,7 +417,7 @@ const cancelOrder = async (req, res, next) => {
 
     updatedOrder.shippingAddress = parseJsonSafe(updatedOrder.shippingAddress);
 
-    return sendSuccess(res, 'Order has been successfully cancelled and refunded.', { order: updatedOrder });
+    return sendSuccess(res, 'Order has been successfully cancelled.', { order: updatedOrder });
   } catch (error) {
     next(error);
   }

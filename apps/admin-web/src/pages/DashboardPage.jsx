@@ -95,12 +95,55 @@ export default function DashboardPage() {
         </div>
       </div>
 
+      {/* Payment Gateway Mode Banner */}
+      <div className={`p-4 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
+        overview.isSimulationMode
+          ? 'bg-purple-950/40 border-purple-800/60 text-purple-200'
+          : 'bg-emerald-950/40 border-emerald-800/60 text-emerald-200'
+      }`}>
+        <div className="flex items-center gap-3">
+          <div className={`p-2 rounded-lg ${
+            overview.isSimulationMode
+              ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30'
+              : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
+          }`}>
+            <Boxes className="w-5 h-5" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold uppercase tracking-wider text-white">
+                Payment Provider Mode: {overview.paymentMode || 'SIMULATOR'}
+              </span>
+              <span className={`px-2 py-0.5 rounded text-[10px] font-extrabold uppercase border ${
+                overview.isSimulationMode
+                  ? 'bg-purple-500/20 text-purple-300 border-purple-400/40'
+                  : 'bg-emerald-500/20 text-emerald-300 border-emerald-400/40'
+              }`}>
+                {overview.isSimulationMode ? 'SANDBOX SIMULATOR' : 'REAL GATEWAY'}
+              </span>
+            </div>
+            <p className="text-[11px] text-slate-400 mt-0.5">
+              {overview.isSimulationMode
+                ? 'Zero-credential local simulation active. Test transactions are strictly excluded from real accounting revenue.'
+                : 'Real Razorpay Standard Gateway is connected and processing real currency transactions.'}
+            </p>
+          </div>
+        </div>
+
+        <div className="text-left sm:text-right">
+          <span className="text-[10px] text-slate-400 uppercase font-semibold block">Simulated Volume</span>
+          <span className="text-xs font-mono font-bold text-purple-300">
+            ₹{(overview.simulatedRevenue || 0).toLocaleString('en-IN')} ({overview.simulatedOrdersCount || 0} test orders)
+          </span>
+        </div>
+      </div>
+
       {/* 4 Primary Metric Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
-          title="Total Revenue"
-          value={`₹${(overview.totalRevenue || 0).toLocaleString('en-IN')}`}
-          subtitle="Settled paid transactions"
+          title="Real Settled Revenue"
+          value={`₹${(overview.realRevenue || 0).toLocaleString('en-IN')}`}
+          subtitle="Real gateway paid orders only"
           icon={DollarSign}
           color="emerald"
         />
@@ -108,7 +151,7 @@ export default function DashboardPage() {
         <StatCard
           title="Total Orders"
           value={overview.totalOrders || 0}
-          subtitle="All lifetime orders"
+          subtitle="All store orders"
           icon={ShoppingCart}
           color="admin"
         />
@@ -190,6 +233,7 @@ export default function DashboardPage() {
                 <tr className="text-slate-400 uppercase font-semibold border-b border-slate-800">
                   <th className="pb-2.5">Order ID</th>
                   <th className="pb-2.5">Customer</th>
+                  <th className="pb-2.5">Payment</th>
                   <th className="pb-2.5">Total</th>
                   <th className="pb-2.5">Status</th>
                   <th className="pb-2.5 text-right">Action</th>
@@ -198,42 +242,62 @@ export default function DashboardPage() {
               <tbody className="divide-y divide-slate-800/60">
                 {recentOrders.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="py-8 text-center text-slate-500">
+                    <td colSpan={6} className="py-8 text-center text-slate-500">
                       No customer orders placed yet. Orders will appear here automatically once customers checkout.
                     </td>
                   </tr>
                 ) : (
-                  recentOrders.map((ord) => (
-                    <tr key={ord.id} className="hover:bg-slate-800/40 transition">
-                      <td className="py-3 font-mono font-medium text-slate-300">
-                        #{ord.id.slice(0, 10)}...
-                      </td>
-                      <td className="py-3">
-                        <div className="font-semibold text-white">{ord.user?.name}</div>
-                        <div className="text-[10px] text-slate-500">{ord.user?.email}</div>
-                      </td>
-                      <td className="py-3 font-bold text-white">
-                        ₹{ord.totalAmount?.toLocaleString('en-IN')}
-                      </td>
-                      <td className="py-3">
-                        <span
-                          className={`px-2 py-0.5 rounded-full text-[10px] font-semibold border uppercase tracking-wider ${
-                            STATUS_PILLS[ord.status] || 'bg-slate-800 text-slate-300'
-                          }`}
-                        >
-                          {ord.status}
-                        </span>
-                      </td>
-                      <td className="py-3 text-right">
-                        <Link
-                          to={`/orders?search=${ord.id}`}
-                          className="text-indigo-400 hover:text-indigo-300 font-semibold"
-                        >
-                          View Details
-                        </Link>
-                      </td>
-                    </tr>
-                  ))
+                  recentOrders.map((ord) => {
+                    const pay = ord.payments?.[0];
+                    const isSim = pay?.provider === 'SIMULATOR' || pay?.provider === 'MOCK';
+                    return (
+                      <tr key={ord.id} className="hover:bg-slate-800/40 transition">
+                        <td className="py-3 font-mono font-medium text-slate-300">
+                          #{ord.id.slice(0, 10)}...
+                        </td>
+                        <td className="py-3">
+                          <div className="font-semibold text-white">{ord.user?.name}</div>
+                          <div className="text-[10px] text-slate-500">{ord.user?.email}</div>
+                        </td>
+                        <td className="py-3">
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-xs text-slate-300 font-medium">
+                              {pay?.provider || 'SIMULATOR'}
+                            </span>
+                            {isSim ? (
+                              <span className="px-1.5 py-0.2 bg-purple-500/20 text-purple-300 border border-purple-400/30 text-[9px] font-bold rounded">
+                                TEST
+                              </span>
+                            ) : pay?.provider === 'RAZORPAY' ? (
+                              <span className="px-1.5 py-0.2 bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 text-[9px] font-bold rounded">
+                                GATEWAY
+                              </span>
+                            ) : null}
+                          </div>
+                        </td>
+                        <td className="py-3 font-bold text-white">
+                          ₹{ord.totalAmount?.toLocaleString('en-IN')}
+                        </td>
+                        <td className="py-3">
+                          <span
+                            className={`px-2 py-0.5 rounded-full text-[10px] font-semibold border uppercase tracking-wider ${
+                              STATUS_PILLS[ord.status] || 'bg-slate-800 text-slate-300'
+                            }`}
+                          >
+                            {ord.status}
+                          </span>
+                        </td>
+                        <td className="py-3 text-right">
+                          <Link
+                            to={`/orders?search=${ord.id}`}
+                            className="text-indigo-400 hover:text-indigo-300 font-semibold"
+                          >
+                            View Details
+                          </Link>
+                        </td>
+                      </tr>
+                    );
+                  })
                 )}
               </tbody>
             </table>

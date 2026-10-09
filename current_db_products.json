@@ -1,0 +1,744 @@
+[
+  {
+    "sku": "EA-CAM-007",
+    "category": "Electronics & Audio",
+    "name": "1080p Full HD Webcam with Stereo Microphone & Privacy Shutter",
+    "image": "https://images.unsplash.com/photo-1587826080692-f439cd0b70da?w=800&auto=format&fit=crop&q=80",
+    "description": "Plug-and-play USB webcam with auto light correction and noise-cancelling dual mics. Perfect for Zoom meetings, online college classes, and video calls."
+  },
+  {
+    "sku": "EA-HUB-004",
+    "category": "Electronics & Audio",
+    "name": "7-in-1 Aluminium USB-C Multiport Hub Adapter (4K HDMI, 100W PD, SD Card)",
+    "image": "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=800&auto=format&fit=crop&q=80",
+    "description": "Expands a single USB-C port into 4K@30Hz HDMI, 100W Power Delivery charging, 3 x USB 3.0 5Gbps ports, and SD/TF micro card reader slots."
+  },
+  {
+    "sku": "EA-TWS-001",
+    "category": "Electronics & Audio",
+    "name": "BassPro ANC True Wireless Bluetooth Earbuds with 40-Hour Battery",
+    "image": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=800&auto=format&fit=crop&q=80",
+    "description": "Active Noise Cancellation up to 30dB with Quad-mic ENC for crystal-clear calls. 10mm dynamic bass drivers, IPX5 sweat resistance, and fast Type-C charging."
+  },
+  {
+    "sku": "EA-HDM-011",
+    "category": "Electronics & Audio",
+    "name": "Braided High-Speed 4K 60Hz HDMI 2.0 Cable with Gold Connectors (2m)",
+    "image": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800&auto=format&fit=crop&q=80",
+    "description": "Supports 18Gbps bandwidth, HDR, and ARC audio. Heavy-duty nylon braiding prevents kinks, providing reliable connection for TV, monitor, and gaming consoles."
+  },
+  {
+    "sku": "EA-CLK-010",
+    "category": "Electronics & Audio",
+    "name": "Digital Alarm Clock with Wireless Phone Charging Station & Night Light",
+    "image": "https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?w=800&auto=format&fit=crop&q=80",
+    "description": "Modern minimalist bedside clock with 10W fast wireless charging pad, dimmable LED time display, dual alarms, and warm ambient night light."
+  },
+  {
+    "sku": "EA-HDP-009",
+    "category": "Electronics & Audio",
+    "name": "Over-Ear Studio Monitor Headphones with 50mm Neodymium Drivers",
+    "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=80",
+    "description": "Precision acoustic tuning with memory foam protein leather earcups. Delivers deep punchy bass, clear vocal mids, and passive noise isolation."
+  },
+  {
+    "sku": "EA-KBD-005",
+    "category": "Electronics & Audio",
+    "name": "RGB Mechanical Gaming Keyboard with Hot-Swappable Red Switches",
+    "image": "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800&auto=format&fit=crop&q=80",
+    "description": "Tenkeyless 87-key compact mechanical keyboard with smooth linear red switches, detachable Type-C braided cable, and 18 customizable RGB backlighting modes."
+  },
+  {
+    "sku": "EA-MOU-006",
+    "category": "Electronics & Audio",
+    "name": "Silent Click Ergonomic 2.4GHz Wireless Optical Mouse with DPI Switch",
+    "image": "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=800&auto=format&fit=crop&q=80",
+    "description": "Contoured hand-fit design with 90% silent click buttons, 3-level adjustable DPI (800/1200/1600), nano USB receiver, and 18-month battery longevity."
+  },
+  {
+    "sku": "EA-PLG-008",
+    "category": "Electronics & Audio",
+    "name": "Smart Wi-Fi Plug with Energy Monitoring (16A for Heavy Appliances)",
+    "image": "https://images.unsplash.com/photo-1558089687-f282ffcbc126?w=800&auto=format&fit=crop&q=80",
+    "description": "Control geysers, ACs, and water pumps from anywhere via smartphone app. Compatible with Alexa and Google Assistant for hands-free voice control."
+  },
+  {
+    "sku": "EA-SPK-002",
+    "category": "Electronics & Audio",
+    "name": "SoundPulse 16W Waterproof IPX7 Portable Bluetooth Speaker",
+    "image": "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800&auto=format&fit=crop&q=80",
+    "description": "Dual 8W acoustic drivers with passive bass radiator. Rugged shockproof fabric housing delivers 14 hours of continuous music on a single charge."
+  },
+  {
+    "sku": "EA-PWR-003",
+    "category": "Electronics & Audio",
+    "name": "Ultra-Slim 10,000mAh 22.5W Fast Charging Power Bank with Dual Output",
+    "image": "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=800&auto=format&fit=crop&q=80",
+    "description": "Aviation-grade aluminium alloy enclosure with Type-C Power Delivery and USB-A Quick Charge 3.0. Charges smartphones 0 to 60% in just 30 minutes."
+  },
+  {
+    "sku": "FA-TSH-001",
+    "category": "Fashion & Apparel",
+    "name": "100% Combed Organic Cotton Classic Crew Neck T-Shirt (Midnight Navy)",
+    "image": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80",
+    "description": "180 GSM pre-shrunk bio-washed combed cotton. Super soft, breathable fabric with reinforced ribbed collar that maintains shape wash after wash."
+  },
+  {
+    "sku": "FA-JOG-011",
+    "category": "Fashion & Apparel",
+    "name": "Comfort-Fit Brushed Fleece Casual Track Pants / Joggers (Charcoal)",
+    "image": "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=800&auto=format&fit=crop&q=80",
+    "description": "Soft cotton-rich fleece with elasticated drawstring waistband and ribbed ankle cuffs. Deep zippered side pockets secure phone and keys."
+  },
+  {
+    "sku": "FA-SCK-007",
+    "category": "Fashion & Apparel",
+    "name": "Cushioned Cotton Ankle Sports Socks (Pack of 5 Pairs, Multi-Colour)",
+    "image": "https://images.unsplash.com/photo-1586350977771-b3b0abd50c82?w=800&auto=format&fit=crop&q=80",
+    "description": "Terry cushioned sole absorbs impact during running and gym workouts. Y-heel stitch and arch compression band prevent slipping inside shoes."
+  },
+  {
+    "sku": "FA-WLT-006",
+    "category": "Fashion & Apparel",
+    "name": "Full-Grain Leather Bi-Fold Wallet with RFID Blocking Lining",
+    "image": "https://images.unsplash.com/photo-1627123424574-724758594e93?w=800&auto=format&fit=crop&q=80",
+    "description": "Slim handcrafted leather wallet with 8 card slots, 2 currency compartments, and military-grade RFID lining to prevent digital pickpocketing."
+  },
+  {
+    "sku": "FA-BLT-005",
+    "category": "Fashion & Apparel",
+    "name": "Genuine Leather Classic Reversible Pin Buckle Belt (Black & Brown)",
+    "image": "https://images.unsplash.com/photo-1624222247344-550fb60583dc?w=800&auto=format&fit=crop&q=80",
+    "description": "Solid brass rotating buckle lets you switch between formal black and casual rich brown leather with one twist. 35mm width fits all trousers."
+  },
+  {
+    "sku": "FA-JKT-008",
+    "category": "Fashion & Apparel",
+    "name": "Lightweight Windproof Full-Zip Active Sports Running Jacket",
+    "image": "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&auto=format&fit=crop&q=80",
+    "description": "Breathable water-resistant nylon shell with zippered pockets and reflective night-running safety strips. Folds into its own pocket for easy storage."
+  },
+  {
+    "sku": "FA-SUN-010",
+    "category": "Fashion & Apparel",
+    "name": "Polarized UV400 Protection Wayfarer Sunglasses with Hard Case",
+    "image": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=800&auto=format&fit=crop&q=80",
+    "description": "TAC polarized shatterproof lenses eliminate reflective road and water glare with 100% UVA/B protection. Lightweight acetate frame with spring hinges."
+  },
+  {
+    "sku": "FA-POL-004",
+    "category": "Fashion & Apparel",
+    "name": "Pure Cotton Breathable Casual Henley Polo T-Shirt (Heather Grey)",
+    "image": "https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=800&auto=format&fit=crop&q=80",
+    "description": "220 GSM pique knit fabric with classic button placket. Provides a sharp smart-casual look suitable for workplace and weekend outings."
+  },
+  {
+    "sku": "FA-TRZ-002",
+    "category": "Fashion & Apparel",
+    "name": "Pure Cotton Relaxed Fit Everyday Chino Trousers (Khaki Beige)",
+    "image": "https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?w=800&auto=format&fit=crop&q=80",
+    "description": "Tailored from breathable 98% cotton with 2% elastane stretch for all-day office comfort. Wrinkle-resistant finish with deep slant pockets."
+  },
+  {
+    "sku": "FA-KRT-009",
+    "category": "Fashion & Apparel",
+    "name": "Pure Linen Handloom Short Kurta for Casual & Festive Wear (Off-White)",
+    "image": "https://images.unsplash.com/photo-1603252109303-2751441ec157?w=800&auto=format&fit=crop&q=80",
+    "description": "100% breathable organic linen fabric with mandarin collar and coconut shell buttons. Keeps you cool in Indian summer weather."
+  },
+  {
+    "sku": "FA-BAG-003",
+    "category": "Fashion & Apparel",
+    "name": "Water-Resistant Everyday Commuter Laptop Backpack (26L, Fits 15.6\")",
+    "image": "https://images.unsplash.com/photo-1546938576-6e6a64f317cc?w=800&auto=format&fit=crop&q=80",
+    "description": "Durable 900D water-repellent oxford fabric with padded laptop sleeve, secret anti-theft back pocket, external USB pass-through, and luggage strap."
+  },
+  {
+    "sku": "GR-ATT-001",
+    "category": "Grocery & Daily Needs",
+    "name": "Aashirvaad Superior MP Sharbati Whole Wheat Atta (5 kg)",
+    "image": "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&auto=format&fit=crop&q=80",
+    "description": "Ground from the golden grains of Madhya Pradesh with traditional chakki process. High water absorption gives ultra-soft rotis that stay fresh longer."
+  },
+  {
+    "sku": "GR-GHE-001",
+    "category": "Grocery & Daily Needs",
+    "name": "Amul Pure Cow Ghee (1 Litre Tin)",
+    "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=800&auto=format&fit=crop&q=80",
+    "description": "Rich granular texture and traditional golden aroma made from fresh cow milk cream. Free from preservatives, ideal for tempering dals, rotis, and sweets."
+  },
+  {
+    "sku": "GR-SPC-005",
+    "category": "Grocery & Daily Needs",
+    "name": "Catch Coriander / Dhaniya Powder (500 g)",
+    "image": "https://images.unsplash.com/photo-1532336414038-cf19250c5757?w=800&auto=format&fit=crop&q=80",
+    "description": "Cold-ground whole coriander seeds retaining maximum natural volatile oils for a fresh, citrusy aroma and smooth gravy texture."
+  },
+  {
+    "sku": "GR-SPC-002",
+    "category": "Grocery & Daily Needs",
+    "name": "Catch Kashmiri Mirch Red Chilli Powder (500 g)",
+    "image": "https://images.unsplash.com/photo-1509358271058-acd22cc93898?w=800&auto=format&fit=crop&q=80",
+    "description": "Premium mild-spicy red chilli powder known for its appetizing vibrant natural red color and subtle smoky flavor. No artificial colors added."
+  },
+  {
+    "sku": "GR-SPC-004",
+    "category": "Grocery & Daily Needs",
+    "name": "Catch Whole Cumin Seeds / Jeera (200 g)",
+    "image": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?w=800&auto=format&fit=crop&q=80",
+    "description": "Cleaned, bold aromatic cumin seeds with high essential oil content. Delivers rich earthy fragrance to everyday tadkas, dal fry, and jeera rice."
+  },
+  {
+    "sku": "GR-PC-002",
+    "category": "Grocery & Daily Needs",
+    "name": "Colgate Total 12-Hour Antibacterial Toothpaste (150 g x Pack of 2)",
+    "image": "https://images.unsplash.com/photo-1559599101-f09722fb4948?w=800&auto=format&fit=crop&q=80",
+    "description": "Dual-zinc and arginine formula actively fights plaque, cavities, tartar, and bad breath across teeth, tongue, cheeks, and gums for 12 hours."
+  },
+  {
+    "sku": "GR-PC-001",
+    "category": "Grocery & Daily Needs",
+    "name": "Dettol Skincare Moisturizing Bathing Soap Bar (125 g x Pack of 4)",
+    "image": "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?w=800&auto=format&fit=crop&q=80",
+    "description": "Trusted 99.9% germ protection enriched with added moisturizers and nourishing argan oil to prevent skin dryness. Dermatologically tested for entire family."
+  },
+  {
+    "sku": "GR-SPC-003",
+    "category": "Grocery & Daily Needs",
+    "name": "Everest Royal Garam Masala (100 g Box)",
+    "image": "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=800&auto=format&fit=crop&q=80",
+    "description": "A traditional blend of 13 roasted aromatic spices including black cardamom, cinnamon, mace, and cloves for rich North and South Indian gravies."
+  },
+  {
+    "sku": "GR-OIL-001",
+    "category": "Grocery & Daily Needs",
+    "name": "Fortune Sunlite Refined Sunflower Oil (1 Litre Pouch)",
+    "image": "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=800&auto=format&fit=crop&q=80",
+    "description": "Light, clear, and fortified with Vitamin A and Vitamin D. High smoke point makes it suitable for deep frying, sautéing, and daily Indian cooking."
+  },
+  {
+    "sku": "GR-HSD-006",
+    "category": "Grocery & Daily Needs",
+    "name": "Freshwrap Heavy Duty Aluminium Food Foil (18 Metres)",
+    "image": "https://images.unsplash.com/photo-1584992236310-6edddc08acff?w=800&auto=format&fit=crop&q=80",
+    "description": "11-micron thick food grade hygienic aluminium wrap. Keeps rotis, parathas, and sandwiches warm and moisture-fresh for school and office tiffins."
+  },
+  {
+    "sku": "GR-HSD-004",
+    "category": "Grocery & Daily Needs",
+    "name": "Harpic Power Plus 10X Max Toilet Cleaner (1 Litre)",
+    "image": "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=800&auto=format&fit=crop&q=80",
+    "description": "Thick liquid formula clings to toilet bowl surfaces to eliminate 99.9% germs, remove yellow limescale, and eliminate stubborn stains effortlessly."
+  },
+  {
+    "sku": "GR-RIC-001",
+    "category": "Grocery & Daily Needs",
+    "name": "India Gate Feast Rozzana Premium Basmati Rice (5 kg)",
+    "image": "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=800&auto=format&fit=crop&q=80",
+    "description": "Aged long-grain basmati rice with sweet natural aroma and slender, non-sticky grains upon cooking. Ideal for daily pulao, biryani, and steamed rice."
+  },
+  {
+    "sku": "GR-BRK-002",
+    "category": "Grocery & Daily Needs",
+    "name": "Kellogg's Real Almond & Honey Crunchy Corn Flakes (750 g)",
+    "image": "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=800&auto=format&fit=crop&q=80",
+    "description": "Crispy sun-ripened corn flakes loaded with real sliced Californian almonds and natural bee honey. Packed with iron and essential B-complex vitamins."
+  },
+  {
+    "sku": "GR-PC-004",
+    "category": "Grocery & Daily Needs",
+    "name": "Lifebuoy Total Germ Protection Liquid Handwash Refill Pouch (750 ml)",
+    "image": "https://images.unsplash.com/photo-1584744982491-665216d95f8b?w=800&auto=format&fit=crop&q=80",
+    "description": "Powered by Activ Silver formula for 10-second fast germ fighting. Gentle foaming handwash that leaves hands clean and refreshed after meals."
+  },
+  {
+    "sku": "GR-HSD-003",
+    "category": "Grocery & Daily Needs",
+    "name": "Lizol Disinfectant Citrus Surface Floor Cleaner (1 Litre)",
+    "image": "https://images.unsplash.com/photo-1563453392212-326f5e854473?w=800&auto=format&fit=crop&q=80",
+    "description": "Kills 99.9% of germs and virus strains while cutting through kitchen grease and floor grime. Leaves a long-lasting fresh citrus scent across tile and marble."
+  },
+  {
+    "sku": "GR-SGR-001",
+    "category": "Grocery & Daily Needs",
+    "name": "Madhur Pure & Hygienic Refined Sugar (1 kg Pack)",
+    "image": "https://images.unsplash.com/photo-1581441363689-1f3c3c414635?w=800&auto=format&fit=crop&q=80",
+    "description": "Sulphur-free, untouched by hands refined sparkling white crystal sugar. Dissolves quickly and evenly in beverages, tea, and homemade desserts."
+  },
+  {
+    "sku": "GR-BEV-002",
+    "category": "Grocery & Daily Needs",
+    "name": "Nescafe Classic 100% Pure Instant Coffee (100 g Glass Jar)",
+    "image": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&auto=format&fit=crop&q=80",
+    "description": "Crafted with premium selected Robusta coffee beans slow-roasted to perfection. Delivers bold aroma and signature refreshing taste."
+  },
+  {
+    "sku": "GR-PC-003",
+    "category": "Grocery & Daily Needs",
+    "name": "Oral-B CrossAction Pro-Health Soft Toothbrush (Pack of 4)",
+    "image": "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=800&auto=format&fit=crop&q=80",
+    "description": "CrissCross bristles angled at 16 degrees reach deep between teeth to remove up to 99% of hard-to-reach plaque while being gentle on sensitive gums."
+  },
+  {
+    "sku": "GR-HSD-005",
+    "category": "Grocery & Daily Needs",
+    "name": "Origami 3-Ply Virgin Pulp Kitchen Towel Tissues (Pack of 4 Rolls)",
+    "image": "https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=800&auto=format&fit=crop&q=80",
+    "description": "Highly absorbent food-contact safe paper towels. Ideal for absorbing excess oil from fried snacks, wiping kitchen counters, and cleaning microwave spills."
+  },
+  {
+    "sku": "GR-PC-005",
+    "category": "Grocery & Daily Needs",
+    "name": "Parachute 100% Pure Unrefined Coconut Oil (500 ml Bottle)",
+    "image": "https://images.unsplash.com/photo-1615397349754-cfa2066a298e?w=800&auto=format&fit=crop&q=80",
+    "description": "Made from sun-dried superior copras through a multi-stage filtration process without chemicals. Multipurpose oil for deep hair nourishment and skin hydration."
+  },
+  {
+    "sku": "GR-BRK-001",
+    "category": "Grocery & Daily Needs",
+    "name": "Quaker Rolled Oats with Beta Glucan Fibre (1 kg Pouch)",
+    "image": "https://images.unsplash.com/photo-1521483451569-e33803c0330c?w=800&auto=format&fit=crop&q=80",
+    "description": "100% whole grain oats rich in soluble beta-glucan fibre that helps maintain healthy cholesterol and provides long-lasting energy for active mornings."
+  },
+  {
+    "sku": "GR-HSD-007",
+    "category": "Grocery & Daily Needs",
+    "name": "Shalimar Oxo-Biodegradable Heavy Duty Garbage Bags (Medium 30 Bags x 2 Rolls)",
+    "image": "https://images.unsplash.com/photo-1530587191325-3db32d826c18?w=800&auto=format&fit=crop&q=80",
+    "description": "19 x 21 inch tear-resistant bags with convenient tie-string closure. Eco-conscious oxo-biodegradable formulation prevents leakage and foul odors."
+  },
+  {
+    "sku": "GR-HSD-001",
+    "category": "Grocery & Daily Needs",
+    "name": "Surf Excel Matic Front & Top Load Liquid Detergent (2 Litre)",
+    "image": "https://images.unsplash.com/photo-1585421514738-01798e348b17?w=800&auto=format&fit=crop&q=80",
+    "description": "Advanced stain-lifting formula dissolves instantly in washing machines to remove tough grease, tea, and food stains without leaving white powder residue."
+  },
+  {
+    "sku": "GR-SLT-001",
+    "category": "Grocery & Daily Needs",
+    "name": "Tata Salt Vacuum Evaporated Iodized Salt (1 kg)",
+    "image": "https://images.unsplash.com/photo-1518110925495-5fe2fda0442c?w=800&auto=format&fit=crop&q=80",
+    "description": "India’s trusted vacuum-evaporated table salt ensuring the right proportion of iodine for normal physical and mental growth. Free flowing and pure."
+  },
+  {
+    "sku": "GR-SPC-001",
+    "category": "Grocery & Daily Needs",
+    "name": "Tata Sampann High Curcumin Pure Turmeric Powder (500 g)",
+    "image": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=800&auto=format&fit=crop&q=80",
+    "description": "Contains at least 3% natural curcumin guaranteed. Sourced from Salem farmlands, ground hygienically to give deep golden color and healing aroma."
+  },
+  {
+    "sku": "GR-DAL-002",
+    "category": "Grocery & Daily Needs",
+    "name": "Tata Sampann Moong Dal Split (1 kg)",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop&q=80",
+    "description": "High-protein split yellow moong lentils with zero polish. Easy to digest, quick cooking, and rich in natural dietary fibre and essential minerals."
+  },
+  {
+    "sku": "GR-BRK-003",
+    "category": "Grocery & Daily Needs",
+    "name": "Tata Sampann Organic Thick Poha / Flattened Rice (500 g)",
+    "image": "https://images.unsplash.com/photo-1514733670139-4d87a1941d55?w=800&auto=format&fit=crop&q=80",
+    "description": "Hygienically cleaned and processed thick rice flakes that retain moisture and stay fluffy without turning soggy. Natural source of iron and dietary fibre."
+  },
+  {
+    "sku": "GR-BRK-004",
+    "category": "Grocery & Daily Needs",
+    "name": "Tata Sampann Roasted Sooji / Rava (500 g)",
+    "image": "https://images.unsplash.com/photo-1589367920969-ab8e050bbb04?w=800&auto=format&fit=crop&q=80",
+    "description": "Pre-roasted durum wheat semolina made with strict quality checks. Ready for instant preparation of non-sticky upma, sheera, halwa, and crispy rava dosas."
+  },
+  {
+    "sku": "GR-DAL-003",
+    "category": "Grocery & Daily Needs",
+    "name": "Tata Sampann Unpolished Chana Dal (1 kg)",
+    "image": "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=800&auto=format&fit=crop&q=80",
+    "description": "Naturally unpolished split Bengal gram packed with wholesome plant protein. Ideal for tadka dals, dry curries, and savoury homemade snacks."
+  },
+  {
+    "sku": "GR-DAL-001",
+    "category": "Grocery & Daily Needs",
+    "name": "Tata Sampann Unpolished Toor Dal / Arhar Dal (1 kg)",
+    "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=800&auto=format&fit=crop&q=80",
+    "description": "100% unpolished yellow pigeon peas sourced from fertile Indian farmlands. Retains natural wholesome proteins, dietary fibre, and authentic taste without artificial polish."
+  },
+  {
+    "sku": "GR-BEV-001",
+    "category": "Grocery & Daily Needs",
+    "name": "Tata Tea Gold Pure CTC & Long Leaf Tea (500 g)",
+    "image": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=800&auto=format&fit=crop&q=80",
+    "description": "Exquisite blend of strong Assam CTC tea with 15% gently rolled long tea leaves for rich taste and irresistible aroma in every cup of chai."
+  },
+  {
+    "sku": "GR-HSD-002",
+    "category": "Grocery & Daily Needs",
+    "name": "Vim Lemon Power Dishwash Liquid Gel (750 ml Bottle)",
+    "image": "https://images.unsplash.com/photo-1585421514284-efb74c2b69ba?w=800&auto=format&fit=crop&q=80",
+    "description": "Concentrated lemon degreaser formula cleans 1 sink-full of oily utensils with just 1 spoon of gel. Leaves stainless steel and glass sparkling clean."
+  },
+  {
+    "sku": "HK-SPCR-011",
+    "category": "Home & Kitchen",
+    "name": "360-Degree Rotating 12-Jar Spice Carousel Rack Organiser",
+    "image": "https://images.unsplash.com/photo-1588854337236-6889d631faa8?w=800&auto=format&fit=crop&q=80",
+    "description": "Compact revolving spice stand made from durable ABS with 12 refillable glass spice containers with dual sift-and-pour shaker lids."
+  },
+  {
+    "sku": "HK-EGG-009",
+    "category": "Home & Kitchen",
+    "name": "Automatic Rapid Stainless Steel Electric Egg Boiler (7 Eggs Capacity)",
+    "image": "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=800&auto=format&fit=crop&q=80",
+    "description": "Boils up to 7 eggs in soft, medium, or hard consistency with one-touch operation and automatic dry-boil safety shutoff."
+  },
+  {
+    "sku": "HK-BOWL-007",
+    "category": "Home & Kitchen",
+    "name": "Borosilicate Heat-Resistant Glass Food Storage Bowls with Clip Lids (Set of 3)",
+    "image": "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?w=800&auto=format&fit=crop&q=80",
+    "description": "Microwave, oven, freezer, and dishwasher safe bowls (400ml, 650ml, 950ml). Non-porous glass does not absorb food stains or odors."
+  },
+  {
+    "sku": "HK-PAN-002",
+    "category": "Home & Kitchen",
+    "name": "ChefPro Tri-Ply Stainless Steel Fry Pan (24cm, Induction Base)",
+    "image": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&auto=format&fit=crop&q=80",
+    "description": "Heavy-gauge 3-layer body for even heat distribution with zero hotspots. Riveted stay-cool ergonomic handle suitable for gas and induction cooktops."
+  },
+  {
+    "sku": "HK-KTL-010",
+    "category": "Home & Kitchen",
+    "name": "Cordless Fast-Boil Stainless Steel Electric Kettle (1.5 Litre, 1500W)",
+    "image": "https://images.unsplash.com/photo-1570222094114-d054a817e56b?w=800&auto=format&fit=crop&q=80",
+    "description": "304 food-grade stainless steel interior with concealed heating element. Boils water in under 4 minutes with auto shut-off and boil-dry protection."
+  },
+  {
+    "sku": "HK-UTL-008",
+    "category": "Home & Kitchen",
+    "name": "Ergonomic Stainless Steel Whisk & Silicone Spatula Combo (Pack of 3)",
+    "image": "https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?w=800&auto=format&fit=crop&q=80",
+    "description": "Heat resistant up to 230°C food grade silicone spatulas and sturdy balloon wire whisk. Safe for all non-stick cookware surfaces."
+  },
+  {
+    "sku": "HK-TWA-004",
+    "category": "Home & Kitchen",
+    "name": "Heavy-Gauge Die-Cast Aluminium Non-Stick Dosa Tawa (28cm)",
+    "image": "https://images.unsplash.com/photo-1584269600519-112d071b35e6?w=800&auto=format&fit=crop&q=80",
+    "description": "5-layer scratch-resistant granite non-stick coating requires minimum cooking oil for crisp paper dosas, rotis, and parathas without sticking."
+  },
+  {
+    "sku": "HK-KNF-005",
+    "category": "Home & Kitchen",
+    "name": "High-Carbon German Stainless Steel Kitchen Knife Set with Wooden Block (6 Pcs)",
+    "image": "https://images.unsplash.com/photo-1593618998160-e34014e67546?w=800&auto=format&fit=crop&q=80",
+    "description": "Precision-tapered ground blades for effortless vegetable and meat slicing. Includes Chef knife, Santoku knife, utility knife, paring knife, kitchen shears, and pine wooden block."
+  },
+  {
+    "sku": "HK-CNT-003",
+    "category": "Home & Kitchen",
+    "name": "Modular Stackable Airtight Food Storage Containers (Set of 6, 1200ml)",
+    "image": "https://images.unsplash.com/photo-1590736969955-71cc94801759?w=800&auto=format&fit=crop&q=80",
+    "description": "BPA-free crystal clear containers with silicone sealed locking lids. Stackable space-saving design keeps pulses, snacks, and grains dry and bug-free."
+  },
+  {
+    "sku": "HK-DRK-013",
+    "category": "Home & Kitchen",
+    "name": "Multi-Purpose Stainless Steel Over-the-Sink Dish Drying Rack",
+    "image": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&auto=format&fit=crop&q=80",
+    "description": "Roll-up silicone rimmed heat-resistant stainless steel drying trivet. Drains water directly into the sink, saving precious kitchen counter space."
+  },
+  {
+    "sku": "HK-BRD-006",
+    "category": "Home & Kitchen",
+    "name": "Organic Bamboo Wood Cutting Chopping Board with Juice Groove",
+    "image": "https://images.unsplash.com/photo-1546554137-f86b9593a222?w=800&auto=format&fit=crop&q=80",
+    "description": "Extra thick knife-friendly organic bamboo board with perimeter juice groove to prevent countertop spills. Naturally antimicrobial and easy to wash."
+  },
+  {
+    "sku": "HK-TWL-012",
+    "category": "Home & Kitchen",
+    "name": "Pure Cotton Waffle Weave Kitchen Cleaning Towels (Pack of 6)",
+    "image": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=80",
+    "description": "Super absorbent, lint-free honeycomb weave towels (40x60cm). Fast-drying fabric ideal for dish drying, wiping countertops, and dining tables."
+  },
+  {
+    "sku": "HK-BOT-001",
+    "category": "Home & Kitchen",
+    "name": "Thermosteel 1000ml Vacuum Insulated Stainless Steel Bottle",
+    "image": "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=800&auto=format&fit=crop&q=80",
+    "description": "Double-wall food-grade 304 stainless steel keeps beverages cold for 24 hours and hot for 18 hours. Leak-proof cap with carrying handle for gym, office, and travel."
+  },
+  {
+    "sku": "MA-WCH-004",
+    "category": "Mobile Accessories",
+    "name": "15W Qi-Certified Fast Wireless Charging Pad with LED Indicator",
+    "image": "https://images.unsplash.com/photo-1616401784845-180882ba9ba8?w=800&auto=format&fit=crop&q=80",
+    "description": "Ultra-thin 6mm aluminium alloy base with foreign object detection and smart temperature control. Works through phone cases up to 5mm thickness."
+  },
+  {
+    "sku": "MA-SPL-009",
+    "category": "Mobile Accessories",
+    "name": "2-in-1 Type-C to 3.5mm Headphone Jack & Fast Charging Splitter",
+    "image": "https://images.unsplash.com/photo-1563770660941-20978e870e26?w=800&auto=format&fit=crop&q=80",
+    "description": "Built-in Hi-Res DAC audio chip ensures crisp lossless sound while charging your smartphone at up to 30W Power Delivery simultaneously."
+  },
+  {
+    "sku": "MA-GAN-005",
+    "category": "Mobile Accessories",
+    "name": "65W GaN Dual Port USB-C Power Delivery Fast Wall Charger",
+    "image": "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=800&auto=format&fit=crop&q=80",
+    "description": "Gallium Nitride (GaN) technology delivers high-power charging in a 50% smaller footprint. Fast-charges laptops, iPads, and iPhones simultaneously."
+  },
+  {
+    "sku": "MA-STD-008",
+    "category": "Mobile Accessories",
+    "name": "Foldable Aluminium Mobile & Tablet Desktop Stand Holder",
+    "image": "https://images.unsplash.com/photo-1586105251261-72a756497a11?w=800&auto=format&fit=crop&q=80",
+    "description": "Dual-hinge 270-degree adjustable viewing angle for video calls, recipe reading, and gaming with dedicated cable charging pass-through slot."
+  },
+  {
+    "sku": "MA-CBL-006",
+    "category": "Mobile Accessories",
+    "name": "Heavy-Duty Braided 60W Type-C to Type-C Fast Charging Cable (1.5m)",
+    "image": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800&auto=format&fit=crop&q=80",
+    "description": "Reinforced ballistic nylon weave withstands 25,000+ bends. Supports 480Mbps data transfer and fast Power Delivery for Android & MacBooks."
+  },
+  {
+    "sku": "MA-CAR-007",
+    "category": "Mobile Accessories",
+    "name": "High-Speed Dual Metal 38W Fast Car Charger (Type-C PD & QC 3.0)",
+    "image": "https://images.unsplash.com/photo-1517400508447-f8dd518b86db?w=800&auto=format&fit=crop&q=80",
+    "description": "All-metal zinc alloy body fits flush into 12V/24V cigarette lighter socket with soft blue circular LED ring for nighttime visibility."
+  },
+  {
+    "sku": "MA-MNT-001",
+    "category": "Mobile Accessories",
+    "name": "Magnetic 360-Degree Rotating Car Dashboard Phone Mount",
+    "image": "https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=800&auto=format&fit=crop&q=80",
+    "description": "Equipped with 6 ultra-strong N52 neodymium magnets and high-strength 3M VHB base adhesive. Secure one-handed phone placement during bumpy drives."
+  },
+  {
+    "sku": "MA-CSE-003",
+    "category": "Mobile Accessories",
+    "name": "Shockproof Matte Finish Hybrid Phone Case with Ring Kickstand",
+    "image": "https://images.unsplash.com/photo-1580910051074-3eb694886505?w=800&auto=format&fit=crop&q=80",
+    "description": "Dual-layer TPU bumper with translucent scratch-resistant PC back. Integrated 360-degree zinc alloy finger ring kickstand and raised camera lip."
+  },
+  {
+    "sku": "MA-GLS-002",
+    "category": "Mobile Accessories",
+    "name": "Super-Tough 9H Tempered Glass Screen Protector with Easy Align Frame (Pack of 2)",
+    "image": "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=800&auto=format&fit=crop&q=80",
+    "description": "Oleophobic anti-fingerprint coating with edge-to-edge 2.5D curved protection and 99.9% optical clarity. Includes precision auto-alignment installation frame."
+  },
+  {
+    "sku": "MA-RNG-010",
+    "category": "Mobile Accessories",
+    "name": "Ultra-Slim Ring Grip Holder & Magnetic Kickstand for Smartphones",
+    "image": "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800&auto=format&fit=crop&q=80",
+    "description": "Premium zinc alloy 3mm ultra-thin phone grip rotates 360 degrees and flips 180 degrees. Compatible with magnetic car dashboard phone holders."
+  },
+  {
+    "sku": "PC-SUN-004",
+    "category": "Personal Care & Grooming",
+    "name": "Broad Spectrum SPF 50 PA++++ Lightweight Matte Sunscreen Gel (50g)",
+    "image": "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=800&auto=format&fit=crop&q=80",
+    "description": "Non-greasy, ultra-light water-gel formula leaves zero white cast. Enriched with Centella Asiatica and Vitamin C to protect against UV and blue light."
+  },
+  {
+    "sku": "PC-DRY-002",
+    "category": "Personal Care & Grooming",
+    "name": "Ceramic Ionic Hair Dryer with 3 Heat Settings & Cool Shot (1600W)",
+    "image": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&auto=format&fit=crop&q=80",
+    "description": "Advanced negative ionic technology neutralizes static frizz for smooth salon-like blowouts. Includes concentrator nozzle and foldable handle for travel."
+  },
+  {
+    "sku": "PC-TRM-001",
+    "category": "Personal Care & Grooming",
+    "name": "Cordless Waterproof Beard Trimmer with 20 Length Settings (Titanium Blades)",
+    "image": "https://images.unsplash.com/photo-1621607512214-68297480165e?w=800&auto=format&fit=crop&q=80",
+    "description": "Self-sharpening titanium-coated skin-friendly blades with 0.5mm precision zoom wheel. 90-minute cordless runtime on a fast 1-hour USB quick charge."
+  },
+  {
+    "sku": "PC-GEL-010",
+    "category": "Personal Care & Grooming",
+    "name": "Hydrating Hyaluronic Acid Lightweight Oil-Free Water Gel Cream (50g)",
+    "image": "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=800&auto=format&fit=crop&q=80",
+    "description": "Quick-absorbing oil-free gel moisturizer delivers intense 72-hour continuous hydration without clogging pores or feeling sticky in humid climates."
+  },
+  {
+    "sku": "PC-MNK-009",
+    "category": "Personal Care & Grooming",
+    "name": "Multi-Purpose Stainless Steel Pedicure & Manicure Grooming Kit (12 Pcs)",
+    "image": "https://images.unsplash.com/photo-1629198688000-71f23e745b6e?w=800&auto=format&fit=crop&q=80",
+    "description": "Surgical grade stainless steel nail clippers, cuticle scissors, tweezers, and files in a luxurious compact PU leather travel case."
+  },
+  {
+    "sku": "PC-ALM-008",
+    "category": "Personal Care & Grooming",
+    "name": "Natural Cold-Pressed Sweet Almond Oil for Hair & Skin (200ml)",
+    "image": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=800&auto=format&fit=crop&q=80",
+    "description": "100% pure edible grade sweet almond oil rich in Vitamin E and antioxidants. Strengthens hair roots, softens skin, and works as gentle baby massage oil."
+  },
+  {
+    "sku": "PC-FCW-003",
+    "category": "Personal Care & Grooming",
+    "name": "Natural Tea Tree & Salicylic Acid Anti-Acne Oil-Control Face Wash (150ml)",
+    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&auto=format&fit=crop&q=80",
+    "description": "Sulphate-free purifying gentle foaming cleanser unclogs pores, controls excess sebum, and prevents pimples without stripping natural moisture."
+  },
+  {
+    "sku": "PC-SRM-005",
+    "category": "Personal Care & Grooming",
+    "name": "Niacinamide 10% & Zinc 1% Dark Spot Clarifying Face Serum (30ml)",
+    "image": "https://images.unsplash.com/photo-1617897903246-719242758050?w=800&auto=format&fit=crop&q=80",
+    "description": "Pure grade Vitamin B3 clinically proven to fade dark acne spots, reduce enlarged pores, and balance uneven skin tone within 4 weeks."
+  },
+  {
+    "sku": "PC-MSK-011",
+    "category": "Personal Care & Grooming",
+    "name": "Pure Activated Charcoal Deep Cleansing Peel-Off Face Mask (100g)",
+    "image": "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=800&auto=format&fit=crop&q=80",
+    "description": "Natural bamboo charcoal acts like a magnet to extract stubborn blackheads, whiteheads, environmental pollutants, and dead skin cells."
+  },
+  {
+    "sku": "PC-LTN-007",
+    "category": "Personal Care & Grooming",
+    "name": "Pure Shea Butter & Vitamin E Deep Nourishing Body Lotion (400ml)",
+    "image": "https://images.unsplash.com/photo-1526947425960-945c6e72858f?w=800&auto=format&fit=crop&q=80",
+    "description": "Non-sticky fast-absorbing body lotion locks in deep moisture for 48 hours. Heals rough elbows, knees, and dry skin in cold weather."
+  },
+  {
+    "sku": "PC-TBH-006",
+    "category": "Personal Care & Grooming",
+    "name": "Sonic Electric Toothbrush with 40,000 VPM & 3 Replacement Heads",
+    "image": "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=800&auto=format&fit=crop&q=80",
+    "description": "5 cleaning modes (Clean, White, Polish, Massage, Sensitive) with built-in 2-minute smart timer and 30-day battery life per USB charge."
+  },
+  {
+    "sku": "SO-STP-010",
+    "category": "Stationery & Office",
+    "name": "Compact Metal Stapler with 1000 Standard Staples & Staple Remover",
+    "image": "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=800&auto=format&fit=crop&q=80",
+    "description": "Jam-free 25-sheet capacity metal body stapler with built-in staple reload indicator and ergonomic palm pressure pad."
+  },
+  {
+    "sku": "SO-CBL-009",
+    "category": "Stationery & Office",
+    "name": "Desktop Cable Clips & Wire Management Organizers (Pack of 10)",
+    "image": "https://images.unsplash.com/photo-1508746829417-e6f548d8d6ed?w=800&auto=format&fit=crop&q=80",
+    "description": "Strong 3M adhesive backed silicone clips keep phone chargers, USB cords, and headphone cables neatly organized and off the floor."
+  },
+  {
+    "sku": "SO-LST-003",
+    "category": "Stationery & Office",
+    "name": "Ergonomic Aluminium Folding Laptop Stand with 6-Level Height Adjustment",
+    "image": "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=800&auto=format&fit=crop&q=80",
+    "description": "Aviation-grade aluminium alloy stand with non-slip silicone pads. Foldable, portable design promotes healthy posture and laptop heat dissipation."
+  },
+  {
+    "sku": "SO-MAT-006",
+    "category": "Stationery & Office",
+    "name": "Extended Anti-Fray Waterproof Desk Mat Pad (800x300mm, Dual Color)",
+    "image": "https://images.unsplash.com/photo-1593062096033-9a26b09da705?w=800&auto=format&fit=crop&q=80",
+    "description": "Dual-sided waterproof PU leather desk blotter protects your table from scratches, stains, and spills while providing a smooth mouse gliding surface."
+  },
+  {
+    "sku": "SO-LMP-004",
+    "category": "Stationery & Office",
+    "name": "Eye-Care LED Desk Lamp with 3 Color Modes & Touch Dimming (USB Rechargeable)",
+    "image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=800&auto=format&fit=crop&q=80",
+    "description": "Flicker-free warm, cool, and natural light modes with stepless brightness control. Flexible 180-degree gooseneck and USB rechargeable lithium battery."
+  },
+  {
+    "sku": "SO-NBK-001",
+    "category": "Stationery & Office",
+    "name": "Hardbound Executive Ruled Notebook (A5, 200 Pages, 100 GSM Cream Paper)",
+    "image": "https://images.unsplash.com/photo-1544816155-12df9643f363?w=800&auto=format&fit=crop&q=80",
+    "description": "Premium faux leather hardbound journal with acid-free, bleed-resistant 100 GSM cream pages. Includes elastic band closure, ribbon bookmark, and inner rear pocket."
+  },
+  {
+    "sku": "SO-SCS-007",
+    "category": "Stationery & Office",
+    "name": "Heavy Duty Multi-Purpose Stainless Steel Craft Scissors (Pack of 2)",
+    "image": "https://images.unsplash.com/photo-1503792501406-2c40da09e1e2?w=800&auto=format&fit=crop&q=80",
+    "description": "Ultra-sharp titanium-coated blades for cutting paper, cardboard, fabric, and plastic packaging effortlessly. Soft-touch comfort grip handles."
+  },
+  {
+    "sku": "SO-ORG-005",
+    "category": "Stationery & Office",
+    "name": "Multi-Compartment Mesh Metal Desk Organizer Caddy with Drawer",
+    "image": "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=800&auto=format&fit=crop&q=80",
+    "description": "Durable rust-resistant powder-coated steel mesh with 6 compartments and slide-out drawer for pens, sticky notes, paperclips, and stationery."
+  },
+  {
+    "sku": "SO-STK-008",
+    "category": "Stationery & Office",
+    "name": "Pastel Neon Sticky Notes with Index Flags (400 Sheets Pack)",
+    "image": "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?w=800&auto=format&fit=crop&q=80",
+    "description": "Strong self-adhesive memo notes that stick reliably to monitors, books, and walls without leaving residue. Includes color-coded page flags."
+  },
+  {
+    "sku": "SO-PEN-002",
+    "category": "Stationery & Office",
+    "name": "SmoothFlow 0.5mm Retractable Gel Ink Pen Set (Pack of 10, Blue & Black)",
+    "image": "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?w=800&auto=format&fit=crop&q=80",
+    "description": "Japanese quick-drying waterproof pigment ink with precision tungsten carbide ball tip. Comfortable rubberized finger grip prevents writing fatigue."
+  },
+  {
+    "sku": "TL-UMB-003",
+    "category": "Travel & Lifestyle",
+    "name": "Automatic Open-Close Windproof Teflon Travel Umbrella (Compact)",
+    "image": "https://images.unsplash.com/photo-1517404215738-15263e9f9178?w=800&auto=format&fit=crop&q=80",
+    "description": "9-rib reinforced fiberglass frame with water-repellent 210T Teflon canopy. Withstands heavy downpours and strong wind gusts without flipping inside out."
+  },
+  {
+    "sku": "TL-DUF-005",
+    "category": "Travel & Lifestyle",
+    "name": "Foldable Lightweight Water-Resistant Gym & Travel Duffle Bag (35L)",
+    "image": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&auto=format&fit=crop&q=80",
+    "description": "Spacious main compartment with ventilated side shoe pocket and wet-dry separation pouch. Folds down into a small compact pouch when not in use."
+  },
+  {
+    "sku": "TL-TOI-008",
+    "category": "Travel & Lifestyle",
+    "name": "Hanging Waterproof Toiletry & Cosmetic Organizer Bag with Swivel Hook",
+    "image": "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800&auto=format&fit=crop&q=80",
+    "description": "4 separate clear zippered compartments with elastic loops for bottles, shampoo, shaving kit, and cosmetics. 360-degree metal hook hangs on towel bars and bathroom doors."
+  },
+  {
+    "sku": "TL-PLW-001",
+    "category": "Travel & Lifestyle",
+    "name": "Memory Foam Ergonomic Travel Neck Pillow with Washable Velvet Cover",
+    "image": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?w=800&auto=format&fit=crop&q=80",
+    "description": "100% pure high-density memory foam with 360-degree chin and neck support. Includes breathable washable cover, sleep eye mask, and earplugs."
+  },
+  {
+    "sku": "TL-WLT-007",
+    "category": "Travel & Lifestyle",
+    "name": "RFID Blocking Multi-Pocket Travel Passport Wallet & Document Organizer",
+    "image": "https://images.unsplash.com/photo-1627123424574-724758594e93?w=800&auto=format&fit=crop&q=80",
+    "description": "Stores up to 4 passports, boarding passes, credit cards, cash, and SIM cards in organized zippered compartments with external quick-access boarding pass slip."
+  },
+  {
+    "sku": "TL-LCK-004",
+    "category": "Travel & Lifestyle",
+    "name": "TSA Approved 3-Digit Combination Cable Luggage Locks (Pack of 2)",
+    "image": "https://images.unsplash.com/photo-1584982751601-97dcc096659c?w=800&auto=format&fit=crop&q=80",
+    "description": "Durable zinc alloy lock body with flexible braided steel cable that threads easily through multiple zipper pulls on suitcases and backpacks."
+  },
+  {
+    "sku": "TL-ADP-006",
+    "category": "Travel & Lifestyle",
+    "name": "Universal All-in-One Worldwide Travel Adapter with 4 USB Ports",
+    "image": "https://images.unsplash.com/photo-1527631746610-bca00a040d60?w=800&auto=format&fit=crop&q=80",
+    "description": "Covers over 150 countries with US/EU/UK/AUS plugs. 4 USB ports plus Type-C fast output with dual 6A safety fuses for global travel."
+  },
+  {
+    "sku": "TL-CUB-002",
+    "category": "Travel & Lifestyle",
+    "name": "Water-Resistant Compression Luggage Packing Cubes Set (6 Pcs Organizer)",
+    "image": "https://images.unsplash.com/photo-1581553680321-4fffae59fccd?w=800&auto=format&fit=crop&q=80",
+    "description": "Ripstop honeycomb nylon cubes with double compression zippers save up to 40% suitcase space. Includes dedicated laundry and shoe bags."
+  }
+]

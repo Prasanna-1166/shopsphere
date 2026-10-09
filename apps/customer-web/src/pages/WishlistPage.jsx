@@ -5,6 +5,7 @@ import { useWishlist } from '../context/WishlistContext';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import EmptyState from '../components/common/EmptyState';
+import { GENERIC_PRODUCT_FALLBACK_IMAGE, handleImageError } from '../utils/imageFallback';
 
 export default function WishlistPage() {
   const { wishlistItems, removeFromWishlist, loading } = useWishlist();
@@ -63,9 +64,7 @@ export default function WishlistPage() {
 
           const isOutOfStock = prod.stockQuantity <= 0;
           const currentPrice = prod.discountPrice !== null ? prod.discountPrice : prod.price;
-          const imgUrl =
-            prod.images?.[0]?.url ||
-            'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600';
+          const imgUrl = prod.images?.[0]?.url || GENERIC_PRODUCT_FALLBACK_IMAGE;
 
           return (
             <div
@@ -78,6 +77,7 @@ export default function WishlistPage() {
                   <img
                     src={imgUrl}
                     alt={prod.name}
+                    onError={handleImageError}
                     className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
                   />
                 </Link>

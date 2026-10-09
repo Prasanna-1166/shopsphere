@@ -157,6 +157,23 @@ const updateOrderStatus = async (req, res, next) => {
           400
         );
       }
+
+      // Fulfillment guard: Do not dispatch or deliver online orders unless payment is PAID
+      if (['SHIPPED', 'DELIVERED'].includes(newStatus)) {
+        const activePayment = await prisma.payment.findFirst({
+          where: { orderId: id },
+          orderBy: { createdAt: 'desc' },
+        });
+        const isCod = activePayment?.provider === 'COD';
+        if (order.paymentStatus !== 'PAID' && !isCod) {
+          return sendError(
+            res,
+            `Cannot transition order #${id} to ${newStatus}: Payment status is ${order.paymentStatus}. Orders must be legitimately paid before fulfillment.`,
+            [],
+            400
+          );
+        }
+      }
     }
 
     const updateData = {};

@@ -107,6 +107,7 @@ describe('ShopSphere — Checkout Transactions & Order Lifecycle Tests', () => {
           postalCode: '560001',
         },
         paymentMethod: 'MOCK_CARD',
+        autoConfirmMock: true,
       });
 
     expect(res.statusCode).toBe(201);

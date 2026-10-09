@@ -14,6 +14,7 @@ import {
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import EmptyState from '../components/common/EmptyState';
+import { GENERIC_PRODUCT_FALLBACK_IMAGE, handleImageError } from '../utils/imageFallback';
 
 export default function CartPage() {
   const { items, summary, updateQuantity, removeFromCart, clearCart, loading } = useCart();
@@ -104,14 +105,14 @@ export default function CartPage() {
           <div className="bg-white border border-slate-200 rounded-xl divide-y divide-slate-100 shadow-sm overflow-hidden">
             {items.map((item) => {
               const prod = item.product;
-              const imgUrl = prod.images?.[0]?.url || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300';
+              const imgUrl = prod.images?.[0]?.url || GENERIC_PRODUCT_FALLBACK_IMAGE;
               const price = prod.discountPrice || prod.price;
 
               return (
                 <div key={item.id} className="p-4 sm:p-5 flex gap-4 items-center">
                   {/* Thumbnail */}
                   <Link to={`/products/${prod.slug}`} className="w-20 h-20 sm:w-24 sm:h-24 rounded-lg bg-slate-100 overflow-hidden shrink-0 border border-slate-200">
-                    <img src={imgUrl} alt={prod.name} className="w-full h-full object-cover" />
+                    <img src={imgUrl} alt={prod.name} onError={handleImageError} className="w-full h-full object-cover" />
                   </Link>
 
                   {/* Info */}

@@ -83,8 +83,15 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 
-// 3. Body & Cookie Parsing
-app.use(express.json({ limit: '10mb' }));
+// 3. Body & Cookie Parsing (Capture raw buffer for HMAC webhook signature verification)
+app.use(
+  express.json({
+    limit: '10mb',
+    verify: (req, res, buf) => {
+      req.rawBody = buf;
+    },
+  })
+);
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(cookieParser(config.cookieSecret));
 

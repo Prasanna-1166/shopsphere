@@ -44,6 +44,7 @@ router.get('/inventory/history', adminInventoryController.getInventoryHistory);
 router.get('/orders', adminOrderController.getAdminOrders);
 router.get('/orders/:id', adminOrderController.getAdminOrderDetails);
 router.patch('/orders/:id/status', adminOrderController.updateOrderStatus);
+router.put('/orders/:id/status', adminOrderController.updateOrderStatus);
 
 // Customer Management
 router.get('/customers', adminCustomerController.getAdminCustomers);

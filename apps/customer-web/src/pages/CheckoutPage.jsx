@@ -13,11 +13,31 @@ import {
   QrCode,
   Banknote,
   Building2,
+  Loader2,
+  FlaskConical,
+  RotateCcw,
+  XCircle,
 } from 'lucide-react';
 import api from '../api/client';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import { useToast } from '../context/ToastContext';
+import PaymentSimulatorModal from '../components/common/PaymentSimulatorModal';
+
+// Helper to load Razorpay Standard Checkout script dynamically
+function loadRazorpayScript() {
+  return new Promise((resolve) => {
+    if (window.Razorpay) {
+      return resolve(true);
+    }
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.async = true;
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
+}
 
 export default function CheckoutPage() {
   const { user, isAuthenticated } = useAuth();
@@ -30,7 +50,15 @@ export default function CheckoutPage() {
   const [showNewAddressForm, setShowNewAddressForm] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('UPI');
   const [loading, setLoading] = useState(false);
+  const [verifying, setVerifying] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
+  const [paymentConfig, setPaymentConfig] = useState(null);
+
+  // Simulator Modal State
+  const [simulatorOpen, setSimulatorOpen] = useState(false);
+  const [pendingSimOrder, setPendingSimOrder] = useState(null);
+  const [simLoading, setSimLoading] = useState(false);
+  const [lastPaymentError, setLastPaymentError] = useState(null);
 
   // New Address Form State
   const [newAddress, setNewAddress] = useState({
@@ -54,15 +82,29 @@ export default function CheckoutPage() {
     async function loadCheckoutData() {
       try {
         setInitialLoading(true);
-        const addrRes = await api.get('/addresses');
-        if (addrRes.data && addrRes.data.addresses) {
-          const list = addrRes.data.addresses;
+
+        // Fetch addresses & payment config in parallel
+        const [addrRes, cfgRes] = await Promise.allSettled([
+          api.get('/addresses'),
+          api.get('/payments/config'),
+        ]);
+
+        if (addrRes.status === 'fulfilled' && addrRes.value?.data?.addresses) {
+          const list = addrRes.value.data.addresses;
           setAddresses(list);
           const defaultAddr = list.find((a) => a.isDefault) || list[0];
           if (defaultAddr) {
             setSelectedAddressId(defaultAddr.id);
           } else {
             setShowNewAddressForm(true);
+          }
+        }
+
+        if (cfgRes.status === 'fulfilled' && cfgRes.value?.data) {
+          const cfg = cfgRes.value.data;
+          setPaymentConfig(cfg);
+          if (!cfg.isSimulated && cfg.provider === 'RAZORPAY') {
+            loadRazorpayScript();
           }
         }
       } catch (err) {
@@ -76,7 +118,14 @@ export default function CheckoutPage() {
 
   const handleCreateAddress = async (e) => {
     e.preventDefault();
-    if (!newAddress.fullName || !newAddress.phone || !newAddress.addressLine1 || !newAddress.city || !newAddress.state || !newAddress.postalCode) {
+    if (
+      !newAddress.fullName ||
+      !newAddress.phone ||
+      !newAddress.addressLine1 ||
+      !newAddress.city ||
+      !newAddress.state ||
+      !newAddress.postalCode
+    ) {
       showToast('Please fill all required address fields.', 'error');
       return;
     }
@@ -110,6 +159,8 @@ export default function CheckoutPage() {
       return;
     }
 
+    setLastPaymentError(null);
+
     try {
       setLoading(true);
 
@@ -121,22 +172,151 @@ export default function CheckoutPage() {
         }
       }
 
+      const activeAddress = addresses.find((a) => a.id === targetAddressId) || newAddress;
+
       const orderPayload = {
         addressId: targetAddressId,
         paymentMethod: paymentMethod === 'COD' ? 'CASH_ON_DELIVERY' : paymentMethod,
       };
 
+      // 1. Create Server Order & Payment Intent
       const res = await api.post('/orders', orderPayload);
-      if (res.data && res.data.order) {
-        const createdOrder = res.data.order;
-        await refreshCart();
-        showToast('Order placed successfully!', 'success');
-        navigate(`/orders/success/${createdOrder.id}`);
+      if (!res.data || !res.data.order) {
+        throw new Error('Failed to create order.');
       }
+
+      const createdOrder = res.data.order;
+      const paymentIntent = res.data.paymentIntent;
+      const paymentRequired = res.data.paymentRequired;
+
+      // 2. If Cash On Delivery: Order is confirmed directly
+      if (!paymentRequired || paymentMethod === 'COD') {
+        await refreshCart();
+        showToast('Order placed successfully with Cash on Delivery!', 'success');
+        navigate(`/orders/success/${createdOrder.id}`);
+        return;
+      }
+
+      // 3. If in Local Simulation Mode: Open interactive PaymentSimulatorModal
+      if (paymentConfig?.isSimulated || paymentIntent?.provider === 'SIMULATOR' || paymentIntent?.provider === 'MOCK') {
+        setPendingSimOrder({
+          order: createdOrder,
+          intent: paymentIntent,
+          paymentMethod,
+        });
+        setSimulatorOpen(true);
+        setLoading(false);
+        return;
+      }
+
+      // 4. If Real Razorpay Standard Gateway
+      if (paymentIntent && paymentIntent.provider === 'RAZORPAY') {
+        const scriptLoaded = await loadRazorpayScript();
+        if (!scriptLoaded || !window.Razorpay) {
+          showToast('Failed to load Razorpay payment gateway script. Please check your network.', 'error');
+          setLoading(false);
+          return;
+        }
+
+        const options = {
+          key: paymentIntent.keyId,
+          amount: paymentIntent.amountPaise || Math.round(createdOrder.totalAmount * 100),
+          currency: paymentIntent.currency || 'INR',
+          name: 'ShopSphere',
+          description: `Order #${createdOrder.id.slice(0, 8)}`,
+          order_id: paymentIntent.razorpayOrderId || paymentIntent.providerReference,
+          prefill: {
+            name: user?.name || activeAddress?.fullName || '',
+            email: user?.email || '',
+            contact: activeAddress?.phone || '',
+          },
+          theme: {
+            color: '#0f172a',
+          },
+          handler: async function (response) {
+            try {
+              setVerifying(true);
+              const verifyRes = await api.post('/payments/verify', {
+                orderId: createdOrder.id,
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+              });
+
+              await refreshCart();
+              showToast('Payment verified successfully! Thank you for shopping with ShopSphere.', 'success');
+              navigate(`/orders/success/${createdOrder.id}`);
+            } catch (vErr) {
+              setLastPaymentError(vErr.message || 'Payment verification failed at server.');
+              showToast(vErr.message || 'Payment verification failed.', 'error');
+            } finally {
+              setVerifying(false);
+              setLoading(false);
+            }
+          },
+          modal: {
+            ondismiss: function () {
+              setLoading(false);
+              setLastPaymentError('Checkout window was dismissed. You can complete payment whenever ready.');
+              showToast('Checkout window closed. You can retry payment anytime.', 'info');
+            },
+          },
+        };
+
+        const razorpayInstance = new window.Razorpay(options);
+        razorpayInstance.on('payment.failed', function (resp) {
+          setLastPaymentError(resp.error?.description || 'Payment declined by card issuing bank.');
+          showToast(resp.error?.description || 'Payment failed at gateway.', 'error');
+          setLoading(false);
+        });
+
+        razorpayInstance.open();
+        return;
+      }
+
+      // Fallback
+      await refreshCart();
+      navigate(`/orders/success/${createdOrder.id}`);
     } catch (err) {
+      setLastPaymentError(err.message || 'Failed to place order.');
       showToast(err.message || 'Failed to place order. Please try again.', 'error');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleExecuteSimulationScenario = async (scenario) => {
+    if (!pendingSimOrder) return;
+    try {
+      setSimLoading(true);
+      const res = await api.post('/payments/verify', {
+        orderId: pendingSimOrder.order.id,
+        scenario,
+        paymentMethod: pendingSimOrder.paymentMethod || paymentMethod,
+        providerReference: pendingSimOrder.intent?.providerReference,
+      });
+
+      if (scenario === 'SUCCESS') {
+        setSimulatorOpen(false);
+        await refreshCart();
+        showToast('Simulated payment approved successfully!', 'success');
+        navigate(`/orders/success/${pendingSimOrder.order.id}`);
+      } else if (scenario === 'CANCEL') {
+        setSimulatorOpen(false);
+        setLastPaymentError('Simulated checkout was cancelled. You can retry payment whenever ready.');
+        showToast('Payment simulation cancelled by customer.', 'info');
+      }
+    } catch (err) {
+      if (scenario === 'FAILURE') {
+        setLastPaymentError(err.message || 'Simulated card decline (Insufficient funds / Bank rejection).');
+        showToast('Simulated payment declined as requested.', 'error');
+        throw err;
+      } else {
+        showToast(err.message || 'Verification error.', 'error');
+        throw err;
+      }
+    } finally {
+      setSimLoading(false);
     }
   };
 
@@ -158,14 +338,15 @@ export default function CheckoutPage() {
     return (
       <div className="max-w-7xl mx-auto px-4 py-16 text-center space-y-3">
         <div className="w-8 h-8 border-3 border-slate-900 border-t-transparent rounded-full animate-spin mx-auto" />
-        <p className="text-xs text-slate-500 font-medium">Preparing secure checkout...</p>
+        <p className="text-xs text-slate-500 font-medium">Preparing secure checkout session...</p>
       </div>
     );
   }
 
-  const freeDeliveryThreshold = 499;
-  const deliveryFee = summary.subtotal >= freeDeliveryThreshold ? 0 : 49;
+  const freeDeliveryThreshold = 1500;
+  const deliveryFee = summary.subtotal >= freeDeliveryThreshold ? 0 : 99;
   const finalTotal = summary.subtotal + deliveryFee;
+  const isSim = paymentConfig?.isSimulated || paymentConfig?.provider === 'SIMULATOR';
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
@@ -174,7 +355,9 @@ export default function CheckoutPage() {
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Secure Checkout</h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-            256-bit SSL encrypted & authenticated session
+            {isSim
+              ? 'Local Payment Simulator Active — Test offline sandbox checkout flows'
+              : '256-bit SSL encrypted & Razorpay PCI-DSS Level 1 compliant gateway'}
           </p>
         </div>
         <div className="hidden sm:flex items-center gap-2 text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-200">
@@ -182,6 +365,52 @@ export default function CheckoutPage() {
           <span>ShopSphere Buyer Protection</span>
         </div>
       </div>
+
+      {/* Simulator Active Sandbox Notice */}
+      {isSim && (
+        <div className="p-4 bg-purple-50/80 border border-purple-200/90 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-purple-600 text-white rounded-xl shadow-xs shrink-0">
+              <FlaskConical className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h4 className="text-xs font-bold text-purple-950 uppercase tracking-wide">
+                  Local Payment Simulator Active
+                </h4>
+                <span className="px-2 py-0.5 bg-purple-200/70 text-purple-800 text-[10px] font-bold rounded-md">
+                  Sandbox
+                </span>
+              </div>
+              <p className="text-xs text-purple-800 mt-0.5">
+                No external merchant credentials required. When you click proceed, an interactive dialog allows testing <strong>Success</strong>, <strong>Failure</strong>, and <strong>Cancellation</strong> scenarios.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Last Payment Error / Retry Banner */}
+      {lastPaymentError && (
+        <div className="p-4 bg-rose-50 border border-rose-200 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+          <div className="flex items-start gap-2.5 text-rose-800">
+            <XCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
+            <div>
+              <p className="font-bold">Payment Attempt Did Not Complete</p>
+              <p className="mt-0.5 text-rose-700">{lastPaymentError}</p>
+            </div>
+          </div>
+          {pendingSimOrder && (
+            <button
+              onClick={() => setSimulatorOpen(true)}
+              className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl shadow-xs transition shrink-0 flex items-center gap-1.5"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span>Retry Payment Simulator</span>
+            </button>
+          )}
+        </div>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Column: Delivery & Payment Details */}
@@ -226,23 +455,23 @@ export default function CheckoutPage() {
                         name="address_select"
                         checked={isSelected}
                         onChange={() => setSelectedAddressId(addr.id)}
-                        className="mt-1 w-4 h-4 text-slate-900 border-slate-300 focus:ring-slate-900"
+                        className="mt-0.5 w-4 h-4 text-slate-900 border-slate-300 focus:ring-slate-900"
                       />
                       <div className="flex-1 text-xs space-y-1">
                         <div className="flex items-center gap-2">
-                          <span className="font-bold text-slate-900 text-sm">{addr.fullName}</span>
+                          <span className="font-bold text-slate-900">{addr.fullName}</span>
                           {addr.isDefault && (
-                            <span className="px-2 py-0.5 bg-slate-200 text-slate-700 font-bold text-[10px] rounded">
+                            <span className="px-2 py-0.5 bg-slate-200 text-slate-700 text-[10px] font-bold rounded">
                               Default
                             </span>
                           )}
                         </div>
-                        <p className="text-slate-600 leading-relaxed">
+                        <p className="text-slate-600">
                           {addr.addressLine1}
                           {addr.addressLine2 ? `, ${addr.addressLine2}` : ''}
                         </p>
                         <p className="text-slate-600 font-medium">
-                          {addr.city}, {addr.state} — <strong>{addr.postalCode}</strong>
+                          {addr.city}, {addr.state} — {addr.postalCode}
                         </p>
                         <p className="text-slate-500 pt-0.5">Phone: {addr.phone}</p>
                       </div>
@@ -374,19 +603,36 @@ export default function CheckoutPage() {
 
           {/* Step 2: Payment Method */}
           <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
-            <div className="flex items-center gap-2.5 border-b border-slate-100 pb-3">
-              <span className="w-6 h-6 rounded-full bg-slate-900 text-white text-xs font-bold flex items-center justify-center">
-                2
-              </span>
-              <h3 className="text-sm font-bold text-slate-900">Payment Option</h3>
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div className="flex items-center gap-2.5">
+                <span className="w-6 h-6 rounded-full bg-slate-900 text-white text-xs font-bold flex items-center justify-center">
+                  2
+                </span>
+                <h3 className="text-sm font-bold text-slate-900">Payment Method</h3>
+              </div>
+              <div className="flex items-center gap-1.5 text-[11px] text-slate-600 font-semibold bg-slate-50 px-2.5 py-1 rounded-md border border-slate-200">
+                {isSim ? (
+                  <>
+                    <FlaskConical className="w-3.5 h-3.5 text-purple-600" />
+                    <span>Local Simulator Active</span>
+                  </>
+                ) : (
+                  <>
+                    <Lock className="w-3 h-3 text-emerald-600" />
+                    <span>Razorpay Standard Gateway</span>
+                  </>
+                )}
+              </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {/* UPI Option */}
+              {/* UPI / QR Option */}
               <div
                 onClick={() => setPaymentMethod('UPI')}
                 className={`p-4 rounded-xl border-2 transition cursor-pointer flex items-center gap-3 ${
-                  paymentMethod === 'UPI' ? 'border-slate-900 bg-slate-50/70' : 'border-slate-200 hover:border-slate-300'
+                  paymentMethod === 'UPI'
+                    ? 'border-slate-900 bg-slate-50/70 shadow-sm'
+                    : 'border-slate-200 hover:border-slate-300'
                 }`}
               >
                 <input
@@ -399,7 +645,7 @@ export default function CheckoutPage() {
                 <div className="text-xs">
                   <p className="font-bold text-slate-900 flex items-center gap-1.5">
                     <QrCode className="w-4 h-4 text-slate-700" />
-                    <span>UPI / QR / Apps</span>
+                    <span>Instant UPI / QR / Apps</span>
                   </p>
                   <p className="text-slate-500">Google Pay, PhonePe, Paytm, BHIM</p>
                 </div>
@@ -407,16 +653,18 @@ export default function CheckoutPage() {
 
               {/* Card Option */}
               <div
-                onClick={() => setPaymentMethod('MOCK_CARD')}
+                onClick={() => setPaymentMethod('CARD')}
                 className={`p-4 rounded-xl border-2 transition cursor-pointer flex items-center gap-3 ${
-                  paymentMethod === 'MOCK_CARD' ? 'border-slate-900 bg-slate-50/70' : 'border-slate-200 hover:border-slate-300'
+                  paymentMethod === 'CARD'
+                    ? 'border-slate-900 bg-slate-50/70 shadow-sm'
+                    : 'border-slate-200 hover:border-slate-300'
                 }`}
               >
                 <input
                   type="radio"
                   name="payment_select"
-                  checked={paymentMethod === 'MOCK_CARD'}
-                  onChange={() => setPaymentMethod('MOCK_CARD')}
+                  checked={paymentMethod === 'CARD'}
+                  onChange={() => setPaymentMethod('CARD')}
                   className="w-4 h-4 text-slate-900 border-slate-300 focus:ring-slate-900"
                 />
                 <div className="text-xs">
@@ -424,7 +672,7 @@ export default function CheckoutPage() {
                     <CreditCard className="w-4 h-4 text-slate-700" />
                     <span>Credit / Debit Card</span>
                   </p>
-                  <p className="text-slate-500">Visa, MasterCard, RuPay</p>
+                  <p className="text-slate-500">Visa, MasterCard, RuPay, Diners</p>
                 </div>
               </div>
 
@@ -432,7 +680,9 @@ export default function CheckoutPage() {
               <div
                 onClick={() => setPaymentMethod('NET_BANKING')}
                 className={`p-4 rounded-xl border-2 transition cursor-pointer flex items-center gap-3 ${
-                  paymentMethod === 'NET_BANKING' ? 'border-slate-900 bg-slate-50/70' : 'border-slate-200 hover:border-slate-300'
+                  paymentMethod === 'NET_BANKING'
+                    ? 'border-slate-900 bg-slate-50/70 shadow-sm'
+                    : 'border-slate-200 hover:border-slate-300'
                 }`}
               >
                 <input
@@ -447,7 +697,7 @@ export default function CheckoutPage() {
                     <Building2 className="w-4 h-4 text-slate-700" />
                     <span>Net Banking</span>
                   </p>
-                  <p className="text-slate-500">HDFC, ICICI, SBI, Axis & all banks</p>
+                  <p className="text-slate-500">HDFC, ICICI, SBI, Axis & 50+ Banks</p>
                 </div>
               </div>
 
@@ -455,7 +705,9 @@ export default function CheckoutPage() {
               <div
                 onClick={() => setPaymentMethod('COD')}
                 className={`p-4 rounded-xl border-2 transition cursor-pointer flex items-center gap-3 ${
-                  paymentMethod === 'COD' ? 'border-slate-900 bg-slate-50/70' : 'border-slate-200 hover:border-slate-300'
+                  paymentMethod === 'COD'
+                    ? 'border-slate-900 bg-slate-50/70 shadow-sm'
+                    : 'border-slate-200 hover:border-slate-300'
                 }`}
               >
                 <input
@@ -470,7 +722,7 @@ export default function CheckoutPage() {
                     <Banknote className="w-4 h-4 text-slate-700" />
                     <span>Cash on Delivery</span>
                   </p>
-                  <p className="text-slate-500">Pay via cash or UPI at delivery</p>
+                  <p className="text-slate-500">Pay via cash or UPI at delivery doorstep</p>
                 </div>
               </div>
             </div>
@@ -481,14 +733,14 @@ export default function CheckoutPage() {
         <div className="lg:col-span-4 space-y-4">
           <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
             <h3 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3">
-              Items in Order ({summary.totalQuantity})
+              Order Summary ({summary.totalQuantity} items)
             </h3>
 
             {/* Items Mini List */}
             <div className="space-y-3 max-h-56 overflow-y-auto pr-1">
               {items.map((item) => {
                 const prod = item.product;
-                const price = prod.discountPrice || prod.price;
+                const price = prod.discountPrice !== null ? prod.discountPrice : prod.price;
                 return (
                   <div key={item.id} className="flex items-center justify-between text-xs">
                     <div className="flex items-center gap-2 min-w-0 pr-2">
@@ -514,7 +766,7 @@ export default function CheckoutPage() {
                 </span>
               </div>
               <div className="flex justify-between">
-                <span>Delivery</span>
+                <span>Delivery Charges</span>
                 <span>
                   {deliveryFee === 0 ? (
                     <span className="font-bold text-emerald-600">FREE</span>
@@ -524,37 +776,68 @@ export default function CheckoutPage() {
                 </span>
               </div>
               <div className="flex justify-between">
-                <span>Taxes & GST</span>
-                <span className="text-slate-400">Included</span>
+                <span>Applicable Taxes & GST</span>
+                <span className="text-slate-400">Included in prices</span>
               </div>
               <div className="flex justify-between text-base font-bold text-slate-900 border-t border-slate-200 pt-3">
-                <span>Total Amount</span>
-                <span>₹{finalTotal.toLocaleString('en-IN')}</span>
+                <span>Final Payable Amount</span>
+                <span className="text-slate-950">₹{finalTotal.toLocaleString('en-IN')}</span>
               </div>
             </div>
 
-            {/* Place Order CTA */}
+            {/* Place Order / Pay CTA */}
             <button
               onClick={handlePlaceOrder}
-              disabled={loading || items.length === 0}
+              disabled={loading || verifying || items.length === 0}
               className="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm rounded-lg transition shadow-sm flex items-center justify-center gap-2 disabled:opacity-50"
             >
-              {loading ? (
-                <span>Processing Order...</span>
+              {loading || verifying ? (
+                <span className="flex items-center gap-2">
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <span>{verifying ? 'Verifying Payment...' : 'Connecting Gateway...'}</span>
+                </span>
               ) : (
                 <>
-                  <Lock className="w-4 h-4" />
-                  <span>Place Order (₹{finalTotal.toLocaleString('en-IN')})</span>
+                  {isSim && paymentMethod !== 'COD' ? (
+                    <FlaskConical className="w-4 h-4 text-purple-400" />
+                  ) : (
+                    <Lock className="w-4 h-4" />
+                  )}
+                  <span>
+                    {paymentMethod === 'COD'
+                      ? `Place COD Order (₹${finalTotal.toLocaleString('en-IN')})`
+                      : isSim
+                      ? `Simulate Payment (₹${finalTotal.toLocaleString('en-IN')})`
+                      : `Pay ₹${finalTotal.toLocaleString('en-IN')} via Razorpay`}
+                  </span>
                 </>
               )}
             </button>
           </div>
 
-          <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-[11px] text-slate-500 leading-relaxed text-center">
-            By placing your order, you agree to ShopSphere's Terms of Sale and Privacy Policy.
+          <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-[11px] text-slate-500 leading-relaxed text-center space-y-1">
+            <p>
+              {isSim
+                ? '🧪 Local Payment Simulator: No real money is transferred.'
+                : '🔒 100% Secure Payment processed by Razorpay.'}
+            </p>
+            <p className="text-[10px] text-slate-400">
+              ShopSphere never stores your raw card numbers, CVVs, or UPI PINs.
+            </p>
           </div>
         </div>
       </div>
+
+      {/* Interactive Payment Simulator Modal */}
+      <PaymentSimulatorModal
+        isOpen={simulatorOpen}
+        onClose={() => setSimulatorOpen(false)}
+        order={pendingSimOrder?.order}
+        paymentIntent={pendingSimOrder?.intent}
+        paymentMethod={pendingSimOrder?.paymentMethod || paymentMethod}
+        onExecuteScenario={handleExecuteSimulationScenario}
+        loading={simLoading}
+      />
     </div>
   );
 }

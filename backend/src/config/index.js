@@ -32,8 +32,15 @@ module.exports = {
     apiOrigin: process.env.API_ORIGIN || 'http://localhost:5000',
   },
   payment: {
-    provider: process.env.PAYMENT_PROVIDER || 'MOCK',
-    secret: process.env.PAYMENT_SECRET || 'mock_payment_secret',
+    provider: (process.env.PAYMENT_PROVIDER || 'SIMULATOR').toUpperCase(),
+    mode: process.env.PAYMENT_MODE || 'simulation',
+    secret: process.env.PAYMENT_SECRET || 'simulator_payment_secret_shopsphere',
+    isSimulated: (process.env.PAYMENT_PROVIDER || 'SIMULATOR').toUpperCase() === 'SIMULATOR' || (process.env.PAYMENT_PROVIDER || '').toUpperCase() === 'MOCK',
+  },
+  razorpay: {
+    keyId: process.env.RAZORPAY_KEY_ID || '',
+    keySecret: process.env.RAZORPAY_KEY_SECRET || '',
+    webhookSecret: process.env.RAZORPAY_WEBHOOK_SECRET || '',
   },
   rateLimit: {
     windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS, 10) || 15 * 60 * 1000,

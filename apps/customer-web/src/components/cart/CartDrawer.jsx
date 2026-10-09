@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { X, ShoppingBag, Plus, Minus, Trash2, ArrowRight } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
+import { GENERIC_PRODUCT_FALLBACK_IMAGE, handleImageError } from '../../utils/imageFallback';
 
 export default function CartDrawer() {
   const { isCartDrawerOpen, setIsCartDrawerOpen, items, summary, updateQuantity, removeFromCart } = useCart();
@@ -62,12 +63,12 @@ export default function CartDrawer() {
             ) : (
               items.map((item) => {
                 const prod = item.product;
-                const imgUrl = prod.images?.[0]?.url || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200';
+                const imgUrl = prod.images?.[0]?.url || GENERIC_PRODUCT_FALLBACK_IMAGE;
                 const price = prod.discountPrice || prod.price;
 
                 return (
                   <div key={item.id} className="p-3 bg-slate-50 border border-slate-200 rounded-xl flex gap-3 items-center">
-                    <img src={imgUrl} alt={prod.name} className="w-16 h-16 rounded-lg object-cover bg-white shrink-0 border border-slate-200" />
+                    <img src={imgUrl} alt={prod.name} onError={handleImageError} className="w-16 h-16 rounded-lg object-cover bg-white shrink-0 border border-slate-200" />
                     <div className="flex-1 min-w-0 space-y-1">
                       <Link
                         to={`/products/${prod.slug}`}

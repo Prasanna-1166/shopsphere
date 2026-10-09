@@ -19,9 +19,10 @@ import {
 } from 'lucide-react';
 import api from '../api/client';
 import { useCart } from '../context/CartContext';
-import { useWishlist } from '../../src/context/WishlistContext';
+import { useWishlist } from '../context/WishlistContext';
 import ProductCard from '../components/common/ProductCard';
 import EmptyState from '../components/common/EmptyState';
+import { GENERIC_PRODUCT_FALLBACK_IMAGE, handleImageError } from '../utils/imageFallback';
 
 function extractPackSize(name) {
   if (!name) return null;
@@ -149,7 +150,7 @@ export default function ProductDetailsPage() {
 
   const images = product.images && product.images.length > 0
     ? product.images
-    : [{ url: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&auto=format&fit=crop&q=80', altText: product.name }];
+    : [{ url: GENERIC_PRODUCT_FALLBACK_IMAGE, altText: product.name }];
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
@@ -183,8 +184,9 @@ export default function ProductDetailsPage() {
         <div className="lg:col-span-6 space-y-4">
           <div className="relative aspect-square rounded-2xl overflow-hidden bg-slate-50 border border-slate-200">
             <img
-              src={images[selectedImageIdx]?.url}
+              src={images[selectedImageIdx]?.url || GENERIC_PRODUCT_FALLBACK_IMAGE}
               alt={images[selectedImageIdx]?.altText || product.name}
+              onError={handleImageError}
               className="w-full h-full object-cover object-center"
             />
 
@@ -230,7 +232,12 @@ export default function ProductDetailsPage() {
                       : 'border-slate-200 hover:border-slate-400'
                   }`}
                 >
-                  <img src={img.url} alt={img.altText || ''} className="w-full h-full object-cover" />
+                  <img
+                    src={img.url || GENERIC_PRODUCT_FALLBACK_IMAGE}
+                    alt={img.altText || ''}
+                    onError={handleImageError}
+                    className="w-full h-full object-cover"
+                  />
                 </button>
               ))}
             </div>

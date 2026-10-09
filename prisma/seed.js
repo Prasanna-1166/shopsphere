@@ -155,8 +155,8 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=800&auto=format&fit=crop&q=80', altText: 'India Gate Rozzana Basmati Rice 5kg' },
-        { url: 'https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?w=800&auto=format&fit=crop&q=80', altText: 'Cooked Basmati Rice grains' }
+        { url: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=800&auto=format&fit=crop&q=80', altText: "India Gate Feast Rozzana Premium Basmati Rice (5 kg)" },
+        { url: 'https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?w=800&auto=format&fit=crop&q=80', altText: "India Gate Feast Rozzana Premium Basmati Rice (5 kg)" }
       ],
     },
     {
@@ -170,7 +170,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop&q=80', altText: 'Tata Sampann Unpolished Toor Dal 1kg' }
+        { url: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=800&auto=format&fit=crop&q=80', altText: "Tata Sampann Unpolished Toor Dal / Arhar Dal (1 kg)" }
       ],
     },
     {
@@ -184,7 +184,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&auto=format&fit=crop&q=80', altText: 'Aashirvaad Whole Wheat Atta 5kg' }
+        { url: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=800&auto=format&fit=crop&q=80', altText: "Aashirvaad Superior MP Sharbati Whole Wheat Atta (5 kg)" }
       ],
     },
     {
@@ -198,7 +198,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=800&auto=format&fit=crop&q=80', altText: 'Fortune Sunlite Refined Sunflower Oil 1L' }
+        { url: 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=800&auto=format&fit=crop&q=80', altText: 'GR-OIL-001' }
       ],
     },
     {
@@ -212,7 +212,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=800&auto=format&fit=crop&q=80', altText: 'Amul Pure Cow Ghee 1L Tin' }
+        { url: 'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=800&auto=format&fit=crop&q=80', altText: "Amul Pure Cow Ghee (1 Litre Tin)" }
       ],
     },
     {
@@ -226,7 +226,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=800&auto=format&fit=crop&q=80', altText: 'Tata Salt Vacuum Evaporated Iodized Salt 1kg' }
+        { url: 'https://images.unsplash.com/photo-1518110925495-5fe2fda0442c?w=800&auto=format&fit=crop&q=80', altText: "Tata Salt Vacuum Evaporated Iodized Salt (1 kg)" }
       ],
     },
     {
@@ -240,7 +240,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1581441363689-1f3c3c414635?w=800&auto=format&fit=crop&q=80', altText: 'Madhur Pure Refined Sugar 1kg' }
+        { url: 'https://images.unsplash.com/photo-1581441363689-1f3c3c414635?w=800&auto=format&fit=crop&q=80', altText: "Madhur Pure & Hygienic Refined Sugar (1 kg Pack)" }
       ],
     },
     {
@@ -254,7 +254,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=800&auto=format&fit=crop&q=80', altText: 'Tata Sampann Moong Dal Split 1kg' }
+        { url: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop&q=80', altText: "Tata Sampann Moong Dal Split (1 kg)" }
       ],
     },
     {
@@ -268,7 +268,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?w=800&auto=format&fit=crop&q=80', altText: 'Tata Sampann Unpolished Chana Dal 1kg' }
+        { url: 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=800&auto=format&fit=crop&q=80', altText: "Tata Sampann Unpolished Chana Dal (1 kg)" }
       ],
     },
     {
@@ -282,7 +282,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=800&auto=format&fit=crop&q=80', altText: 'Tata Sampann Turmeric Powder 500g' }
+        { url: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=800&auto=format&fit=crop&q=80', altText: "Tata Sampann High Curcumin Pure Turmeric Powder (500 g)" }
       ],
     },
     {
@@ -296,7 +296,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=800&auto=format&fit=crop&q=80', altText: 'Catch Kashmiri Mirch Powder 500g' }
+        { url: 'https://images.unsplash.com/photo-1509358271058-acd22cc93898?w=800&auto=format&fit=crop&q=80', altText: 'GR-SPC-002' }
       ],
     },
     {
@@ -310,7 +310,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1599909533730-a870138980b1?w=800&auto=format&fit=crop&q=80', altText: 'Everest Royal Garam Masala 100g' }
+        { url: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=800&auto=format&fit=crop&q=80', altText: 'GR-SPC-003' }
       ],
     },
     {
@@ -324,7 +324,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1596040033282-5881023a1a9e?w=800&auto=format&fit=crop&q=80', altText: 'Catch Whole Cumin Seeds Jeera 200g' }
+        { url: 'https://images.unsplash.com/photo-1599940824399-b87987ceb72a?w=800&auto=format&fit=crop&q=80', altText: 'GR-SPC-004' }
       ],
     },
     {
@@ -338,7 +338,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=800&auto=format&fit=crop&q=80', altText: 'Catch Dhaniya Powder 500g' }
+        { url: 'https://images.unsplash.com/photo-1532336414038-cf19250c5757?w=800&auto=format&fit=crop&q=80', altText: 'GR-SPC-005' }
       ],
     },
     {
@@ -352,7 +352,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=800&auto=format&fit=crop&q=80', altText: 'Tata Tea Gold 500g Pack' }
+        { url: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=800&auto=format&fit=crop&q=80', altText: "Tata Tea Gold Pure CTC & Long Leaf Tea (500 g)" }
       ],
     },
     {
@@ -366,7 +366,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&auto=format&fit=crop&q=80', altText: 'Nescafe Classic Coffee 100g' }
+        { url: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&auto=format&fit=crop&q=80', altText: "Nescafe Classic 100% Pure Instant Coffee (100 g Glass Jar)" }
       ],
     },
     {
@@ -380,7 +380,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=800&auto=format&fit=crop&q=80', altText: 'Quaker Rolled Oats 1kg' }
+        { url: 'https://images.unsplash.com/photo-1521483451569-e33803c0330c?w=800&auto=format&fit=crop&q=80', altText: "Quaker Rolled Oats with Beta Glucan Fibre (1 kg Pouch)" }
       ],
     },
     {
@@ -394,7 +394,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1521483451569-e33803c0330c?w=800&auto=format&fit=crop&q=80', altText: 'Kelloggs Almond Honey Corn Flakes 750g' }
+        { url: 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=800&auto=format&fit=crop&q=80', altText: "Kellogg's Real Almond & Honey Crunchy Corn Flakes (750 g)" }
       ],
     },
     {
@@ -408,7 +408,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=800&auto=format&fit=crop&q=80', altText: 'Tata Sampann Thick Poha 500g' }
+        { url: 'https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?w=800&auto=format&fit=crop&q=80', altText: "Tata Sampann Organic Thick Poha / Flattened Rice (500 g)" }
       ],
     },
     {
@@ -422,7 +422,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&auto=format&fit=crop&q=80', altText: 'Tata Sampann Roasted Sooji 500g' }
+        { url: 'https://images.unsplash.com/photo-1589367920969-ab8e050bbb04?w=800&auto=format&fit=crop&q=80', altText: "Tata Sampann Roasted Sooji / Rava (500 g)" }
       ],
     },
     {
@@ -436,7 +436,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1585421514738-01798e348b17?w=800&auto=format&fit=crop&q=80', altText: 'Surf Excel Matic Liquid Detergent 2L' }
+        { url: 'https://images.unsplash.com/photo-1585421514738-01798e348b17?w=800&auto=format&fit=crop&q=80', altText: 'GR-HSD-001' }
       ],
     },
     {
@@ -450,7 +450,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1585421514284-efb74c2b69ba?w=800&auto=format&fit=crop&q=80', altText: 'Vim Lemon Dishwash Gel 750ml' }
+        { url: 'https://images.unsplash.com/photo-1585421514284-efb74c2b69ba?w=800&auto=format&fit=crop&q=80', altText: "Vim Lemon Power Dishwash Liquid Gel (750 ml Bottle)" }
       ],
     },
     {
@@ -464,7 +464,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1563453392212-326f5e854473?w=800&auto=format&fit=crop&q=80', altText: 'Lizol Citrus Floor Cleaner 1L' }
+        { url: 'https://images.unsplash.com/photo-1563453392212-326f5e854473?w=800&auto=format&fit=crop&q=80', altText: 'GR-HSD-003' }
       ],
     },
     {
@@ -478,7 +478,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=800&auto=format&fit=crop&q=80', altText: 'Harpic Power Plus Toilet Cleaner 1L' }
+        { url: 'https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=800&auto=format&fit=crop&q=80', altText: "Harpic Power Plus 10X Max Toilet Cleaner (1 Litre)" }
       ],
     },
     {
@@ -492,7 +492,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=800&auto=format&fit=crop&q=80', altText: 'Origami Kitchen Towel 4 Rolls' }
+        { url: 'https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=800&auto=format&fit=crop&q=80', altText: "Origami 3-Ply Virgin Pulp Kitchen Towel Tissues (Pack of 4 Rolls)" }
       ],
     },
     {
@@ -506,7 +506,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1607344645866-009c320c5ab8?w=800&auto=format&fit=crop&q=80', altText: 'Freshwrap Aluminium Foil 18m' }
+        { url: 'https://images.unsplash.com/photo-1584992236310-6edddc08acff?w=800&auto=format&fit=crop&q=80', altText: 'GR-HSD-006' }
       ],
     },
     {
@@ -520,7 +520,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&auto=format&fit=crop&q=80', altText: 'Shalimar Garbage Bags Medium 60 Pack' }
+        { url: 'https://images.unsplash.com/photo-1530587191325-3db32d826c18?w=800&auto=format&fit=crop&q=80', altText: 'GR-HSD-007' }
       ],
     },
     {
@@ -534,7 +534,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1607006314354-9e79435b6fb8?w=800&auto=format&fit=crop&q=80', altText: 'Dettol Skincare Soap 4 Pack' }
+        { url: 'https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?w=800&auto=format&fit=crop&q=80', altText: 'GR-PC-001' }
       ],
     },
     {
@@ -548,7 +548,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1559599101-f09722fb4948?w=800&auto=format&fit=crop&q=80', altText: 'Colgate Total Toothpaste 2 Pack' }
+        { url: 'https://images.unsplash.com/photo-1559599101-f09722fb4948?w=800&auto=format&fit=crop&q=80', altText: 'GR-PC-002' }
       ],
     },
     {
@@ -562,7 +562,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1520697830682-bbb6e85e2b0b?w=800&auto=format&fit=crop&q=80', altText: 'Oral-B CrossAction Soft Toothbrush 4 Pack' }
+        { url: 'https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=800&auto=format&fit=crop&q=80', altText: 'GR-PC-003' }
       ],
     },
     {
@@ -576,7 +576,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&auto=format&fit=crop&q=80', altText: 'Lifebuoy Liquid Handwash Refill 750ml' }
+        { url: 'https://images.unsplash.com/photo-1584744982491-665216d95f8b?w=800&auto=format&fit=crop&q=80', altText: 'GR-PC-004' }
       ],
     },
     {
@@ -590,7 +590,7 @@ async function main() {
       active: true,
       categoryId: 'cat_grocery_daily_needs',
       images: [
-        { url: 'https://images.unsplash.com/photo-1526947425960-945c6e72858f?w=800&auto=format&fit=crop&q=80', altText: 'Parachute Coconut Oil 500ml' }
+        { url: 'https://images.unsplash.com/photo-1615397349754-cfa2066a298e?w=800&auto=format&fit=crop&q=80', altText: 'GR-PC-005' }
       ],
     },
 
@@ -608,7 +608,7 @@ async function main() {
       active: true,
       categoryId: 'cat_home_kitchen',
       images: [
-        { url: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=800&auto=format&fit=crop&q=80', altText: 'Thermosteel 1000ml Vacuum Insulated Stainless Steel Bottle' }
+        { url: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=800&auto=format&fit=crop&q=80', altText: "Thermosteel 1000ml Vacuum Insulated Stainless Steel Bottle" }
       ],
     },
     {
@@ -622,7 +622,7 @@ async function main() {
       active: true,
       categoryId: 'cat_home_kitchen',
       images: [
-        { url: 'https://images.unsplash.com/photo-1584992236310-6edddc08acff?w=800&auto=format&fit=crop&q=80', altText: 'ChefPro Tri-Ply Stainless Steel Fry Pan' }
+        { url: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&auto=format&fit=crop&q=80', altText: 'HK-PAN-002' }
       ],
     },
     {
@@ -636,7 +636,7 @@ async function main() {
       active: true,
       categoryId: 'cat_home_kitchen',
       images: [
-        { url: 'https://images.unsplash.com/photo-1590794056226-79ef3a8147e1?w=800&auto=format&fit=crop&q=80', altText: 'Modular Stackable Airtight Food Storage Containers' }
+        { url: 'https://images.unsplash.com/photo-1590736969955-71cc94801759?w=800&auto=format&fit=crop&q=80', altText: 'HK-CNT-003' }
       ],
     },
     {
@@ -650,7 +650,7 @@ async function main() {
       active: true,
       categoryId: 'cat_home_kitchen',
       images: [
-        { url: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=800&auto=format&fit=crop&q=80', altText: 'Non-Stick Granite Dosa Tawa' }
+        { url: 'https://images.unsplash.com/photo-1590794056226-79ef3a8147e1?w=800&auto=format&fit=crop&q=80', altText: 'HK-TWA-004' }
       ],
     },
     {
@@ -664,7 +664,7 @@ async function main() {
       active: true,
       categoryId: 'cat_home_kitchen',
       images: [
-        { url: 'https://images.unsplash.com/photo-1593618998160-e34014e67546?w=800&auto=format&fit=crop&q=80', altText: 'Kitchen Knife Set with Wooden Block' }
+        { url: 'https://images.unsplash.com/photo-1593618998160-e34014e67546?w=800&auto=format&fit=crop&q=80', altText: "High-Carbon German Stainless Steel Kitchen Knife Set with Wooden Block (6 Pcs)" }
       ],
     },
     {
@@ -678,7 +678,7 @@ async function main() {
       active: true,
       categoryId: 'cat_home_kitchen',
       images: [
-        { url: 'https://images.unsplash.com/photo-1590794056226-79ef3a8147e1?w=800&auto=format&fit=crop&q=80', altText: 'Bamboo Wood Cutting Board' }
+        { url: 'https://images.unsplash.com/photo-1546554137-f86b9593a222?w=800&auto=format&fit=crop&q=80', altText: 'HK-BRD-006' }
       ],
     },
     {
@@ -692,7 +692,7 @@ async function main() {
       active: true,
       categoryId: 'cat_home_kitchen',
       images: [
-        { url: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=800&auto=format&fit=crop&q=80', altText: 'Borosilicate Glass Storage Bowls' }
+        { url: 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?w=800&auto=format&fit=crop&q=80', altText: 'HK-BOWL-007' }
       ],
     },
     {
@@ -706,7 +706,7 @@ async function main() {
       active: true,
       categoryId: 'cat_home_kitchen',
       images: [
-        { url: 'https://images.unsplash.com/photo-1590794056226-79ef3a8147e1?w=800&auto=format&fit=crop&q=80', altText: 'Silicone Spatula and Whisk Set' }
+        { url: 'https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?w=800&auto=format&fit=crop&q=80', altText: "Ergonomic Stainless Steel Whisk & Silicone Spatula Combo (Pack of 3)" }
       ],
     },
     {
@@ -720,7 +720,7 @@ async function main() {
       active: true,
       categoryId: 'cat_home_kitchen',
       images: [
-        { url: 'https://images.unsplash.com/photo-1584992236310-6edddc08acff?w=800&auto=format&fit=crop&q=80', altText: 'Automatic Electric Egg Boiler' }
+        { url: 'https://images.unsplash.com/photo-1587486913049-53fc88980cfc?w=800&auto=format&fit=crop&q=80', altText: "Automatic Rapid Stainless Steel Electric Egg Boiler (7 Eggs Capacity)" }
       ],
     },
     {
@@ -734,7 +734,7 @@ async function main() {
       active: true,
       categoryId: 'cat_home_kitchen',
       images: [
-        { url: 'https://images.unsplash.com/photo-1594213114663-ddfeefe6e2d9?w=800&auto=format&fit=crop&q=80', altText: 'Fast Boil Electric Kettle' }
+        { url: 'https://images.unsplash.com/photo-1570222094114-d054a817e56b?w=800&auto=format&fit=crop&q=80', altText: "Cordless Fast-Boil Stainless Steel Electric Kettle (1.5 Litre, 1500W)" }
       ],
     },
     {
@@ -748,7 +748,7 @@ async function main() {
       active: true,
       categoryId: 'cat_home_kitchen',
       images: [
-        { url: 'https://images.unsplash.com/photo-1596040033282-5881023a1a9e?w=800&auto=format&fit=crop&q=80', altText: 'Rotating Spice Carousel Rack' }
+        { url: 'https://images.unsplash.com/photo-1588854337236-6889d631faa8?w=800&auto=format&fit=crop&q=80', altText: 'HK-SPCR-011' }
       ],
     },
     {
@@ -762,7 +762,7 @@ async function main() {
       active: true,
       categoryId: 'cat_home_kitchen',
       images: [
-        { url: 'https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=800&auto=format&fit=crop&q=80', altText: 'Waffle Weave Kitchen Towels' }
+        { url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=80', altText: 'HK-TWL-012' }
       ],
     },
     {
@@ -776,7 +776,7 @@ async function main() {
       active: true,
       categoryId: 'cat_home_kitchen',
       images: [
-        { url: 'https://images.unsplash.com/photo-1584992236310-6edddc08acff?w=800&auto=format&fit=crop&q=80', altText: 'Over the Sink Dish Drying Rack' }
+        { url: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=800&auto=format&fit=crop&q=80', altText: 'HK-DRK-013' }
       ],
     },
 
@@ -794,7 +794,7 @@ async function main() {
       active: true,
       categoryId: 'cat_electronics_accessories',
       images: [
-        { url: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=800&auto=format&fit=crop&q=80', altText: 'BassPro ANC True Wireless Bluetooth Earbuds' }
+        { url: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=800&auto=format&fit=crop&q=80', altText: "BassPro ANC True Wireless Bluetooth Earbuds with 40-Hour Battery" }
       ],
     },
     {
@@ -808,7 +808,7 @@ async function main() {
       active: true,
       categoryId: 'cat_electronics_accessories',
       images: [
-        { url: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800&auto=format&fit=crop&q=80', altText: 'SoundPulse 16W Waterproof Bluetooth Speaker' }
+        { url: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800&auto=format&fit=crop&q=80', altText: "SoundPulse 16W Waterproof IPX7 Portable Bluetooth Speaker" }
       ],
     },
     {
@@ -822,7 +822,7 @@ async function main() {
       active: true,
       categoryId: 'cat_electronics_accessories',
       images: [
-        { url: 'https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=800&auto=format&fit=crop&q=80', altText: 'Ultra-Slim 10000mAh Fast Charging Power Bank' }
+        { url: 'https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=800&auto=format&fit=crop&q=80', altText: "Ultra-Slim 10,000mAh 22.5W Fast Charging Power Bank with Dual Output" }
       ],
     },
     {
@@ -836,7 +836,7 @@ async function main() {
       active: true,
       categoryId: 'cat_electronics_accessories',
       images: [
-        { url: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=800&auto=format&fit=crop&q=80', altText: '7-in-1 USB-C Multiport Hub Adapter' }
+        { url: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=800&auto=format&fit=crop&q=80', altText: 'EA-HUB-004' }
       ],
     },
     {
@@ -850,7 +850,7 @@ async function main() {
       active: true,
       categoryId: 'cat_electronics_accessories',
       images: [
-        { url: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800&auto=format&fit=crop&q=80', altText: 'RGB Mechanical Gaming Keyboard' }
+        { url: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800&auto=format&fit=crop&q=80', altText: "RGB Mechanical Gaming Keyboard with Hot-Swappable Red Switches" }
       ],
     },
     {
@@ -864,7 +864,7 @@ async function main() {
       active: true,
       categoryId: 'cat_electronics_accessories',
       images: [
-        { url: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=800&auto=format&fit=crop&q=80', altText: 'Silent Click Ergonomic Wireless Mouse' }
+        { url: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=800&auto=format&fit=crop&q=80', altText: "Silent Click Ergonomic 2.4GHz Wireless Optical Mouse with DPI Switch" }
       ],
     },
     {
@@ -878,7 +878,7 @@ async function main() {
       active: true,
       categoryId: 'cat_electronics_accessories',
       images: [
-        { url: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800&auto=format&fit=crop&q=80', altText: '1080p Full HD Webcam' }
+        { url: 'https://images.unsplash.com/photo-1587826080692-f439cd0b70da?w=800&auto=format&fit=crop&q=80', altText: "1080p Full HD Webcam with Stereo Microphone & Privacy Shutter" }
       ],
     },
     {
@@ -892,7 +892,7 @@ async function main() {
       active: true,
       categoryId: 'cat_electronics_accessories',
       images: [
-        { url: 'https://images.unsplash.com/photo-1558002038-1055907df827?w=800&auto=format&fit=crop&q=80', altText: 'Smart WiFi Plug 16A' }
+        { url: 'https://images.unsplash.com/photo-1558002038-1055907df827?w=800&auto=format&fit=crop&q=80', altText: "Smart Wi-Fi Plug with Energy Monitoring (16A for Heavy Appliances)" }
       ],
     },
     {
@@ -906,7 +906,7 @@ async function main() {
       active: true,
       categoryId: 'cat_electronics_accessories',
       images: [
-        { url: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=80', altText: 'Over-Ear Studio Headphones' }
+        { url: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=80', altText: "Over-Ear Studio Monitor Headphones with 50mm Neodymium Drivers" }
       ],
     },
     {
@@ -920,7 +920,7 @@ async function main() {
       active: true,
       categoryId: 'cat_electronics_accessories',
       images: [
-        { url: 'https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?w=800&auto=format&fit=crop&q=80', altText: 'Digital Alarm Clock with Wireless Charger' }
+        { url: 'https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?w=800&auto=format&fit=crop&q=80', altText: "Digital Alarm Clock with Wireless Phone Charging Station & Night Light" }
       ],
     },
     {
@@ -934,7 +934,7 @@ async function main() {
       active: true,
       categoryId: 'cat_electronics_accessories',
       images: [
-        { url: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800&auto=format&fit=crop&q=80', altText: 'Braided 4K HDMI Cable' }
+        { url: 'https://images.unsplash.com/photo-1558655146-d09347e92766?w=800&auto=format&fit=crop&q=80', altText: 'EA-HDM-011' }
       ],
     },
 
@@ -952,7 +952,7 @@ async function main() {
       active: true,
       categoryId: 'cat_fashion_apparel',
       images: [
-        { url: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80', altText: 'Organic Cotton Crew Neck T-Shirt Midnight Navy' }
+        { url: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80', altText: 'FA-TSH-001' }
       ],
     },
     {
@@ -966,7 +966,7 @@ async function main() {
       active: true,
       categoryId: 'cat_fashion_apparel',
       images: [
-        { url: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=800&auto=format&fit=crop&q=80', altText: 'Pure Cotton Relaxed Fit Chino Trousers' }
+        { url: 'https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?w=800&auto=format&fit=crop&q=80', altText: 'FA-TRZ-002' }
       ],
     },
     {
@@ -980,7 +980,7 @@ async function main() {
       active: true,
       categoryId: 'cat_fashion_apparel',
       images: [
-        { url: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&auto=format&fit=crop&q=80', altText: 'Commuter Laptop Backpack' }
+        { url: 'https://images.unsplash.com/photo-1546938576-6e6a64f317cc?w=800&auto=format&fit=crop&q=80', altText: 'FA-BAG-003' }
       ],
     },
     {
@@ -994,7 +994,7 @@ async function main() {
       active: true,
       categoryId: 'cat_fashion_apparel',
       images: [
-        { url: 'https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=800&auto=format&fit=crop&q=80', altText: 'Casual Henley Polo T-Shirt' }
+        { url: 'https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=800&auto=format&fit=crop&q=80', altText: "Pure Cotton Breathable Casual Henley Polo T-Shirt (Heather Grey)" }
       ],
     },
     {
@@ -1008,7 +1008,7 @@ async function main() {
       active: true,
       categoryId: 'cat_fashion_apparel',
       images: [
-        { url: 'https://images.unsplash.com/photo-1624222247344-550fb60583dc?w=800&auto=format&fit=crop&q=80', altText: 'Genuine Leather Reversible Belt' }
+        { url: 'https://images.unsplash.com/photo-1624222247344-550fb60583dc?w=800&auto=format&fit=crop&q=80', altText: "Genuine Leather Classic Reversible Pin Buckle Belt (Black & Brown)" }
       ],
     },
     {
@@ -1022,7 +1022,7 @@ async function main() {
       active: true,
       categoryId: 'cat_fashion_apparel',
       images: [
-        { url: 'https://images.unsplash.com/photo-1627123424574-724758594e93?w=800&auto=format&fit=crop&q=80', altText: 'Leather Bi-Fold Wallet' }
+        { url: 'https://images.unsplash.com/photo-1627123424574-724758594e93?w=800&auto=format&fit=crop&q=80', altText: 'FA-WLT-006' }
       ],
     },
     {
@@ -1036,7 +1036,7 @@ async function main() {
       active: true,
       categoryId: 'cat_fashion_apparel',
       images: [
-        { url: 'https://images.unsplash.com/photo-1586350977771-b3b0abd50c82?w=800&auto=format&fit=crop&q=80', altText: 'Cotton Ankle Sports Socks 5 Pack' }
+        { url: 'https://images.unsplash.com/photo-1582966772680-860e372bb558?w=800&auto=format&fit=crop&q=80', altText: "Cushioned Cotton Ankle Sports Socks (Pack of 5 Pairs, Multi-Colour)" }
       ],
     },
     {
@@ -1050,7 +1050,7 @@ async function main() {
       active: true,
       categoryId: 'cat_fashion_apparel',
       images: [
-        { url: 'https://images.unsplash.com/photo-1544441893-675973e31985?w=800&auto=format&fit=crop&q=80', altText: 'Windproof Running Jacket' }
+        { url: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&auto=format&fit=crop&q=80', altText: "Lightweight Windproof Full-Zip Active Sports Running Jacket" }
       ],
     },
     {
@@ -1064,7 +1064,7 @@ async function main() {
       active: true,
       categoryId: 'cat_fashion_apparel',
       images: [
-        { url: 'https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=800&auto=format&fit=crop&q=80', altText: 'Pure Linen Short Kurta' }
+        { url: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=800&auto=format&fit=crop&q=80', altText: 'FA-KRT-009' }
       ],
     },
     {
@@ -1078,7 +1078,7 @@ async function main() {
       active: true,
       categoryId: 'cat_fashion_apparel',
       images: [
-        { url: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=800&auto=format&fit=crop&q=80', altText: 'Polarized UV400 Sunglasses' }
+        { url: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=800&auto=format&fit=crop&q=80', altText: "Polarized UV400 Protection Wayfarer Sunglasses with Hard Case" }
       ],
     },
     {
@@ -1092,7 +1092,7 @@ async function main() {
       active: true,
       categoryId: 'cat_fashion_apparel',
       images: [
-        { url: 'https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=800&auto=format&fit=crop&q=80', altText: 'Brushed Fleece Casual Joggers' }
+        { url: 'https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=800&auto=format&fit=crop&q=80', altText: 'FA-JOG-011' }
       ],
     },
 
@@ -1110,7 +1110,7 @@ async function main() {
       active: true,
       categoryId: 'cat_personal_care',
       images: [
-        { url: 'https://images.unsplash.com/photo-1621607512214-68297480165e?w=800&auto=format&fit=crop&q=80', altText: 'Cordless Waterproof Beard Trimmer' }
+        { url: 'https://images.unsplash.com/photo-1621607512214-68297480165e?w=800&auto=format&fit=crop&q=80', altText: "Cordless Waterproof Beard Trimmer with 20 Length Settings (Titanium Blades)" }
       ],
     },
     {
@@ -1124,7 +1124,7 @@ async function main() {
       active: true,
       categoryId: 'cat_personal_care',
       images: [
-        { url: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&auto=format&fit=crop&q=80', altText: 'Ceramic Ionic Hair Dryer' }
+        { url: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&auto=format&fit=crop&q=80', altText: 'PC-DRY-002' }
       ],
     },
     {
@@ -1138,7 +1138,7 @@ async function main() {
       active: true,
       categoryId: 'cat_personal_care',
       images: [
-        { url: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&auto=format&fit=crop&q=80', altText: 'Tea Tree and Salicylic Acid Face Wash' }
+        { url: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&auto=format&fit=crop&q=80', altText: 'PC-FCW-003' }
       ],
     },
     {
@@ -1152,7 +1152,7 @@ async function main() {
       active: true,
       categoryId: 'cat_personal_care',
       images: [
-        { url: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=800&auto=format&fit=crop&q=80', altText: 'Matte Sunscreen Gel SPF 50' }
+        { url: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=800&auto=format&fit=crop&q=80', altText: "Broad Spectrum SPF 50 PA++++ Lightweight Matte Sunscreen Gel (50g)" }
       ],
     },
     {
@@ -1166,7 +1166,7 @@ async function main() {
       active: true,
       categoryId: 'cat_personal_care',
       images: [
-        { url: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&auto=format&fit=crop&q=80', altText: 'Niacinamide Face Serum' }
+        { url: 'https://images.unsplash.com/photo-1617897903246-719242758050?w=800&auto=format&fit=crop&q=80', altText: 'PC-SRM-005' }
       ],
     },
     {
@@ -1180,7 +1180,7 @@ async function main() {
       active: true,
       categoryId: 'cat_personal_care',
       images: [
-        { url: 'https://images.unsplash.com/photo-1559599101-f09722fb4948?w=800&auto=format&fit=crop&q=80', altText: 'Sonic Electric Toothbrush' }
+        { url: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=800&auto=format&fit=crop&q=80', altText: 'PC-TBH-006' }
       ],
     },
     {
@@ -1194,7 +1194,7 @@ async function main() {
       active: true,
       categoryId: 'cat_personal_care',
       images: [
-        { url: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&auto=format&fit=crop&q=80', altText: 'Shea Butter Body Lotion' }
+        { url: 'https://images.unsplash.com/photo-1526947425960-945c6e72858f?w=800&auto=format&fit=crop&q=80', altText: "Pure Shea Butter & Vitamin E Deep Nourishing Body Lotion (400ml)" }
       ],
     },
     {
@@ -1208,7 +1208,7 @@ async function main() {
       active: true,
       categoryId: 'cat_personal_care',
       images: [
-        { url: 'https://images.unsplash.com/photo-1608248597359-58b16e45f949?w=800&auto=format&fit=crop&q=80', altText: 'Sweet Almond Oil 200ml' }
+        { url: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=800&auto=format&fit=crop&q=80', altText: 'PC-ALM-008' }
       ],
     },
     {
@@ -1222,7 +1222,7 @@ async function main() {
       active: true,
       categoryId: 'cat_personal_care',
       images: [
-        { url: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&auto=format&fit=crop&q=80', altText: 'Pedicure Manicure Grooming Kit' }
+        { url: 'https://images.unsplash.com/photo-1629198688000-71f23e745b6e?w=800&auto=format&fit=crop&q=80', altText: "Multi-Purpose Stainless Steel Pedicure & Manicure Grooming Kit (12 Pcs)" }
       ],
     },
     {
@@ -1236,7 +1236,7 @@ async function main() {
       active: true,
       categoryId: 'cat_personal_care',
       images: [
-        { url: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=800&auto=format&fit=crop&q=80', altText: 'Hyaluronic Acid Water Gel Cream' }
+        { url: 'https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=800&auto=format&fit=crop&q=80', altText: 'PC-GEL-010' }
       ],
     },
     {
@@ -1250,7 +1250,7 @@ async function main() {
       active: true,
       categoryId: 'cat_personal_care',
       images: [
-        { url: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&auto=format&fit=crop&q=80', altText: 'Activated Charcoal Peel-Off Face Mask' }
+        { url: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=800&auto=format&fit=crop&q=80', altText: 'PC-MSK-011' }
       ],
     },
 
@@ -1268,7 +1268,7 @@ async function main() {
       active: true,
       categoryId: 'cat_stationery_office',
       images: [
-        { url: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800&auto=format&fit=crop&q=80', altText: 'Executive Ruled Notebook' }
+        { url: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=800&auto=format&fit=crop&q=80', altText: 'SO-NBK-001' }
       ],
     },
     {
@@ -1282,7 +1282,7 @@ async function main() {
       active: true,
       categoryId: 'cat_stationery_office',
       images: [
-        { url: 'https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?w=800&auto=format&fit=crop&q=80', altText: 'SmoothFlow Gel Pen Set' }
+        { url: 'https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?w=800&auto=format&fit=crop&q=80', altText: "SmoothFlow 0.5mm Retractable Gel Ink Pen Set (Pack of 10, Blue & Black)" }
       ],
     },
     {
@@ -1296,7 +1296,7 @@ async function main() {
       active: true,
       categoryId: 'cat_stationery_office',
       images: [
-        { url: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=800&auto=format&fit=crop&q=80', altText: 'Ergonomic Laptop Stand' }
+        { url: 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=800&auto=format&fit=crop&q=80', altText: 'SO-LST-003' }
       ],
     },
     {
@@ -1310,7 +1310,7 @@ async function main() {
       active: true,
       categoryId: 'cat_stationery_office',
       images: [
-        { url: 'https://images.unsplash.com/photo-1534972195531-a756b1126f24?w=800&auto=format&fit=crop&q=80', altText: 'Eye Care LED Desk Lamp' }
+        { url: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=800&auto=format&fit=crop&q=80', altText: "Eye-Care LED Desk Lamp with 3 Color Modes & Touch Dimming (USB Rechargeable)" }
       ],
     },
     {
@@ -1324,7 +1324,7 @@ async function main() {
       active: true,
       categoryId: 'cat_stationery_office',
       images: [
-        { url: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=800&auto=format&fit=crop&q=80', altText: 'Mesh Desk Organizer' }
+        { url: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=800&auto=format&fit=crop&q=80', altText: "Multi-Compartment Mesh Metal Desk Organizer Caddy with Drawer" }
       ],
     },
     {
@@ -1338,7 +1338,7 @@ async function main() {
       active: true,
       categoryId: 'cat_stationery_office',
       images: [
-        { url: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=800&auto=format&fit=crop&q=80', altText: 'Extended Waterproof Desk Mat' }
+        { url: 'https://images.unsplash.com/photo-1593062096033-9a26b09da705?w=800&auto=format&fit=crop&q=80', altText: 'SO-MAT-006' }
       ],
     },
     {
@@ -1352,7 +1352,7 @@ async function main() {
       active: true,
       categoryId: 'cat_stationery_office',
       images: [
-        { url: 'https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?w=800&auto=format&fit=crop&q=80', altText: 'Stainless Steel Craft Scissors' }
+        { url: 'https://images.unsplash.com/photo-1503792501406-2c40da09e1e2?w=800&auto=format&fit=crop&q=80', altText: 'SO-SCS-007' }
       ],
     },
     {
@@ -1366,7 +1366,7 @@ async function main() {
       active: true,
       categoryId: 'cat_stationery_office',
       images: [
-        { url: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800&auto=format&fit=crop&q=80', altText: 'Pastel Neon Sticky Notes' }
+        { url: 'https://images.unsplash.com/photo-1586075010923-2dd4570fb338?w=800&auto=format&fit=crop&q=80', altText: "Pastel Neon Sticky Notes with Index Flags (400 Sheets Pack)" }
       ],
     },
     {
@@ -1380,7 +1380,7 @@ async function main() {
       active: true,
       categoryId: 'cat_stationery_office',
       images: [
-        { url: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=800&auto=format&fit=crop&q=80', altText: 'Cable Clips Wire Management' }
+        { url: 'https://images.unsplash.com/photo-1508746829417-e6f548d8d6ed?w=800&auto=format&fit=crop&q=80', altText: 'SO-CBL-009' }
       ],
     },
     {
@@ -1394,7 +1394,7 @@ async function main() {
       active: true,
       categoryId: 'cat_stationery_office',
       images: [
-        { url: 'https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?w=800&auto=format&fit=crop&q=80', altText: 'Compact Metal Stapler Set' }
+        { url: 'https://images.unsplash.com/photo-1568667256549-094345857637?w=800&auto=format&fit=crop&q=80', altText: 'SO-STP-010' }
       ],
     },
 
@@ -1412,7 +1412,7 @@ async function main() {
       active: true,
       categoryId: 'cat_mobile_accessories',
       images: [
-        { url: 'https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=800&auto=format&fit=crop&q=80', altText: 'Magnetic Car Phone Mount' }
+        { url: 'https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=800&auto=format&fit=crop&q=80', altText: 'MA-MNT-001' }
       ],
     },
     {
@@ -1426,7 +1426,7 @@ async function main() {
       active: true,
       categoryId: 'cat_mobile_accessories',
       images: [
-        { url: 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800&auto=format&fit=crop&q=80', altText: '9H Tempered Glass Screen Protector' }
+        { url: 'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=800&auto=format&fit=crop&q=80', altText: 'MA-GLS-002' }
       ],
     },
     {
@@ -1440,7 +1440,7 @@ async function main() {
       active: true,
       categoryId: 'cat_mobile_accessories',
       images: [
-        { url: 'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=800&auto=format&fit=crop&q=80', altText: 'Shockproof Hybrid Phone Case' }
+        { url: 'https://images.unsplash.com/photo-1580910051074-3eb694886505?w=800&auto=format&fit=crop&q=80', altText: 'MA-CSE-003' }
       ],
     },
     {
@@ -1454,7 +1454,7 @@ async function main() {
       active: true,
       categoryId: 'cat_mobile_accessories',
       images: [
-        { url: 'https://images.unsplash.com/photo-1622445262464-84b1456045b6?w=800&auto=format&fit=crop&q=80', altText: '15W Fast Wireless Charging Pad' }
+        { url: 'https://images.unsplash.com/photo-1616401784845-180882ba9ba8?w=800&auto=format&fit=crop&q=80', altText: 'MA-WCH-004' }
       ],
     },
     {
@@ -1468,7 +1468,7 @@ async function main() {
       active: true,
       categoryId: 'cat_mobile_accessories',
       images: [
-        { url: 'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=800&auto=format&fit=crop&q=80', altText: '65W GaN Fast Wall Charger' }
+        { url: 'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=800&auto=format&fit=crop&q=80', altText: 'MA-GAN-005' }
       ],
     },
     {
@@ -1482,7 +1482,7 @@ async function main() {
       active: true,
       categoryId: 'cat_mobile_accessories',
       images: [
-        { url: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800&auto=format&fit=crop&q=80', altText: 'Braided Type-C Fast Charging Cable' }
+        { url: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800&auto=format&fit=crop&q=80', altText: "Heavy-Duty Braided 60W Type-C to Type-C Fast Charging Cable (1.5m)" }
       ],
     },
     {
@@ -1496,7 +1496,7 @@ async function main() {
       active: true,
       categoryId: 'cat_mobile_accessories',
       images: [
-        { url: 'https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=800&auto=format&fit=crop&q=80', altText: 'Dual Metal Fast Car Charger' }
+        { url: 'https://images.unsplash.com/photo-1517400508447-f8dd518b86db?w=800&auto=format&fit=crop&q=80', altText: 'MA-CAR-007' }
       ],
     },
     {
@@ -1510,7 +1510,7 @@ async function main() {
       active: true,
       categoryId: 'cat_mobile_accessories',
       images: [
-        { url: 'https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=800&auto=format&fit=crop&q=80', altText: 'Aluminium Phone and Tablet Stand' }
+        { url: 'https://images.unsplash.com/photo-1586105251261-72a756497a11?w=800&auto=format&fit=crop&q=80', altText: 'MA-STD-008' }
       ],
     },
     {
@@ -1524,7 +1524,7 @@ async function main() {
       active: true,
       categoryId: 'cat_mobile_accessories',
       images: [
-        { url: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800&auto=format&fit=crop&q=80', altText: 'Type-C to 3.5mm Audio Splitter' }
+        { url: 'https://images.unsplash.com/photo-1563770660941-20978e870e26?w=800&auto=format&fit=crop&q=80', altText: 'MA-SPL-009' }
       ],
     },
     {
@@ -1538,7 +1538,7 @@ async function main() {
       active: true,
       categoryId: 'cat_mobile_accessories',
       images: [
-        { url: 'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=800&auto=format&fit=crop&q=80', altText: 'Ring Grip Holder Kickstand' }
+        { url: 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800&auto=format&fit=crop&q=80', altText: 'MA-RNG-010' }
       ],
     },
 
@@ -1556,7 +1556,7 @@ async function main() {
       active: true,
       categoryId: 'cat_travel_lifestyle',
       images: [
-        { url: 'https://images.unsplash.com/photo-1527631746610-bca00a040d60?w=800&auto=format&fit=crop&q=80', altText: 'Memory Foam Travel Neck Pillow' }
+        { url: 'https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?w=800&auto=format&fit=crop&q=80', altText: "Memory Foam Ergonomic Travel Neck Pillow with Washable Velvet Cover" }
       ],
     },
     {
@@ -1570,7 +1570,7 @@ async function main() {
       active: true,
       categoryId: 'cat_travel_lifestyle',
       images: [
-        { url: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&auto=format&fit=crop&q=80', altText: 'Luggage Packing Cubes Set' }
+        { url: 'https://images.unsplash.com/photo-1581553680321-4fffae59fccd?w=800&auto=format&fit=crop&q=80', altText: 'TL-CUB-002' }
       ],
     },
     {
@@ -1584,7 +1584,7 @@ async function main() {
       active: true,
       categoryId: 'cat_travel_lifestyle',
       images: [
-        { url: 'https://images.unsplash.com/photo-1534972195531-a756b1126f24?w=800&auto=format&fit=crop&q=80', altText: 'Windproof Travel Umbrella' }
+        { url: 'https://images.unsplash.com/photo-1517404215738-15263e9f9178?w=800&auto=format&fit=crop&q=80', altText: 'TL-UMB-003' }
       ],
     },
     {
@@ -1598,7 +1598,7 @@ async function main() {
       active: true,
       categoryId: 'cat_travel_lifestyle',
       images: [
-        { url: 'https://images.unsplash.com/photo-1627123424574-724758594e93?w=800&auto=format&fit=crop&q=80', altText: 'TSA Combination Luggage Locks' }
+        { url: 'https://images.unsplash.com/photo-1584982751601-97dcc096659c?w=800&auto=format&fit=crop&q=80', altText: 'TL-LCK-004' }
       ],
     },
     {
@@ -1612,7 +1612,7 @@ async function main() {
       active: true,
       categoryId: 'cat_travel_lifestyle',
       images: [
-        { url: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&auto=format&fit=crop&q=80', altText: 'Travel and Gym Duffle Bag' }
+        { url: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&auto=format&fit=crop&q=80', altText: 'TL-DUF-005' }
       ],
     },
     {
@@ -1626,7 +1626,7 @@ async function main() {
       active: true,
       categoryId: 'cat_travel_lifestyle',
       images: [
-        { url: 'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=800&auto=format&fit=crop&q=80', altText: 'Universal Worldwide Travel Adapter' }
+        { url: 'https://images.unsplash.com/photo-1527631746610-bca00a040d60?w=800&auto=format&fit=crop&q=80', altText: 'TL-ADP-006' }
       ],
     },
     {
@@ -1640,7 +1640,7 @@ async function main() {
       active: true,
       categoryId: 'cat_travel_lifestyle',
       images: [
-        { url: 'https://images.unsplash.com/photo-1627123424574-724758594e93?w=800&auto=format&fit=crop&q=80', altText: 'RFID Passport Wallet Document Organizer' }
+        { url: 'https://images.unsplash.com/photo-1544816155-12df9643f363?w=800&auto=format&fit=crop&q=80', altText: 'TL-WLT-007' }
       ],
     },
     {
@@ -1654,7 +1654,7 @@ async function main() {
       active: true,
       categoryId: 'cat_travel_lifestyle',
       images: [
-        { url: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&auto=format&fit=crop&q=80', altText: 'Hanging Toiletry Cosmetic Bag' }
+        { url: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800&auto=format&fit=crop&q=80', altText: 'TL-TOI-008' }
       ],
     },
   ];
